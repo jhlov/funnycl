@@ -1,6 +1,7 @@
 import { QuizItem } from "components/QuizItem";
 import { ScoreItem } from "components/ScoreItem";
 import React, { useEffect, useMemo } from "react";
+import FlipMove from "react-flip-move";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { init } from "store/game";
@@ -35,11 +36,15 @@ const Game = () => {
       <div className="score">
         <div className="title mb-5">SCORE</div>
         <div>
-          {copyGroupList
-            .sort((a, b) => b?.score - a?.score)
-            .map(group => (
-              <ScoreItem key={group.name} group={group} />
-            ))}
+          <FlipMove>
+            {copyGroupList
+              .sort((a, b) => b?.score - a?.score)
+              .map(group => (
+                <div key={group.name}>
+                  <ScoreItem group={group} />
+                </div>
+              ))}
+          </FlipMove>
         </div>
       </div>
     </div>
