@@ -1,3 +1,4 @@
+import { QuizItem } from "components/QuizItem";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
@@ -22,7 +23,7 @@ const Game = () => {
           {Array(16)
             .fill(0)
             .map((_, i) => (
-              <div className="quiz-item">i</div>
+              <QuizItem key={i} index={i} quiz={quizList[i]} />
             ))}
         </div>
       </div>
