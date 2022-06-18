@@ -184,11 +184,21 @@ export const game = createSlice({
 
       shuffle(quizList);
       state.quizList = quizList.slice(0, 16);
+    },
+    updateScore: (
+      state,
+      action: { payload: { name: string; score: number } }
+    ) => {
+      state.groupList = state.groupList.map(group =>
+        group.name === action.payload.name
+          ? { ...group, score: group.score + action.payload.score }
+          : group
+      );
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { init } = game.actions;
+export const { init, updateScore } = game.actions;
 
 export default game.reducer;

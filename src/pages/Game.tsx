@@ -36,7 +36,7 @@ const Game = () => {
         <div className="title mb-5">SCORE</div>
         <div>
           {copyGroupList
-            .sort((a, b) => a?.score - b?.score)
+            .sort((a, b) => b?.score - a?.score)
             .map(group => (
               <ScoreItem key={group.name} group={group} />
             ))}

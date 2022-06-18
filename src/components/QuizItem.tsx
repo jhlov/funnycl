@@ -1,6 +1,15 @@
 import classNames from "classnames";
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Form,
+  Modal,
+  ToggleButton
+} from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store";
+import { updateScore } from "store/game";
 import { Quiz } from "types";
 import "./QuizItem.scss";
 
@@ -10,14 +19,20 @@ interface Props {
 }
 
 const QuizItem = (props: Props) => {
+  const dispatch = useDispatch();
+
+  const groupList = useSelector((state: RootState) => state.game.groupList);
+
   const [finished, setFinished] = useState(false);
   const [show, setShow] = useState<boolean>(false);
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState("");
+  const [groupName, setGroupName] = useState("");
 
   useEffect(() => {
     if (show) {
       setAnswer("");
+      setGroupName("");
     }
   }, [show]);
 
@@ -38,6 +53,12 @@ const QuizItem = (props: Props) => {
   const handleCloseResult = () => {
     if (props.quiz.answer === answer) {
       setFinished(true);
+      dispatch(
+        updateScore({
+          name: groupName,
+          score: props.quiz.bonus ? props.quiz.score * 2 : props.quiz.score
+        })
+      );
     }
     setResult("");
   };
@@ -59,12 +80,8 @@ const QuizItem = (props: Props) => {
         className={classNames("quiz-item", { finished: finished })}
         onClick={onClick}
       >
-        {!finished && (
-          <>
-            <div className="quiz-type">{quizType}</div>
-            <div className="quiz-number">{props.index + 1}</div>
-          </>
-        )}
+        <div className="quiz-type">{quizType}</div>
+        <div className="quiz-number">{props.index + 1}</div>
       </div>
 
       <Modal className="quiz-modal" size="lg" show={show} onHide={handleClose}>
@@ -80,7 +97,7 @@ const QuizItem = (props: Props) => {
         <Modal.Body>
           <div className="question mb-4">{props.quiz.question}</div>
           {props.quiz.example ? (
-            <div className="example-list mb-5">
+            <div className="example-list">
               {props.quiz.example.map(ex => (
                 <div
                   key={ex}
@@ -92,7 +109,7 @@ const QuizItem = (props: Props) => {
               ))}
             </div>
           ) : (
-            <div className="d-flex justify-content-center mb-5">
+            <div className="d-flex justify-content-center">
               <Form.Control
                 className="answer"
                 size="lg"
@@ -102,12 +119,35 @@ const QuizItem = (props: Props) => {
               />
             </div>
           )}
+
+          <div className="group-list">
+            <ButtonGroup className="mb-2" size="lg">
+              {groupList.map((group, idx) => (
+                <ToggleButton
+                  key={idx}
+                  id={`radio-${idx}`}
+                  type="radio"
+                  variant="outline-secondary"
+                  name="radio"
+                  value={group.name}
+                  checked={groupName === group.name}
+                  onChange={e => setGroupName(e.currentTarget.value)}
+                >
+                  {group.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             닫기
           </Button>
-          <Button variant="primary" onClick={onSubmit} disabled={!answer}>
+          <Button
+            variant="primary"
+            onClick={onSubmit}
+            disabled={!answer || !groupName}
+          >
             정답 제출
           </Button>
         </Modal.Footer>
