@@ -1,0 +1,30 @@
+.game {
+  .photo {
+    position: relative;
+    border: 1px solid lightgrey;
+  }
+
+  .quiz-list {
+    position: absolute;
+    display: grid;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(4, 1fr);
+
+    .quiz-item {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid lightgrey;
+      cursor: pointer;
+    }
+  }
+
+  img {
+    width: auto;
+    height: 80vh;
+  }
+}
