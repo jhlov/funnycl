@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/photoquiz/static/css/main.9430d661.css",
-    "main.js": "/photoquiz/static/js/main.a30bbc97.js",
+    "main.js": "/photoquiz/static/js/main.ddfc4a1f.js",
     "static/js/27.79df6bbb.chunk.js": "/photoquiz/static/js/27.79df6bbb.chunk.js",
     "index.html": "/photoquiz/index.html"
   },
   "entrypoints": [
     "static/css/main.9430d661.css",
-    "static/js/main.a30bbc97.js"
+    "static/js/main.ddfc4a1f.js"
   ]
 }
