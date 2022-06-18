@@ -10,8 +10,10 @@ interface Props {
 }
 
 const QuizItem = (props: Props) => {
+  const [finished, setFinished] = useState(false);
   const [show, setShow] = useState<boolean>(false);
   const [answer, setAnswer] = useState("");
+  const [result, setResult] = useState("");
 
   useEffect(() => {
     if (show) {
@@ -24,18 +26,45 @@ const QuizItem = (props: Props) => {
   }, [props]);
 
   const onClick = () => {
-    setShow(true);
+    if (!finished) {
+      setShow(true);
+    }
   };
 
   const handleClose = () => {
     setShow(false);
   };
 
+  const handleCloseResult = () => {
+    if (props.quiz.answer === answer) {
+      setFinished(true);
+    }
+    setResult("");
+  };
+
+  const onSubmit = () => {
+    handleClose();
+    setTimeout(() => {
+      if (props.quiz.answer === answer) {
+        setResult("정답입니다.!!!");
+      } else {
+        setResult("오답입니다");
+      }
+    }, 200);
+  };
+
   return (
     <>
-      <div className="quiz-item" onClick={onClick}>
-        <div className="quiz-type">{quizType}</div>
-        <div className="quiz-number">{props.index + 1}</div>
+      <div
+        className={classNames("quiz-item", { finished: finished })}
+        onClick={onClick}
+      >
+        {!finished && (
+          <>
+            <div className="quiz-type">{quizType}</div>
+            <div className="quiz-number">{props.index + 1}</div>
+          </>
+        )}
       </div>
 
       <Modal className="quiz-modal" size="lg" show={show} onHide={handleClose}>
@@ -78,8 +107,25 @@ const QuizItem = (props: Props) => {
           <Button variant="secondary" onClick={handleClose}>
             닫기
           </Button>
-          <Button variant="primary" onClick={handleClose} disabled={!answer}>
+          <Button variant="primary" onClick={onSubmit} disabled={!answer}>
             정답 제출
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        className="quiz-result-modal"
+        size="lg"
+        show={!!result}
+        onHide={handleCloseResult}
+      >
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <div>{result}</div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseResult}>
+            닫기
           </Button>
         </Modal.Footer>
       </Modal>
