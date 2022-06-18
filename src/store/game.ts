@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Quiz } from "types";
+import { Group, Quiz } from "types";
 
 interface InitialState {
   quizList: Quiz[];
+  groupList: Group[];
 }
 
 const initialState: InitialState = {
@@ -140,6 +141,23 @@ const initialState: InitialState = {
       example: ["3", "4", "5", "6"],
       score: 10,
       bonus: false
+    }
+  ],
+  groupList: [
+    {
+      name: "A",
+      score: 0,
+      color: "red"
+    },
+    {
+      name: "B",
+      score: 0,
+      color: "blue"
+    },
+    {
+      name: "C",
+      score: 0,
+      color: "green"
     }
   ]
 };
