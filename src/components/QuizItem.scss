@@ -1,0 +1,34 @@
+.quiz-modal {
+  .question {
+    font-size: 36px;
+    text-align: center;
+    padding: 20px 60px;
+    word-break: keep-all;
+  }
+
+  .example-list {
+    display: flex;
+    justify-content: center;
+
+    .example {
+      border: 2px solid lightgray;
+      padding: 8px;
+      min-width: 100px;
+      text-align: center;
+      border-radius: 8px;
+      margin: 0 10px;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+
+      &.checked {
+        background-color: lightgrey;
+      }
+    }
+  }
+
+  .answer {
+    width: 300px;
+    display: inline-block;
+  }
+}

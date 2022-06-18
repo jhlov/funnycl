@@ -182,6 +182,7 @@ export const game = createSlice({
         quizList[i].bonus = true;
       }
 
+      shuffle(quizList);
       state.quizList = quizList.slice(0, 16);
     }
   }
