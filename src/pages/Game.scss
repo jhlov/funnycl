@@ -5,6 +5,7 @@
 
   .photo {
     position: relative;
+    flex: 1;
 
     // border: 1px solid lightgrey;
 
@@ -21,8 +22,8 @@
     }
 
     img {
-      width: auto;
-      height: 80vh;
+      width: 100%;
+      height: auto;
       border-radius: 16px;
     }
   }

@@ -145,17 +145,17 @@ const initialState: InitialState = {
   ],
   groupList: [
     {
-      name: "A",
+      name: "A조",
       score: 0,
       color: "red"
     },
     {
-      name: "B",
+      name: "B조",
       score: 0,
       color: "blue"
     },
     {
-      name: "C",
+      name: "C조",
       score: 0,
       color: "green"
     }
