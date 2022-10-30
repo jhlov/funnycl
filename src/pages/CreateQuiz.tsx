@@ -30,10 +30,6 @@ const CreateQuiz = () => {
     if (quizType === "SHORT_ANSWER_QUESTION") {
       if (!shortAnswerQuestionInfo) {
         setShortAnswerQuestionInfo({
-          offsetLeft: ((e.target as HTMLElement).offsetParent as HTMLElement)
-            .offsetLeft,
-          offsetTop: ((e.target as HTMLElement).offsetParent as HTMLElement)
-            .offsetTop,
           x,
           y,
           width: 100,
