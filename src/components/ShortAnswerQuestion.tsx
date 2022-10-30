@@ -1,6 +1,8 @@
 import CloseIcon from "@mui/icons-material/Close";
 import OpenWithIcon from "@mui/icons-material/OpenWith";
+import SouthEastIcon from "@mui/icons-material/SouthEast";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
+import { useState } from "react";
 import "./ShortAnswerQuestion.scss";
 
 interface Props {
@@ -11,6 +13,9 @@ interface Props {
 }
 
 const ShortAnswerQuestion = (props: Props) => {
+  const [prevClientX, setPrevClientX] = useState(0);
+  const [prevClientY, setPrevClicntY] = useState(0);
+
   const onChangeshortAnswerQuestionAnswer = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -20,19 +25,37 @@ const ShortAnswerQuestion = (props: Props) => {
     });
   };
 
-  const onDragStartShortAnswerQuestionAnswer = (e: React.DragEvent) => {
+  const onDragStart = (e: React.DragEvent) => {
     const img = new Image(0, 0);
     e.dataTransfer.setDragImage(img, 0, 0);
+
+    setPrevClientX(e.clientX);
+    setPrevClicntY(e.clientY);
   };
 
-  const onDragShortAnswerQuestionAnswer = (e: React.DragEvent) => {
-    console.log((e.target as HTMLElement).offsetLeft);
+  const onDragMove = (e: React.DragEvent) => {
     if (e.clientX && e.clientY) {
       props.onChange({
         ...props.info!,
-        x: e.clientX - props.info!.offsetLeft + 4,
-        y: e.clientY - props.info!.offsetTop + 4
+        x: props.info.x + (e.clientX - prevClientX),
+        y: props.info.y + (e.clientY - prevClientY)
       });
+
+      setPrevClientX(e.clientX);
+      setPrevClicntY(e.clientY);
+    }
+  };
+
+  const onDragResize = (e: React.DragEvent) => {
+    if (e.clientX && e.clientY) {
+      props.onChange({
+        ...props.info!,
+        width: props.info.width + (e.clientX - prevClientX),
+        height: props.info.height + (e.clientY - prevClientY)
+      });
+
+      setPrevClientX(e.clientX);
+      setPrevClicntY(e.clientY);
     }
   };
 
@@ -47,8 +70,8 @@ const ShortAnswerQuestion = (props: Props) => {
       <div
         draggable
         className="short-answer-question-move"
-        onDragStart={onDragStartShortAnswerQuestionAnswer}
-        onDrag={onDragShortAnswerQuestionAnswer}
+        onDragStart={onDragStart}
+        onDrag={onDragMove}
         // onDragEnter={e => console.log(e)}
         onDragOver={e => e.preventDefault()}
         // onDragEnd={e => console.log(e)}
@@ -60,6 +83,17 @@ const ShortAnswerQuestion = (props: Props) => {
         onClick={() => props.onRemove(props.index)}
       >
         <CloseIcon fontSize="small" />
+      </div>
+      <div
+        draggable
+        className="short-answer-question-resize"
+        onDragStart={onDragStart}
+        onDrag={onDragResize}
+        // onDragEnter={e => console.log(e)}
+        onDragOver={e => e.preventDefault()}
+        // onDragEnd={e => console.log(e)}
+      >
+        <SouthEastIcon fontSize="small" />
       </div>
       <input
         type="text"

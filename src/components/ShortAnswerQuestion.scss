@@ -14,4 +14,11 @@
     right: -18px;
     top: -18px;
   }
+
+  &-resize {
+    cursor: se-resize;
+    position: absolute;
+    right: -18px;
+    bottom: -18px;
+  }
 }
