@@ -1,7 +1,7 @@
 import FormatShapesIcon from "@mui/icons-material/FormatShapes";
-import OpenWithIcon from "@mui/icons-material/OpenWith";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import quizImg from "assets/quiz1.jpg";
+import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
@@ -44,31 +44,6 @@ const CreateQuiz = () => {
     }
   };
 
-  const onChangeshortAnswerQuestionAnswer = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setShortAnswerQuestionInfo({
-      ...shortAnswerQuestionInfo!,
-      answer: e.target.value
-    });
-  };
-
-  const onDragStartShortAnswerQuestionAnswer = (e: React.DragEvent) => {
-    const img = new Image(0, 0);
-    e.dataTransfer.setDragImage(img, 0, 0);
-  };
-
-  const onDragShortAnswerQuestionAnswer = (e: React.DragEvent) => {
-    console.log((e.target as HTMLElement).offsetLeft);
-    if (e.clientX && e.clientY) {
-      setShortAnswerQuestionInfo({
-        ...shortAnswerQuestionInfo!,
-        x: e.clientX - shortAnswerQuestionInfo!.offsetLeft + 4,
-        y: e.clientY - shortAnswerQuestionInfo!.offsetTop + 4
-      });
-    }
-  };
-
   return (
     <div className="create-quiz">
       <div className="create-quiz-info mt-2 mb-4">
@@ -98,34 +73,12 @@ const CreateQuiz = () => {
       <div className="create-quiz-img-wrapper">
         <img src={quizImg} onClick={onClickImg} />
         {shortAnswerQuestionInfo && (
-          <div
-            className="short-answer-question-info"
-            style={{
-              left: shortAnswerQuestionInfo.x,
-              top: shortAnswerQuestionInfo.y
-            }}
-          >
-            <div
-              draggable
-              className="short-answer-question-info-move"
-              onDragStart={onDragStartShortAnswerQuestionAnswer}
-              onDrag={onDragShortAnswerQuestionAnswer}
-              // onDragEnter={e => console.log(e)}
-              onDragOver={e => e.preventDefault()}
-              // onDragEnd={e => console.log(e)}
-            >
-              <OpenWithIcon fontSize="small" />
-            </div>
-            <input
-              type="text"
-              style={{
-                width: shortAnswerQuestionInfo.width,
-                height: shortAnswerQuestionInfo.height
-              }}
-              value={shortAnswerQuestionInfo.answer}
-              onChange={onChangeshortAnswerQuestionAnswer}
-            />
-          </div>
+          <ShortAnswerQuestion
+            shortAnswerQuestionInfo={shortAnswerQuestionInfo}
+            onChangeShortAnswerQuestionInfo={(info: ShortAnswerQuestionInfo) =>
+              setShortAnswerQuestionInfo(info)
+            }
+          />
         )}
       </div>
     </div>

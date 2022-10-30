@@ -26,15 +26,5 @@
   &-img-wrapper {
     display: inline-block;
     position: relative;
-
-    .short-answer-question-info {
-      position: absolute;
-
-      .short-answer-question-info-move {
-        position: absolute;
-        left: -14px;
-        top: -18px;
-      }
-    }
   }
 }
