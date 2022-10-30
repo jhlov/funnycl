@@ -1,21 +1,21 @@
+import CloseIcon from "@mui/icons-material/Close";
 import OpenWithIcon from "@mui/icons-material/OpenWith";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import "./ShortAnswerQuestion.scss";
 
 interface Props {
-  shortAnswerQuestionInfo: ShortAnswerQuestionInfo;
-  onChangeShortAnswerQuestionInfo: (info: ShortAnswerQuestionInfo) => void;
+  index: number;
+  info: ShortAnswerQuestionInfo;
+  onChange: (info: ShortAnswerQuestionInfo) => void;
+  onRemove: (index: number) => void;
 }
 
-const ShortAnswerQuestion = ({
-  shortAnswerQuestionInfo,
-  onChangeShortAnswerQuestionInfo
-}: Props) => {
+const ShortAnswerQuestion = (props: Props) => {
   const onChangeshortAnswerQuestionAnswer = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    onChangeShortAnswerQuestionInfo({
-      ...shortAnswerQuestionInfo!,
+    props.onChange({
+      ...props.info!,
       answer: e.target.value
     });
   };
@@ -28,10 +28,10 @@ const ShortAnswerQuestion = ({
   const onDragShortAnswerQuestionAnswer = (e: React.DragEvent) => {
     console.log((e.target as HTMLElement).offsetLeft);
     if (e.clientX && e.clientY) {
-      onChangeShortAnswerQuestionInfo({
-        ...shortAnswerQuestionInfo!,
-        x: e.clientX - shortAnswerQuestionInfo!.offsetLeft + 4,
-        y: e.clientY - shortAnswerQuestionInfo!.offsetTop + 4
+      props.onChange({
+        ...props.info!,
+        x: e.clientX - props.info!.offsetLeft + 4,
+        y: e.clientY - props.info!.offsetTop + 4
       });
     }
   };
@@ -40,8 +40,8 @@ const ShortAnswerQuestion = ({
     <div
       className="short-answer-question"
       style={{
-        left: shortAnswerQuestionInfo?.x,
-        top: shortAnswerQuestionInfo?.y
+        left: props.info?.x,
+        top: props.info?.y
       }}
     >
       <div
@@ -55,13 +55,19 @@ const ShortAnswerQuestion = ({
       >
         <OpenWithIcon fontSize="small" />
       </div>
+      <div
+        className="short-answer-question-delete"
+        onClick={() => props.onRemove(props.index)}
+      >
+        <CloseIcon fontSize="small" />
+      </div>
       <input
         type="text"
         style={{
-          width: shortAnswerQuestionInfo?.width,
-          height: shortAnswerQuestionInfo?.height
+          width: props.info?.width,
+          height: props.info?.height
         }}
-        value={shortAnswerQuestionInfo?.answer}
+        value={props.info?.answer}
         onChange={onChangeshortAnswerQuestionAnswer}
       />
     </div>

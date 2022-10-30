@@ -74,10 +74,12 @@ const CreateQuiz = () => {
         <img src={quizImg} onClick={onClickImg} />
         {shortAnswerQuestionInfo && (
           <ShortAnswerQuestion
-            shortAnswerQuestionInfo={shortAnswerQuestionInfo}
-            onChangeShortAnswerQuestionInfo={(info: ShortAnswerQuestionInfo) =>
+            index={0}
+            info={shortAnswerQuestionInfo}
+            onChange={(info: ShortAnswerQuestionInfo) =>
               setShortAnswerQuestionInfo(info)
             }
+            onRemove={() => setShortAnswerQuestionInfo(null)}
           />
         )}
       </div>

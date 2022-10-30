@@ -1,9 +1,17 @@
 .short-answer-question {
   position: absolute;
 
-  .short-answer-question-move {
+  &-move {
+    cursor: move;
     position: absolute;
     left: -14px;
+    top: -18px;
+  }
+
+  &-delete {
+    cursor: pointer;
+    position: absolute;
+    right: -18px;
     top: -18px;
   }
 }
