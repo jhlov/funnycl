@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { LoadingLayer } from "components/LoadingLayer";
+import { CreateQuiz } from "pages/CreateQuiz";
 import { Game } from "pages/Game";
-import React from "react";
 import { HashRouter, Redirect, Route } from "react-router-dom";
 import "./App.scss";
 
@@ -16,6 +16,7 @@ function App() {
             <Redirect to="/game" />
           </Route>
           <Route path="/game" component={Game} />
+          <Route path="/create-quiz" component={CreateQuiz} />
         </HashRouter>
         <LoadingLayer />
       </div>
