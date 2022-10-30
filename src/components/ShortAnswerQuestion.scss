@@ -1,6 +1,10 @@
 .short-answer-question {
   position: absolute;
 
+  input {
+    padding: 4px;
+  }
+
   &-move {
     cursor: move;
     position: absolute;
@@ -11,14 +15,18 @@
   &-delete {
     cursor: pointer;
     position: absolute;
-    right: -18px;
-    top: -18px;
+    right: -16px;
+    top: -20px;
   }
 
   &-resize {
     cursor: se-resize;
     position: absolute;
-    right: -18px;
-    bottom: -18px;
+    right: -1px;
+    bottom: -3px;
+
+    svg {
+      width: 14px;
+    }
   }
 }

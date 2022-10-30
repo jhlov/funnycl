@@ -1,6 +1,6 @@
-import CloseIcon from "@mui/icons-material/Close";
+import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import OpenWithIcon from "@mui/icons-material/OpenWith";
-import SouthEastIcon from "@mui/icons-material/SouthEast";
+import SignalCellular4BarIcon from "@mui/icons-material/SignalCellular4Bar";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import { useState } from "react";
 import "./ShortAnswerQuestion.scss";
@@ -82,7 +82,7 @@ const ShortAnswerQuestion = (props: Props) => {
         className="short-answer-question-delete"
         onClick={() => props.onRemove(props.index)}
       >
-        <CloseIcon fontSize="small" />
+        <DisabledByDefaultIcon fontSize="small" />
       </div>
       <div
         draggable
@@ -93,7 +93,7 @@ const ShortAnswerQuestion = (props: Props) => {
         onDragOver={e => e.preventDefault()}
         // onDragEnd={e => console.log(e)}
       >
-        <SouthEastIcon fontSize="small" />
+        <SignalCellular4BarIcon fontSize="small" />
       </div>
       <input
         type="text"
