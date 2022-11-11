@@ -3,8 +3,8 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import quizImg from "assets/quiz1.jpg";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import "./CreateQuiz.scss";
 
 type QuizType = "NONE" | "SHORT_ANSWER_QUESTION" | "MULTIPLE_CHOICE";
@@ -13,6 +13,33 @@ const CreateQuiz = () => {
   const [quizType, setQuizType] = useState<QuizType>("NONE");
   const [shortAnswerQuestionInfo, setShortAnswerQuestionInfo] =
     useState<ShortAnswerQuestionInfo | null>(null);
+  const [image, setImage] = useState<File>();
+  const [imageUrl, setImageUrl] = useState("");
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const onUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageUrl(reader.result as string);
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
+
+    setImage(e.target.files[0]);
+  };
+
+  const onUploadImageButtonClick = () => {
+    if (!inputRef.current) {
+      return;
+    }
+
+    inputRef.current.click();
+  };
 
   const onClickType = (type: QuizType) => {
     setQuizType(type);
@@ -47,7 +74,8 @@ const CreateQuiz = () => {
           <Form.Label className="d-block text-start mb-0">문제 이름</Form.Label>
           <Form.Control type="text" />
         </Form.Group>
-        <div className="quiz-types">
+
+        <div className="quiz-types me-2">
           <button
             className="type-btn"
             onClick={() => onClickType("SHORT_ANSWER_QUESTION")}
@@ -64,6 +92,17 @@ const CreateQuiz = () => {
             <RadioButtonCheckedIcon />
           </button>
         </div>
+
+        <div className="add-image-button">
+          <input
+            className="d-none"
+            type="file"
+            accept="image/*"
+            ref={inputRef}
+            onChange={onUploadImage}
+          />
+          <Button onClick={onUploadImageButtonClick}>이미지 업로드</Button>
+        </div>
       </div>
 
       <div className="create-quiz-img-wrapper">
@@ -79,6 +118,8 @@ const CreateQuiz = () => {
           />
         )}
       </div>
+
+      <img src={imageUrl} />
     </div>
   );
 };
