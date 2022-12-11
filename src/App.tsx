@@ -1,10 +1,14 @@
 import classNames from "classnames";
 import { LoadingLayer } from "components/LoadingLayer";
 import { getAuth } from "firebase/auth";
+import _ from "lodash";
 import { CreateQuiz } from "pages/CreateQuiz";
 import { Game } from "pages/Game";
+import { Home } from "pages/Home";
+import { Login } from "pages/Login";
+import { Logout } from "pages/Logout";
 import { useEffect } from "react";
-import { HashRouter, Redirect, Route } from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 import "./App.scss";
 
 function App() {
@@ -20,16 +24,21 @@ function App() {
 
   const onAuthStateChanged = async () => {
     console.log("onAuthStateChanged", auth.currentUser);
+    if (_.isNil(auth.currentUser)) {
+      if (!window.location.href.includes("/login")) {
+        window.location.href = "/#/login";
+      }
+    }
   };
 
   return (
     <div className="App">
       <div className={classNames(isMobile ? "mobile-container" : "container")}>
         <HashRouter>
-          <Route path="/" exact>
-            <Redirect to="/game" />
-          </Route>
+          <Route path="/" component={Home} exact />
           <Route path="/game" component={Game} />
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
           <Route path="/create-quiz" component={CreateQuiz} />
         </HashRouter>
         <LoadingLayer />
