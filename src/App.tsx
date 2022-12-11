@@ -1,12 +1,26 @@
 import classNames from "classnames";
 import { LoadingLayer } from "components/LoadingLayer";
+import { getAuth } from "firebase/auth";
 import { CreateQuiz } from "pages/CreateQuiz";
 import { Game } from "pages/Game";
+import { useEffect } from "react";
 import { HashRouter, Redirect, Route } from "react-router-dom";
 import "./App.scss";
 
 function App() {
   const isMobile = false;
+
+  const auth = getAuth();
+
+  useEffect(() => {
+    auth.onAuthStateChanged(() => {
+      onAuthStateChanged();
+    });
+  }, []);
+
+  const onAuthStateChanged = async () => {
+    console.log("onAuthStateChanged", auth.currentUser);
+  };
 
   return (
     <div className="App">
