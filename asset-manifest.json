@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/photoquiz/static/css/main.e40c396f.css",
-    "main.js": "/photoquiz/static/js/main.d3585a92.js",
-    "static/js/27.79df6bbb.chunk.js": "/photoquiz/static/js/27.79df6bbb.chunk.js",
-    "index.html": "/photoquiz/index.html"
+    "main.css": "/funnycl/static/css/main.0a27e5aa.css",
+    "main.js": "/funnycl/static/js/main.aa6effb4.js",
+    "static/js/27.8e3afafb.chunk.js": "/funnycl/static/js/27.8e3afafb.chunk.js",
+    "index.html": "/funnycl/index.html"
   },
   "entrypoints": [
-    "static/css/main.e40c396f.css",
-    "static/js/main.d3585a92.js"
+    "static/css/main.0a27e5aa.css",
+    "static/js/main.aa6effb4.js"
   ]
 }
