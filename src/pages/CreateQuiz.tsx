@@ -1,6 +1,6 @@
 import FormatShapesIcon from "@mui/icons-material/FormatShapes";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import quizImg from "assets/quiz1.jpg";
+import axios from "axios";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import React, { useRef, useState } from "react";
@@ -33,12 +33,32 @@ const CreateQuiz = () => {
     setImage(e.target.files[0]);
   };
 
-  const onUploadImageButtonClick = () => {
+  const onLoadImageButtonClick = () => {
     if (!inputRef.current) {
       return;
     }
 
     inputRef.current.click();
+  };
+
+  const onUploadQuiz = async () => {
+    console.log("onUploadQuiz");
+
+    const formData = new FormData();
+    formData.append("test", "test1");
+    formData.append("image", image!);
+
+    const r = await axios.post(
+      "https://l0519szlp6.execute-api.ap-northeast-2.amazonaws.com/default/fc-uploadImage",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }
+    );
+
+    console.log(r);
   };
 
   const onClickType = (type: QuizType) => {
@@ -93,7 +113,7 @@ const CreateQuiz = () => {
           </button>
         </div>
 
-        <div className="add-image-button">
+        <div className="add-image-button me-2">
           <input
             className="d-none"
             type="file"
@@ -101,12 +121,19 @@ const CreateQuiz = () => {
             ref={inputRef}
             onChange={onUploadImage}
           />
-          <Button onClick={onUploadImageButtonClick}>이미지 업로드</Button>
+          <Button onClick={onLoadImageButtonClick}>이미지 로드</Button>
+        </div>
+
+        <div className="add-image-button">
+          <Button onClick={onUploadQuiz} disabled={!image}>
+            문제 업로드
+          </Button>
         </div>
       </div>
 
       <div className="create-quiz-img-wrapper">
-        <img src={quizImg} onClick={onClickImg} />
+        {/* <img src={quizImg} onClick={onClickImg} /> */}
+        <img src={imageUrl} onClick={onClickImg} />
         {shortAnswerQuestionInfo && (
           <ShortAnswerQuestion
             index={0}
@@ -118,8 +145,6 @@ const CreateQuiz = () => {
           />
         )}
       </div>
-
-      <img src={imageUrl} />
     </div>
   );
 };
