@@ -1,6 +1,10 @@
 .side-bar {
   .main-menu-button {
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    color: unset;
+    text-decoration: unset;
 
     &.active {
       background-color: lightgoldenrodyellow;
