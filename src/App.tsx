@@ -1,7 +1,7 @@
-import classNames from "classnames";
 import { LoadingLayer } from "components/LoadingLayer";
 import { getAuth } from "firebase/auth";
 import _ from "lodash";
+import { Admin } from "pages/Admin";
 import { CreateQuiz } from "pages/CreateQuiz";
 import { Game } from "pages/Game";
 import { Home } from "pages/Home";
@@ -12,8 +12,6 @@ import { HashRouter, Route } from "react-router-dom";
 import "./App.scss";
 
 function App() {
-  const isMobile = false;
-
   const auth = getAuth();
 
   useEffect(() => {
@@ -33,16 +31,15 @@ function App() {
 
   return (
     <div className="App">
-      <div className={classNames(isMobile ? "mobile-container" : "container")}>
-        <HashRouter>
-          <Route path="/" component={Home} exact />
-          <Route path="/game" component={Game} />
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/create-quiz" component={CreateQuiz} />
-        </HashRouter>
-        <LoadingLayer />
-      </div>
+      <HashRouter>
+        <Route path="/" component={Home} exact />
+        <Route path="/game" component={Game} />
+        <Route path="/admin" component={Admin} />
+        <Route path="/create-quiz" component={CreateQuiz} />
+        <Route path="/login" component={Login} />
+        <Route path="/logout" component={Logout} />
+      </HashRouter>
+      <LoadingLayer />
     </div>
   );
 }
