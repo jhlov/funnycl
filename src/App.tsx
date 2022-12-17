@@ -9,10 +9,12 @@ import { Login } from "pages/Login";
 import { Logout } from "pages/Logout";
 import { useEffect } from "react";
 import { HashRouter, Route } from "react-router-dom";
+import { useLogin } from "store/useLogin";
 import "./App.scss";
 
 function App() {
   const auth = getAuth();
+  const { setIsLogin } = useLogin();
 
   useEffect(() => {
     auth.onAuthStateChanged(() => {
@@ -22,16 +24,12 @@ function App() {
 
   const onAuthStateChanged = async () => {
     console.log("onAuthStateChanged", auth.currentUser);
-    if (_.isNil(auth.currentUser)) {
-      if (!window.location.href.includes("/login")) {
-        window.location.href = "/#/login";
-      }
-    }
+    setIsLogin(!_.isNil(auth.currentUser));
   };
 
   return (
     <div className="App">
-      <HashRouter>
+      <HashRouter basename={process.env.PUBLIC_URL}>
         <Route path="/" component={Home} exact />
         <Route path="/game" component={Game} />
         <Route path="/admin" component={Admin} />
