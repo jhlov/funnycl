@@ -12,7 +12,7 @@ const SideBar = () => {
     <div className="side-bar border-end">
       <Link
         className={classNames("main-menu-button p-3", {
-          active: mainMenu === "game"
+          active: mainMenu === "GAME"
         })}
         to="/admin/game"
       >
@@ -21,7 +21,7 @@ const SideBar = () => {
       </Link>
       <Link
         className={classNames("main-menu-button p-3", {
-          active: mainMenu === "quiz"
+          active: mainMenu === "QUIZ"
         })}
         to="/admin/quiz"
       >

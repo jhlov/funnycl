@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { Table } from "react-bootstrap";
+import { useMenus } from "store/useMenus";
 import "./AdminQuizList.scss";
 
 const AdminQuizList = () => {
+  const { setSubMenu } = useMenus();
+
+  useEffect(() => {
+    setSubMenu("QUIZ_LIST");
+  }, []);
+
   return (
-    <div className="admin-quiz-list p-5">
+    <div className="admin-quiz-list">
       <Table striped bordered hover>
         <thead>
           <tr>

@@ -5,8 +5,8 @@ const AdminGame = () => {
   const { setMainMenu } = useMenus();
 
   useEffect(() => {
-    setMainMenu("game");
-  });
+    setMainMenu("GAME");
+  }, []);
 
   return <div>게임</div>;
 };
