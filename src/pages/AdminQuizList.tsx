@@ -11,7 +11,7 @@ const AdminQuizList = () => {
   }, []);
 
   return (
-    <div className="admin-quiz-list">
+    <div className="admin-quiz-list p-5">
       <Table striped bordered hover>
         <thead>
           <tr>

@@ -1,3 +1,6 @@
+import { NewQuizContent } from "components/admin/quiz/NewQuizContent";
+import { NewQuizInfo } from "components/admin/quiz/NewQuizInfo";
+import { QuizList } from "components/admin/quiz/QuizList";
 import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { useMenus } from "store/useMenus";
@@ -13,9 +16,9 @@ const AdminQuizCreate = () => {
   }, []);
 
   return (
-    <div>
+    <>
       {newQuiz.type === "NONE" ? (
-        <>
+        <div className="p-5">
           <h1 className="mb-5">새로운 문제를 만들어 보세요.</h1>
           <div>
             <Button
@@ -34,11 +37,15 @@ const AdminQuizCreate = () => {
               워크 시트
             </Button>
           </div>
-        </>
+        </div>
       ) : (
-        <h1>ㄴㄴ</h1>
+        <div className="d-flex h-100">
+          <QuizList />
+          <NewQuizContent />
+          <NewQuizInfo />
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

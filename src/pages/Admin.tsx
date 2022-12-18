@@ -16,7 +16,7 @@ const Admin = () => {
           <Header />
           <div className="d-flex admin-body">
             <SideBar />
-            <div className="flex-fill p-5">
+            <div className="flex-fill">
               <Route path="/admin" exact>
                 <Redirect to="/admin/game" />
               </Route>
