@@ -16,11 +16,13 @@ const Admin = () => {
           <Header />
           <div className="d-flex admin-body">
             <SideBar />
-            <Route path="/admin" exact>
-              <Redirect to="/admin/game" />
-            </Route>
-            <Route path="/admin/game" component={AdminGame}></Route>
-            <Route path="/admin/quiz" component={AdminQuiz}></Route>
+            <div className="flex-fill">
+              <Route path="/admin" exact>
+                <Redirect to="/admin/game" />
+              </Route>
+              <Route path="/admin/game" component={AdminGame}></Route>
+              <Route path="/admin/quiz" component={AdminQuiz}></Route>
+            </div>
           </div>
         </>
       ) : (
