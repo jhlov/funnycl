@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import store from "store";
 import App from "./App";
 import "./index.css";
@@ -23,7 +24,9 @@ const app = initializeApp(firebaseConfig);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

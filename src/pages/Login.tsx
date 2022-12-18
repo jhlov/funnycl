@@ -8,7 +8,7 @@ const Login = () => {
     // signInFlow: "popup",
     // We will display Google and Facebook as auth providers.
     signInOptions: [EmailAuthProvider.PROVIDER_ID],
-    signInSuccessUrl: "/admin"
+    signInSuccessUrl: "/funnycl/admin"
     // callbacks: {
     //   // Avoid redirects after sign-in.
     //   signInSuccessWithAuthResult: (authResult: any, redirectUrl?: string) => {
