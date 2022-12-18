@@ -1,11 +1,38 @@
 type QuizType = "NONE" | "NORMAL" | "WORK_SHEET";
 
+export type QuizSubject = "KOREAN" | "MATH";
+type AnswerType = "SHORT_ANSWER_QUESTION" | "MULTIPLE_CHOICE";
+
+export const quizSubjectList = [
+  ["KOREAN", "국어"],
+  ["MATH", "수학"]
+];
+
+export const answerTypetList = [
+  ["SHORT_ANSWER_QUESTION", "단답형"],
+  ["MULTIPLE_CHOICE", "객관식"]
+];
+
 export interface Quiz {
+  title: string;
   type: QuizType;
-  name: string;
+  subject: QuizSubject;
+  year: number; // 1 ~ 12
+  tag: string;
+  difficulty: number; // 1 ~ 10;
+  answerType: AnswerType;
+  answer: string;
+  hint: string;
 }
 
 export const initNewQuiz: Quiz = {
+  title: "",
   type: "NONE",
-  name: ""
+  subject: "KOREAN",
+  year: 1,
+  tag: "",
+  difficulty: 1,
+  answerType: "SHORT_ANSWER_QUESTION",
+  answer: "",
+  hint: ""
 };
