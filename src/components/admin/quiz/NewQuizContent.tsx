@@ -71,7 +71,7 @@ const NewQuizContent = () => {
       </Form>
 
       {newQuiz.image && (
-        <div>
+        <div className="new-quiz-image-wrapper mt-2">
           <img src={newQuiz.imageUrl} />
         </div>
       )}

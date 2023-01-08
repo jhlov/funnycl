@@ -1,5 +1,17 @@
 .new-quiz-content {
+  min-width: 800px;
+
   .form-label {
     font-weight: bold;
+  }
+
+  .new-quiz-image-wrapper {
+    max-width: 750px;
+    display: inline-block;
+    border: 1px solid gray;
+
+    img {
+      max-width: 100%;
+    }
   }
 }
