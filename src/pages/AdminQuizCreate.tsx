@@ -26,6 +26,7 @@ const AdminQuizCreate = () => {
               variant="primary"
               size="lg"
               onClick={() => setNewQuiz("type", "NORMAL")}
+              disabled
             >
               일반 문제
             </Button>

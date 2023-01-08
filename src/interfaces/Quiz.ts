@@ -23,6 +23,9 @@ export interface Quiz {
   answerType: AnswerType;
   answer: string;
   hint: string;
+  image: File | null;
+  imageName: string;
+  imageUrl: string;
 }
 
 export const initNewQuiz: Quiz = {
@@ -34,5 +37,8 @@ export const initNewQuiz: Quiz = {
   difficulty: 1,
   answerType: "SHORT_ANSWER_QUESTION",
   answer: "",
-  hint: ""
+  hint: "",
+  image: null,
+  imageName: "",
+  imageUrl: ""
 };

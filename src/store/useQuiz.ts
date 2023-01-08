@@ -6,7 +6,7 @@ interface State {
   getQuizList: () => void;
   newQuiz: Quiz;
   initNewQuiz: () => void;
-  setNewQuiz: (key: string, value: string) => void;
+  setNewQuiz: (key: string, value: any) => void;
 }
 
 export const useQuiz = create<State>(set => ({
@@ -21,7 +21,7 @@ export const useQuiz = create<State>(set => ({
         ...initNewQuiz
       }
     })),
-  setNewQuiz: (key: string, value: string) =>
+  setNewQuiz: (key: string, value: any) =>
     set(state => ({
       newQuiz: {
         ...state.newQuiz,
