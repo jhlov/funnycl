@@ -24,6 +24,14 @@ const Header = () => {
       if (newQuiz.image === null) {
         return true;
       }
+
+      if (newQuiz.answerType === "SHORT_ANSWER_QUESTION") {
+        if (_.isEmpty(newQuiz.shortAnswerQuestionInfo?.answer)) {
+          return true;
+        }
+      } else {
+        return true;
+      }
     }
 
     return false;
