@@ -14,14 +14,13 @@ export const useMenus = create<MenusState>(set => ({
   mainMenu: "GAME",
   subMenu: "GAME_LIST",
   setMainMenu: payload => {
-    const subMenu = payload === "GAME" ? "GAME_LIST" : "QUIZ_LIST";
     set(() => ({
-      mainMenu: payload,
-      subMenu
+      mainMenu: payload
     }));
   },
-  setSubMenu: payload =>
+  setSubMenu: payload => {
     set(() => ({
       subMenu: payload
-    }))
+    }));
+  }
 }));

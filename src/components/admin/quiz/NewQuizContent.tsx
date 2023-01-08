@@ -44,7 +44,11 @@ const NewQuizContent = () => {
           <Form.Label>문제 이름</Form.Label>
           <Row>
             <Col xs="6">
-              <Form.Control type="text" />
+              <Form.Control
+                type="text"
+                value={newQuiz.title}
+                onChange={e => setNewQuiz("title", e.target.value)}
+              />
             </Col>
           </Row>
         </Form.Group>
@@ -71,7 +75,7 @@ const NewQuizContent = () => {
       </Form>
 
       {newQuiz.image && (
-        <div className="new-quiz-image-wrapper mt-2">
+        <div className="new-quiz-image-wrapper mt-5">
           <img src={newQuiz.imageUrl} />
         </div>
       )}
