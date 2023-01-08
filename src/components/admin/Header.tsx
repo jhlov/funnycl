@@ -31,6 +31,10 @@ const Header = () => {
 
   const onClickSaveQuiz = () => {
     console.log("onClickSaveQuiz");
+
+    // 이미지를 저장 하고
+
+    // 문제 저장
   };
 
   return (

@@ -1,3 +1,5 @@
+import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
+
 type QuizType = "NONE" | "NORMAL" | "WORK_SHEET";
 
 export type QuizSubject = "KOREAN" | "MATH";
@@ -26,6 +28,7 @@ export interface Quiz {
   image: File | null;
   imageName: string;
   imageUrl: string;
+  shortAnswerQuestionInfo: ShortAnswerQuestionInfo | null;
 }
 
 export const initNewQuiz: Quiz = {
@@ -40,5 +43,6 @@ export const initNewQuiz: Quiz = {
   hint: "",
   image: null,
   imageName: "",
-  imageUrl: ""
+  imageUrl: "",
+  shortAnswerQuestionInfo: null
 };

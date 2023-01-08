@@ -1,3 +1,6 @@
+import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
+import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
+import _ from "lodash";
 import { useRef } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useQuiz } from "store/useQuiz";
@@ -35,6 +38,28 @@ const NewQuizContent = () => {
     setNewQuiz("image", null);
     setNewQuiz("imageName", "");
     setNewQuiz("imageUrl", "");
+  };
+
+  const onClickImg = (e: React.MouseEvent) => {
+    const x =
+      e.pageX -
+      ((e.target as HTMLElement).offsetParent as HTMLElement).offsetLeft;
+    const y =
+      e.pageY -
+      ((e.target as HTMLElement).offsetParent as HTMLElement).offsetTop;
+    console.log("onClickImg", x, y);
+
+    if (newQuiz.answerType === "SHORT_ANSWER_QUESTION") {
+      if (_.isNil(newQuiz.shortAnswerQuestionInfo)) {
+        setNewQuiz("shortAnswerQuestionInfo", {
+          x,
+          y,
+          width: 100,
+          height: 30,
+          answer: ""
+        });
+      }
+    }
   };
 
   return (
@@ -76,7 +101,17 @@ const NewQuizContent = () => {
 
       {newQuiz.image && (
         <div className="new-quiz-image-wrapper mt-5">
-          <img src={newQuiz.imageUrl} />
+          <img src={newQuiz.imageUrl} onClick={onClickImg} />
+          {newQuiz.shortAnswerQuestionInfo && (
+            <ShortAnswerQuestion
+              index={0}
+              info={newQuiz.shortAnswerQuestionInfo}
+              onChange={(info: ShortAnswerQuestionInfo) =>
+                setNewQuiz("shortAnswerQuestionInfo", info)
+              }
+              onRemove={() => setNewQuiz("shortAnswerQuestionInfo", null)}
+            />
+          )}
         </div>
       )}
     </div>
