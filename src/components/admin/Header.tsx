@@ -1,5 +1,6 @@
 import LogoutIcon from "@mui/icons-material/Logout";
 import { getAuth } from "firebase/auth";
+import { child, getDatabase, push, ref, update } from "firebase/database";
 import _ from "lodash";
 import { useMemo } from "react";
 import { Button } from "react-bootstrap";
@@ -40,9 +41,29 @@ const Header = () => {
   const onClickSaveQuiz = () => {
     console.log("onClickSaveQuiz");
 
+    if (_.isNil(auth.currentUser?.uid)) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
     // 이미지를 저장 하고
 
     // 문제 저장
+    const db = getDatabase();
+
+    // Get a key for a new Post.
+    const quizUrl = `quiz/${auth.currentUser?.uid}`;
+    const newPostKey = push(child(ref(db), quizUrl)).key;
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates: any = {};
+    updates[`${quizUrl}/${newPostKey}`] = _.pick(newQuiz, [
+      "title",
+      "type",
+      "subject"
+    ]);
+
+    return update(ref(db), updates);
   };
 
   return (

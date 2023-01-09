@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -15,11 +16,15 @@ const firebaseConfig = {
   projectId: "funnycl",
   storageBucket: "funnycl.appspot.com",
   messagingSenderId: "606207082154",
-  appId: "1:606207082154:web:1c99bbce79da169dd21ad3"
+  appId: "1:606207082154:web:1c99bbce79da169dd21ad3",
+  databaseURL: "https://funnycl-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
 
 ReactDOM.render(
   <React.StrictMode>
