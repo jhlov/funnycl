@@ -3,6 +3,7 @@ import axios from "axios";
 import { getAuth } from "firebase/auth";
 import { child, getDatabase, push, ref, update } from "firebase/database";
 import _ from "lodash";
+import moment from "moment";
 import { useMemo } from "react";
 import { Button } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
@@ -74,7 +75,8 @@ const Header = () => {
       updates[`${quizUrl}/${newPostKey}`] = _.omit(
         {
           ...newQuiz,
-          image: r.data.data
+          image: r.data.data,
+          created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
         },
         ["imageName", "imageUrl"]
       );
