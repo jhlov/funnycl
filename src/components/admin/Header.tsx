@@ -75,6 +75,7 @@ const Header = () => {
       updates[`${quizUrl}/${newPostKey}`] = _.omit(
         {
           ...newQuiz,
+          id: newPostKey,
           image: r.data.data,
           created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
         },

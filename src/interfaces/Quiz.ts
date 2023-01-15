@@ -21,9 +21,13 @@ export interface Quiz {
   hint: string;
 
   // for local
-  image: File | null;
-  imageName: string;
-  imageUrl: string;
+  image: File | string | null;
+  imageName?: string;
+  imageUrl?: string;
+
+  // for server
+  id?: string;
+  created?: string;
 }
 
 export const initNewQuiz: Quiz = {

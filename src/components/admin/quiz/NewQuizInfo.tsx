@@ -3,23 +3,23 @@ import Form from "react-bootstrap/Form";
 import { useQuiz } from "store/useQuiz";
 import "./NewQuizInfo.scss";
 
+export const yearList = [
+  [1, "초등학교 1학년"],
+  [2, "초등학교 2학년"],
+  [3, "초등학교 3학년"],
+  [4, "초등학교 4학년"],
+  [5, "초등학교 5학년"],
+  [6, "초등학교 6학년"],
+  [7, "중학교 1학년"],
+  [8, "중학교 2학년"],
+  [9, "중학교 3학년"],
+  [10, "고등학교 1학년"],
+  [11, "고등학교 2학년"],
+  [12, "고등학교 3학년"]
+];
+
 const NewQuizInfo = () => {
   const { newQuiz, setNewQuiz } = useQuiz();
-
-  const yearList = [
-    [1, "초등학교 1학년"],
-    [2, "초등학교 2학년"],
-    [3, "초등학교 3학년"],
-    [4, "초등학교 4학년"],
-    [5, "초등학교 5학년"],
-    [6, "초등학교 6학년"],
-    [7, "중학교 1학년"],
-    [8, "중학교 2학년"],
-    [9, "중학교 3학년"],
-    [10, "고등학교 1학년"],
-    [11, "고등학교 2학년"],
-    [12, "고등학교 3학년"]
-  ];
 
   return (
     <div className="new-quiz-info p-3">
