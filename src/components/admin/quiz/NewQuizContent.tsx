@@ -1,7 +1,8 @@
+import classNames from "classnames";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import _ from "lodash";
-import { useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useQuiz } from "store/useQuiz";
 import "./NewQuizContent.scss";
@@ -9,7 +10,20 @@ import "./NewQuizContent.scss";
 const NewQuizContent = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const { newQuiz, setNewQuiz } = useQuiz();
+  const { quizList, getQuizList, newQuiz, setNewQuiz } = useQuiz();
+
+  useEffect(() => {
+    getQuizList();
+  }, []);
+
+  const quizTitleError = useMemo(() => {
+    if (
+      newQuiz.title &&
+      0 < quizList.filter(item => item.title === newQuiz.title).length
+    ) {
+      return "동일한 이름의 문제가 존재합니다.";
+    }
+  }, [quizList, newQuiz.title]);
 
   const onLoadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
@@ -74,6 +88,11 @@ const NewQuizContent = () => {
                 value={newQuiz.title}
                 onChange={e => setNewQuiz("title", e.target.value)}
               />
+              <Form.Text
+                className={classNames({ "text-danger": quizTitleError })}
+              >
+                {quizTitleError}
+              </Form.Text>
             </Col>
           </Row>
         </Form.Group>

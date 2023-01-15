@@ -1,34 +1,19 @@
 import { yearList } from "components/admin/quiz/NewQuizInfo";
 import { getAuth } from "firebase/auth";
-import { child, get, getDatabase, ref } from "firebase/database";
-import { Quiz } from "interfaces/Quiz";
-import _ from "lodash";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { useMenus } from "store/useMenus";
+import { useQuiz } from "store/useQuiz";
 import "./AdminQuizList.scss";
 
 const AdminQuizList = () => {
   const auth = getAuth();
   const { setSubMenu } = useMenus();
-  const [quizList, setQuizList] = useState<Quiz[]>([]);
+  const { quizList, getQuizList } = useQuiz();
 
   useEffect(() => {
     setSubMenu("QUIZ_LIST");
-
-    const dbRef = ref(getDatabase());
-    const quizUrl = `quiz/${auth.currentUser?.uid}`;
-    get(child(dbRef, quizUrl))
-      .then(snapshot => {
-        if (snapshot.exists()) {
-          setQuizList(_.sortBy(Object.values(snapshot.val()), "created"));
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    getQuizList();
   }, []);
 
   return (
