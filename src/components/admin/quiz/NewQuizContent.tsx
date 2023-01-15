@@ -49,7 +49,7 @@ const NewQuizContent = () => {
       ((e.target as HTMLElement).offsetParent as HTMLElement).offsetTop;
     console.log("onClickImg", x, y);
 
-    if (newQuiz.answerType === "SHORT_ANSWER_QUESTION") {
+    if (newQuiz.answerType === "단답형") {
       if (_.isNil(newQuiz.shortAnswerQuestionInfo)) {
         setNewQuiz("shortAnswerQuestionInfo", {
           x,

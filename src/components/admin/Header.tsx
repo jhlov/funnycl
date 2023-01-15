@@ -1,10 +1,11 @@
 import LogoutIcon from "@mui/icons-material/Logout";
+import axios from "axios";
 import { getAuth } from "firebase/auth";
 import { child, getDatabase, push, ref, update } from "firebase/database";
 import _ from "lodash";
 import { useMemo } from "react";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useLogin } from "store/useLogin";
 import { useMenus } from "store/useMenus";
 import { useQuiz } from "store/useQuiz";
@@ -15,18 +16,19 @@ const Header = () => {
   const { isLogin } = useLogin();
   const { subMenu } = useMenus();
   const { newQuiz } = useQuiz();
+  const history = useHistory();
 
   const disabledSaveButton = useMemo(() => {
     if (_.isEmpty(newQuiz.title)) {
       return true;
     }
 
-    if (newQuiz.type === "WORK_SHEET") {
+    if (newQuiz.type === "워크시트") {
       if (newQuiz.image === null) {
         return true;
       }
 
-      if (newQuiz.answerType === "SHORT_ANSWER_QUESTION") {
+      if (newQuiz.answerType === "단답형") {
         if (_.isEmpty(newQuiz.shortAnswerQuestionInfo?.answer)) {
           return true;
         }
@@ -38,7 +40,7 @@ const Header = () => {
     return false;
   }, [newQuiz]);
 
-  const onClickSaveQuiz = () => {
+  const onClickSaveQuiz = async () => {
     console.log("onClickSaveQuiz");
 
     if (_.isNil(auth.currentUser?.uid)) {
@@ -47,23 +49,42 @@ const Header = () => {
     }
 
     // 이미지를 저장 하고
+    const formData = new FormData();
+    formData.append("image", newQuiz.image!);
 
-    // 문제 저장
-    const db = getDatabase();
+    const r = await axios.post(
+      "https://l0519szlp6.execute-api.ap-northeast-2.amazonaws.com/default/fc-uploadImage",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }
+    );
 
-    // Get a key for a new Post.
-    const quizUrl = `quiz/${auth.currentUser?.uid}`;
-    const newPostKey = push(child(ref(db), quizUrl)).key;
+    if (r.data.success === true) {
+      const db = getDatabase();
 
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    const updates: any = {};
-    updates[`${quizUrl}/${newPostKey}`] = _.pick(newQuiz, [
-      "title",
-      "type",
-      "subject"
-    ]);
+      // Get a key for a new Post.
+      const quizUrl = `quiz/${auth.currentUser?.uid}`;
+      const newPostKey = push(child(ref(db), quizUrl)).key;
 
-    return update(ref(db), updates);
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      const updates: any = {};
+      updates[`${quizUrl}/${newPostKey}`] = _.omit(
+        {
+          ...newQuiz,
+          image: r.data.data
+        },
+        ["imageName", "imageUrl"]
+      );
+
+      const updateResult = await update(ref(db), updates);
+      alert("새로운 문제 저장에 성공하였습니다.");
+      history.push("/admin/quiz/list");
+    } else {
+      alert("이미지 저장에 실패하였습니다.");
+    }
   };
 
   return (

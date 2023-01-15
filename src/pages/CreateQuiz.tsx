@@ -7,7 +7,7 @@ import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import "./CreateQuiz.scss";
 
-type QuizType = "NONE" | "SHORT_ANSWER_QUESTION" | "MULTIPLE_CHOICE";
+type QuizType = "NONE" | "단답형" | "객관식";
 
 const CreateQuiz = () => {
   const [quizType, setQuizType] = useState<QuizType>("NONE");
@@ -74,7 +74,7 @@ const CreateQuiz = () => {
       ((e.target as HTMLElement).offsetParent as HTMLElement).offsetTop;
     console.log("onClickImg", x, y);
 
-    if (quizType === "SHORT_ANSWER_QUESTION") {
+    if (quizType === "단답형") {
       if (!shortAnswerQuestionInfo) {
         setShortAnswerQuestionInfo({
           x,
@@ -98,16 +98,16 @@ const CreateQuiz = () => {
         <div className="quiz-types me-2">
           <button
             className="type-btn"
-            onClick={() => onClickType("SHORT_ANSWER_QUESTION")}
-            disabled={quizType === "SHORT_ANSWER_QUESTION"}
+            onClick={() => onClickType("단답형")}
+            disabled={quizType === "단답형"}
           >
             <FormatShapesIcon />
           </button>
 
           <button
             className="type-btn"
-            onClick={() => onClickType("MULTIPLE_CHOICE")}
-            disabled={quizType === "MULTIPLE_CHOICE"}
+            onClick={() => onClickType("객관식")}
+            disabled={quizType === "객관식"}
           >
             <RadioButtonCheckedIcon />
           </button>

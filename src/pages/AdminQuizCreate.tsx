@@ -25,7 +25,7 @@ const AdminQuizCreate = () => {
               className="me-3"
               variant="primary"
               size="lg"
-              onClick={() => setNewQuiz("type", "NORMAL")}
+              onClick={() => setNewQuiz("type", "일반")}
               disabled
             >
               일반 문제
@@ -33,7 +33,7 @@ const AdminQuizCreate = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => setNewQuiz("type", "WORK_SHEET")}
+              onClick={() => setNewQuiz("type", "워크시트")}
             >
               워크 시트
             </Button>

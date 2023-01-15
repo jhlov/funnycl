@@ -31,8 +31,8 @@ const NewQuizInfo = () => {
             onChange={e => setNewQuiz("subject", e.target.value)}
           >
             {quizSubjectList.map(item => (
-              <option key={`subject_${item[0]}`} value={item[0]}>
-                {item[1]}
+              <option key={`subject_${item}`} value={item}>
+                {item}
               </option>
             ))}
           </Form.Select>
@@ -76,8 +76,8 @@ const NewQuizInfo = () => {
             onChange={e => setNewQuiz("answerType", e.target.value)}
           >
             {answerTypetList.map(item => (
-              <option key={`answerType_${item[0]}`} value={item[0]}>
-                {item[1]}
+              <option key={`answerType_${item}`} value={item}>
+                {item}
               </option>
             ))}
           </Form.Select>
