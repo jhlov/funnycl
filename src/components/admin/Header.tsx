@@ -24,16 +24,20 @@ const Header = () => {
       return true;
     }
 
+    // 이름 중복
+    if (
+      newQuiz.title &&
+      0 < quizList.filter(item => item.title === newQuiz.title).length
+    ) {
+      return true;
+    }
+
+    if (!newQuiz.keyword) {
+      return true;
+    }
+
     if (newQuiz.type === "워크시트") {
       if (newQuiz.image === null) {
-        return true;
-      }
-
-      // 이름 중복
-      if (
-        newQuiz.title &&
-        0 < quizList.filter(item => item.title === newQuiz.title).length
-      ) {
         return true;
       }
 

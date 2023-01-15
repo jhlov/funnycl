@@ -14,6 +14,7 @@ export interface Quiz {
   type: QuizType;
   subject: QuizSubject;
   year: number; // 1 ~ 12
+  keyword: string; // 제시어
   tag: string;
   difficulty: number; // 1 ~ 10;
   answerType: AnswerType;
@@ -35,6 +36,7 @@ export const initNewQuiz: Quiz = {
   type: "NONE",
   subject: "국어",
   year: 1,
+  keyword: "",
   tag: "",
   difficulty: 1,
   answerType: "단답형",

@@ -53,6 +53,15 @@ const NewQuizInfo = () => {
         </Form.Group>
 
         <Form.Group className="mb-4">
+          <Form.Label>제시어</Form.Label>
+          <Form.Control
+            type="text"
+            value={newQuiz.keyword}
+            onChange={e => setNewQuiz("keyword", e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-4">
           <Form.Label>난이도</Form.Label>
           <Form.Select
             value={newQuiz.difficulty}
