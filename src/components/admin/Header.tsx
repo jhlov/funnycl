@@ -118,6 +118,14 @@ const Header = () => {
           </div>
         )}
 
+        {subMenu === "GAME_LIST" && (
+          <div className="me-3">
+            <Link className="btn btn-primary btn-sm" to="/admin/game/create">
+              새로운 게임 만들기
+            </Link>
+          </div>
+        )}
+
         {subMenu === "QUIZ_LIST" && (
           <div className="me-3">
             <Link className="btn btn-primary btn-sm" to="/admin/quiz/create">

@@ -1,0 +1,183 @@
+import { quizSubjectList } from "interfaces/Quiz";
+import { Form } from "react-bootstrap";
+import { useGame } from "store/useGame";
+import { yearList } from "../quiz/NewQuizInfo";
+import "./NewGame.scss";
+
+export const NewGame = () => {
+  const { newGame, initNewGame, setNewGame } = useGame();
+
+  return (
+    <div className="new-game p-5 w-100">
+      <div className="d-flex">
+        <div>
+          <Form className="text-start">
+            <Form.Group className="mb-4">
+              <Form.Label>게임 종류</Form.Label>
+              <Form.Control type="text" value={newGame.type} readOnly />
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Label>문제 이름</Form.Label>
+              <Form.Control
+                type="text"
+                value={newGame.title}
+                onChange={e => setNewGame("title", e.target.value)}
+              />
+              {/* <Form.Text
+                    className={classNames({ "text-danger": quizTitleError })}
+                  >
+                    {quizTitleError}
+                  </Form.Text> */}
+            </Form.Group>
+
+            <Form.Group className="new-game__size mb-4">
+              <Form.Label>크기 (가로 x 세로) </Form.Label>
+              <div className="d-flex">
+                <Form.Select
+                  value={newGame.sizeX}
+                  onChange={e => setNewGame("sizeX", Number(e.target.value))}
+                >
+                  {Array(5)
+                    .fill(0)
+                    .map((_, i) => (
+                      <option key={`sizeX_${i}`} value={i + 1}>
+                        {i + 1}
+                      </option>
+                    ))}
+                </Form.Select>
+                <span> ~ </span>
+                <Form.Select
+                  value={newGame.sizeY}
+                  onChange={e => setNewGame("sizeY", Number(e.target.value))}
+                >
+                  {Array(5)
+                    .fill(0)
+                    .map((_, i) => (
+                      <option key={`sizeY${i}`} value={i + 1}>
+                        {i + 1}
+                      </option>
+                    ))}
+                </Form.Select>
+              </div>
+            </Form.Group>
+
+            <Form.Group className="new-game__group mb-4">
+              <Form.Label>모둠수</Form.Label>
+              <Form.Select
+                value={newGame.groupCount}
+                onChange={e => setNewGame("groupCount", Number(e.target.value))}
+              >
+                {Array(5)
+                  .fill(0)
+                  .map((_, i) => (
+                    <option key={`groupCount_${i}`} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+              </Form.Select>
+            </Form.Group>
+          </Form>
+        </div>
+        <div>
+          <Form className="text-start">
+            <Form.Group className="mb-4">
+              <Form.Check
+                type="checkbox"
+                label="게임 시작 할 때, 게임 범위 설정"
+                checked={newGame.isPlaySetting}
+                onChange={e =>
+                  setNewGame("isPlaySetting", Number(e.target.checked))
+                }
+              />
+            </Form.Group>
+
+            {!newGame.isPlaySetting && (
+              <>
+                <Form.Group className="mb-4">
+                  <Form.Label>과목</Form.Label>
+                  <Form.Select
+                    value={newGame.subject}
+                    onChange={e => setNewGame("subject", e.target.value)}
+                  >
+                    {["랜덤", ...quizSubjectList].map(item => (
+                      <option key={`subject${item}`} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+
+                <Form.Group className="new-game__year mb-4">
+                  <Form.Label>과정</Form.Label>
+                  <div className="d-flex">
+                    <Form.Select
+                      value={newGame.yearStart}
+                      onChange={e =>
+                        setNewGame("yearStart", Number(e.target.value))
+                      }
+                    >
+                      {yearList.map(item => (
+                        <option key={`yearStart_${item[0]}`} value={item[0]}>
+                          {item[1]}
+                        </option>
+                      ))}
+                    </Form.Select>
+                    <span> ~ </span>
+                    <Form.Select
+                      value={newGame.yearEnd}
+                      onChange={e =>
+                        setNewGame("yearEnd", Number(e.target.value))
+                      }
+                    >
+                      {yearList.map(item => (
+                        <option key={`yearEnd_${item[0]}`} value={item[0]}>
+                          {item[1]}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="new-game__size mb-4">
+                  <Form.Label>난이도</Form.Label>
+                  <div className="d-flex">
+                    <Form.Select
+                      value={newGame.difficultyStart}
+                      onChange={e =>
+                        setNewGame("difficultyStart", Number(e.target.value))
+                      }
+                    >
+                      {Array(10)
+                        .fill(0)
+                        .map((_, i) => (
+                          <option key={`difficultyStart_${i}`} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                    </Form.Select>
+                    <span> ~ </span>
+                    <Form.Select
+                      value={newGame.difficultyEnd}
+                      onChange={e =>
+                        setNewGame("difficultyEnd", Number(e.target.value))
+                      }
+                    >
+                      {Array(10)
+                        .fill(0)
+                        .map((_, i) => (
+                          <option key={`difficultyEnd_${i}`} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                    </Form.Select>
+                  </div>
+                </Form.Group>
+              </>
+            )}
+          </Form>
+        </div>
+      </div>
+    </div>
+  );
+};

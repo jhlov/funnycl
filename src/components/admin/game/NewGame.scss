@@ -1,0 +1,22 @@
+.new-game {
+  > div {
+    column-gap: 50px;
+
+    > div {
+      width: 400px;
+    }
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  &__size,
+  &__year,
+  &__difficulty {
+    .d-flex {
+      column-gap: 2px;
+      align-items: center;
+    }
+  }
+}
