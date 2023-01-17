@@ -33,7 +33,7 @@ export const NewGame = () => {
             </Form.Group>
 
             <Form.Group className="mb-4">
-              <Form.Label>문제 이름</Form.Label>
+              <Form.Label>게임 이름</Form.Label>
               <Form.Control
                 type="text"
                 value={newGame.title}
