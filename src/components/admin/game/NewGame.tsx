@@ -1,11 +1,26 @@
+import classNames from "classnames";
 import { quizSubjectList } from "interfaces/Quiz";
+import { useEffect, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { useGame } from "store/useGame";
 import { yearList } from "../quiz/NewQuizInfo";
 import "./NewGame.scss";
 
 export const NewGame = () => {
-  const { newGame, initNewGame, setNewGame } = useGame();
+  const { newGame, gameList, getGameList, initNewGame, setNewGame } = useGame();
+
+  useEffect(() => {
+    getGameList();
+  }, []);
+
+  const gameTitleError = useMemo(() => {
+    if (
+      newGame.title &&
+      0 < gameList.filter(item => item.title === newGame.title).length
+    ) {
+      return "동일한 이름의 게임이 존재합니다.";
+    }
+  }, [gameList, newGame.title]);
 
   return (
     <div className="new-game p-5 w-100">
@@ -24,11 +39,11 @@ export const NewGame = () => {
                 value={newGame.title}
                 onChange={e => setNewGame("title", e.target.value)}
               />
-              {/* <Form.Text
-                    className={classNames({ "text-danger": quizTitleError })}
-                  >
-                    {quizTitleError}
-                  </Form.Text> */}
+              <Form.Text
+                className={classNames({ "text-danger": gameTitleError })}
+              >
+                {gameTitleError}
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="new-game__size mb-4">

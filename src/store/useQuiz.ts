@@ -5,7 +5,7 @@ import _ from "lodash";
 import create from "zustand";
 
 interface State {
-  quizList: Array<Quiz>;
+  quizList: Quiz[];
   getQuizList: () => void;
   newQuiz: Quiz;
   initNewQuiz: () => void;
