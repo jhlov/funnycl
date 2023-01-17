@@ -17,12 +17,14 @@ export const useGame = create<State>(set => ({
   getGameList: () => {
     console.log("getGameList");
     const dbRef = ref(getDatabase());
-    const quizUrl = `game/${getAuth().currentUser?.uid}`;
-    get(child(dbRef, quizUrl))
+    const gameUrl = `game/${getAuth().currentUser?.uid}`;
+    get(child(dbRef, gameUrl))
       .then(snapshot => {
         if (snapshot.exists()) {
           set(() => ({
-            gameList: _.sortBy(Object.values(snapshot.val()), "created")
+            gameList: _.reverse(
+              _.sortBy<Game>(Object.values(snapshot.val()), "created")
+            )
           }));
         } else {
           console.log("No data available");

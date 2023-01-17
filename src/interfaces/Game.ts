@@ -15,6 +15,11 @@ export interface Game {
   yearEnd: number;
   difficultyStart: number;
   difficultyEnd: number;
+
+  // for server
+  id?: string;
+  userId?: string;
+  created?: string;
 }
 
 export const initNewGame: Game = {

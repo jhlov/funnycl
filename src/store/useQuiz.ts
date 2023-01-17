@@ -22,7 +22,9 @@ export const useQuiz = create<State>(set => ({
       .then(snapshot => {
         if (snapshot.exists()) {
           set(() => ({
-            quizList: _.sortBy(Object.values(snapshot.val()), "created")
+            quizList: _.reverse(
+              _.sortBy<Quiz>(Object.values(snapshot.val()), "created")
+            )
           }));
         } else {
           console.log("No data available");

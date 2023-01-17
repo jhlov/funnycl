@@ -101,9 +101,7 @@ export const NewGame = () => {
                 type="checkbox"
                 label="게임 시작 할 때, 게임 범위 설정"
                 checked={newGame.isPlaySetting}
-                onChange={e =>
-                  setNewGame("isPlaySetting", Number(e.target.checked))
-                }
+                onChange={e => setNewGame("isPlaySetting", e.target.checked)}
               />
             </Form.Group>
 
