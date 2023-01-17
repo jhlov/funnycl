@@ -1,5 +1,7 @@
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useEffect } from "react";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useGame } from "store/useGame";
 import { useMenus } from "store/useMenus";
 import "./AdminQuizList.scss";
@@ -25,6 +27,7 @@ export const AdminGameList = () => {
             <th style={{ width: "120px" }}>모둠수</th>
             <th>설정</th>
             <th style={{ width: "120px" }}>생성일</th>
+            <th style={{ width: "80px" }}>플레이</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +44,11 @@ export const AdminGameList = () => {
                   : `과목:${item.subject} / 과정:${item.yearStart}~${item.yearEnd} / 난이도:${item.difficultyStart}~${item.difficultyEnd}`}
               </td>
               <td>{item.created}</td>
+              <td>
+                <Link to={`/play/${item.id}`} target="_blank">
+                  <PlayArrowIcon />
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>
