@@ -16,6 +16,10 @@ export interface Game {
   difficultyStart: number;
   difficultyEnd: number;
 
+  // for local
+  image: File | string | null;
+  imageUrl?: string;
+
   // for server
   id?: string;
   userId?: string;
@@ -33,5 +37,7 @@ export const initNewGame: Game = {
   yearStart: 1,
   yearEnd: 12,
   difficultyStart: 1,
-  difficultyEnd: 10
+  difficultyEnd: 10,
+  image: null,
+  imageUrl: ""
 };

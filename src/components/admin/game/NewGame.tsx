@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { ImageInput } from "components/common/ImageInput";
 import { quizSubjectList } from "interfaces/Quiz";
 import { useEffect, useMemo } from "react";
 import { Form } from "react-bootstrap";
@@ -46,52 +47,12 @@ export const NewGame = () => {
               </Form.Text>
             </Form.Group>
 
-            <Form.Group className="new-game__size mb-4">
-              <Form.Label>크기 (가로 x 세로) </Form.Label>
-              <div className="d-flex">
-                <Form.Select
-                  value={newGame.sizeX}
-                  onChange={e => setNewGame("sizeX", Number(e.target.value))}
-                >
-                  {Array(5)
-                    .fill(0)
-                    .map((_, i) => (
-                      <option key={`sizeX_${i}`} value={i + 1}>
-                        {i + 1}
-                      </option>
-                    ))}
-                </Form.Select>
-                <span> ~ </span>
-                <Form.Select
-                  value={newGame.sizeY}
-                  onChange={e => setNewGame("sizeY", Number(e.target.value))}
-                >
-                  {Array(5)
-                    .fill(0)
-                    .map((_, i) => (
-                      <option key={`sizeY${i}`} value={i + 1}>
-                        {i + 1}
-                      </option>
-                    ))}
-                </Form.Select>
-              </div>
-            </Form.Group>
-
-            <Form.Group className="new-game__group mb-4">
-              <Form.Label>모둠수</Form.Label>
-              <Form.Select
-                value={newGame.groupCount}
-                onChange={e => setNewGame("groupCount", Number(e.target.value))}
-              >
-                {Array(5)
-                  .fill(0)
-                  .map((_, i) => (
-                    <option key={`groupCount_${i}`} value={i + 1}>
-                      {i + 1}
-                    </option>
-                  ))}
-              </Form.Select>
-            </Form.Group>
+            <ImageInput
+              image={newGame.image}
+              onChangeImage={v => setNewGame("image", v)}
+              onChangeImageUrl={v => setNewGame("imageUrl", v)}
+            />
+            {newGame.image && <img className="w-100" src={newGame.imageUrl} />}
           </Form>
         </div>
         <div>
@@ -107,6 +68,59 @@ export const NewGame = () => {
 
             {!newGame.isPlaySetting && (
               <>
+                <Form.Group className="new-game__size mb-4">
+                  <Form.Label>크기 (가로 x 세로) </Form.Label>
+                  <div className="d-flex">
+                    <Form.Select
+                      value={newGame.sizeX}
+                      onChange={e =>
+                        setNewGame("sizeX", Number(e.target.value))
+                      }
+                    >
+                      {Array(5)
+                        .fill(0)
+                        .map((_, i) => (
+                          <option key={`sizeX_${i}`} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                    </Form.Select>
+                    <span> ~ </span>
+                    <Form.Select
+                      value={newGame.sizeY}
+                      onChange={e =>
+                        setNewGame("sizeY", Number(e.target.value))
+                      }
+                    >
+                      {Array(5)
+                        .fill(0)
+                        .map((_, i) => (
+                          <option key={`sizeY${i}`} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                    </Form.Select>
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="new-game__group mb-4">
+                  <Form.Label>모둠수</Form.Label>
+                  <Form.Select
+                    value={newGame.groupCount}
+                    onChange={e =>
+                      setNewGame("groupCount", Number(e.target.value))
+                    }
+                  >
+                    {Array(5)
+                      .fill(0)
+                      .map((_, i) => (
+                        <option key={`groupCount_${i}`} value={i + 1}>
+                          {i + 1}
+                        </option>
+                      ))}
+                  </Form.Select>
+                </Form.Group>
+
                 <Form.Group className="mb-4">
                   <Form.Label>과목</Form.Label>
                   <Form.Select

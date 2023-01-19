@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getAuth } from "firebase/auth";
 import { child, getDatabase, push, ref, update } from "firebase/database";
 import _ from "lodash";
@@ -26,6 +27,12 @@ export const SaveGameButton = () => {
       return true;
     }
 
+    if (newGame.type === "숨겨진그림") {
+      if (newGame.image === null) {
+        return true;
+      }
+    }
+
     return false;
   }, [newGame, gameList]);
 
@@ -37,26 +44,48 @@ export const SaveGameButton = () => {
       return;
     }
 
-    const db = getDatabase();
+    // 이미지를 저장 하고
+    const formData = new FormData();
+    formData.append("image", newGame.image!);
 
-    // Get a key for a new Post.
-    const newPostKey = push(child(ref(db), "game/all")).key;
+    const r = await axios.post(
+      "https://l0519szlp6.execute-api.ap-northeast-2.amazonaws.com/default/fc-uploadImage",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }
+    );
 
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    const gameData = {
-      ...newGame,
-      id: newPostKey,
-      userId: auth.currentUser?.uid,
-      created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
-    };
+    if (r.data.success === true) {
+      const db = getDatabase();
 
-    const updates: any = {};
-    updates[`game/all/${newPostKey}`] = gameData;
-    updates[`game/${auth.currentUser?.uid}/${newPostKey}`] = gameData;
+      // Get a key for a new Post.
+      const newPostKey = push(child(ref(db), "game/all")).key;
 
-    const updateResult = await update(ref(db), updates);
-    alert("새로운 게임 저장에 성공하였습니다.");
-    history.push("/admin/game/list");
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      const gameData = _.omit(
+        {
+          ...newGame,
+          id: newPostKey,
+          userId: auth.currentUser?.uid,
+          image: r.data.data,
+          created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
+        },
+        ["imageUrl"]
+      );
+
+      const updates: any = {};
+      updates[`game/all/${newPostKey}`] = gameData;
+      updates[`game/${auth.currentUser?.uid}/${newPostKey}`] = gameData;
+
+      const updateResult = await update(ref(db), updates);
+      alert("새로운 게임 저장에 성공하였습니다.");
+      history.push("/admin/game/list");
+    } else {
+      alert("이미지 저장에 실패하였습니다.");
+    }
   };
 
   return (
