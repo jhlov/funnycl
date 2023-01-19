@@ -23,8 +23,7 @@ export const AdminGameList = () => {
             <th style={{ width: "40px" }}>#</th>
             <th style={{ width: "120px" }}>타입</th>
             <th>게임 이름</th>
-            <th style={{ width: "100px" }}>크기</th>
-            <th style={{ width: "120px" }}>모둠수</th>
+            <th>이미지</th>
             <th>설정</th>
             <th style={{ width: "120px" }}>생성일</th>
             <th style={{ width: "80px" }}>플레이</th>
@@ -36,12 +35,18 @@ export const AdminGameList = () => {
               <td>{i + 1}</td>
               <td>{item.type}</td>
               <td className="text-start">{item.title}</td>
-              <td>{`${item.sizeX} x ${item.sizeY}`}</td>
-              <td>{item.groupCount}</td>
+              <td>
+                {item.image && (
+                  <img
+                    className="admin-quiz-list__image"
+                    src={item.image as string}
+                  />
+                )}
+              </td>
               <td>
                 {item.isPlaySetting
                   ? "게임 시작 할 때, 게임 범위 설정"
-                  : `과목:${item.subject} / 과정:${item.yearStart}~${item.yearEnd} / 난이도:${item.difficultyStart}~${item.difficultyEnd}`}
+                  : `크기:${item.sizeX} x ${item.sizeY} / 모둠수:${item.groupCount} / 과목:${item.subject} / 과정:${item.yearStart}~${item.yearEnd} / 난이도:${item.difficultyStart}~${item.difficultyEnd}`}
               </td>
               <td>{item.created}</td>
               <td>

@@ -24,6 +24,7 @@ const AdminQuizList = () => {
             <th style={{ width: "40px" }}>#</th>
             <th style={{ width: "120px" }}>타입</th>
             <th>문제 이름</th>
+            <th>이미지</th>
             <th style={{ width: "100px" }}>과목</th>
             <th style={{ width: "120px" }}>학년</th>
             <th style={{ width: "120px" }}>제시어</th>
@@ -38,6 +39,14 @@ const AdminQuizList = () => {
               <td>{i + 1}</td>
               <td>{item.type}</td>
               <td className="text-start">{item.title}</td>
+              <td>
+                {item.image && (
+                  <img
+                    className="admin-quiz-list__image"
+                    src={item.image as string}
+                  />
+                )}
+              </td>
               <td>{item.subject}</td>
               <td>{yearList[item.year - 1][1]}</td>
               <td className="text-start">{item.keyword}</td>
