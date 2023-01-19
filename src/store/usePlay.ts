@@ -5,6 +5,7 @@ import create from "zustand";
 interface State {
   gameInfo: Game | null;
   getGameInfo: (id: string) => void;
+  setGameInfo: (key: string, value: any) => void;
 }
 
 export const usePlay = create<State>(set => ({
@@ -25,5 +26,13 @@ export const usePlay = create<State>(set => ({
       .catch(error => {
         console.error(error);
       });
+  },
+  setGameInfo: (key: string, value: any) => {
+    set(state => ({
+      gameInfo: {
+        ...(state.gameInfo as Game),
+        [key]: value
+      }
+    }));
   }
 }));
