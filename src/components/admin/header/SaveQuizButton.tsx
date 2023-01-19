@@ -85,7 +85,7 @@ export const SaveQuizButton = () => {
           image: r.data.data,
           created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
         },
-        ["imageName", "imageUrl"]
+        ["imageUrl"]
       );
 
       const updateResult = await update(ref(db), updates);

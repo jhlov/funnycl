@@ -1,15 +1,14 @@
 import classNames from "classnames";
+import { ImageInput } from "components/common/ImageInput";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import _ from "lodash";
-import { useEffect, useMemo, useRef } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { useEffect, useMemo } from "react";
+import { Col, Form, Row } from "react-bootstrap";
 import { useQuiz } from "store/useQuiz";
 import "./NewQuizContent.scss";
 
 const NewQuizContent = () => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
   const { quizList, getQuizList, newQuiz, setNewQuiz } = useQuiz();
 
   useEffect(() => {
@@ -24,35 +23,6 @@ const NewQuizContent = () => {
       return "동일한 이름의 문제가 존재합니다.";
     }
   }, [quizList, newQuiz.title]);
-
-  const onLoadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      setNewQuiz("imageUrl", reader.result as string);
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
-    setNewQuiz("image", e.target.files[0]);
-    setNewQuiz("imageName", e.target.value);
-  };
-
-  const onClickAddImage = () => {
-    if (!inputRef.current) {
-      return;
-    }
-
-    inputRef.current.click();
-  };
-
-  const onClickRemoveImage = () => {
-    setNewQuiz("image", null);
-    setNewQuiz("imageName", "");
-    setNewQuiz("imageUrl", "");
-  };
 
   const onClickImg = (e: React.MouseEvent) => {
     const x =
@@ -97,25 +67,11 @@ const NewQuizContent = () => {
           </Row>
         </Form.Group>
 
-        {newQuiz.image ? (
-          <div className="d-flex">
-            <div className="me-2">{newQuiz.imageName}</div>
-            <Button variant="primary" size="sm" onClick={onClickRemoveImage}>
-              이미지 제거
-            </Button>
-          </div>
-        ) : (
-          <Button variant="primary" size="sm" onClick={onClickAddImage}>
-            <input
-              className="d-none"
-              type="file"
-              accept="image/*"
-              ref={inputRef}
-              onChange={onLoadImage}
-            />
-            이미지 추가
-          </Button>
-        )}
+        <ImageInput
+          image={newQuiz.image}
+          onChangeImage={v => setNewQuiz("image", v)}
+          onChangeImageUrl={v => setNewQuiz("imageUrl", v)}
+        />
       </Form>
 
       {newQuiz.image && (

@@ -23,7 +23,6 @@ export interface Quiz {
 
   // for local
   image: File | string | null;
-  imageName?: string;
   imageUrl?: string;
 
   // for server
@@ -43,6 +42,5 @@ export const initNewQuiz: Quiz = {
   shortAnswerQuestionInfo: null,
   hint: "",
   image: null,
-  imageName: "",
   imageUrl: ""
 };
