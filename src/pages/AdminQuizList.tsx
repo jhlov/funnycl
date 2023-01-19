@@ -1,5 +1,8 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import { yearList } from "components/admin/quiz/NewQuizInfo";
 import { getAuth } from "firebase/auth";
+import { getDatabase, ref, update } from "firebase/database";
+import moment from "moment";
 import { useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { useMenus } from "store/useMenus";
@@ -16,6 +19,22 @@ const AdminQuizList = () => {
     getQuizList();
   }, []);
 
+  const onClickRemoveQuiz = (id: string) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      const db = getDatabase();
+
+      const updates: any = {};
+      updates[`quiz/${auth.currentUser?.uid}/${id}/deleted`] = moment()
+        .utc(false)
+        .add(9, "h")
+        .format("YYYY-MM-DD HH:mm:ss");
+
+      update(ref(db), updates).then(() => {
+        getQuizList();
+      });
+    }
+  };
+
   return (
     <div className="admin-quiz-list p-5">
       <Table striped bordered hover>
@@ -31,6 +50,7 @@ const AdminQuizList = () => {
             <th style={{ width: "100px" }}>난이도</th>
             <th style={{ width: "120px" }}>문제유형</th>
             <th style={{ width: "120px" }}>생성일</th>
+            <th style={{ width: "80px" }}>삭제</th>
           </tr>
         </thead>
         <tbody>
@@ -53,6 +73,14 @@ const AdminQuizList = () => {
               <td>{item.difficulty}</td>
               <td>{item.answerType}</td>
               <td>{item.created}</td>
+              <td>
+                <button
+                  className="btn"
+                  onClick={() => onClickRemoveQuiz(item.id!)}
+                >
+                  <DeleteIcon />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

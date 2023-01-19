@@ -1,4 +1,8 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, update } from "firebase/database";
+import moment from "moment";
 import { useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -7,6 +11,7 @@ import { useMenus } from "store/useMenus";
 import "./AdminQuizList.scss";
 
 export const AdminGameList = () => {
+  const auth = getAuth();
   const { setSubMenu } = useMenus();
   const { gameList, getGameList } = useGame();
 
@@ -14,6 +19,26 @@ export const AdminGameList = () => {
     setSubMenu("GAME_LIST");
     getGameList();
   }, []);
+
+  const onClickRemoveQuiz = (id: string) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      const db = getDatabase();
+
+      const updates: any = {};
+      updates[`game/all/${id}/deleted`] = moment()
+        .utc(false)
+        .add(9, "h")
+        .format("YYYY-MM-DD HH:mm:ss");
+      updates[`game/${auth.currentUser?.uid}/${id}/deleted`] = moment()
+        .utc(false)
+        .add(9, "h")
+        .format("YYYY-MM-DD HH:mm:ss");
+
+      update(ref(db), updates).then(() => {
+        getGameList();
+      });
+    }
+  };
 
   return (
     <div className="admin-quiz-list p-5">
@@ -27,6 +52,7 @@ export const AdminGameList = () => {
             <th>설정</th>
             <th style={{ width: "120px" }}>생성일</th>
             <th style={{ width: "80px" }}>플레이</th>
+            <th style={{ width: "80px" }}>삭제</th>
           </tr>
         </thead>
         <tbody>
@@ -53,6 +79,14 @@ export const AdminGameList = () => {
                 <Link to={`/play/${item.id}`} target="_blank">
                   <PlayArrowIcon />
                 </Link>
+              </td>
+              <td>
+                <button
+                  className="btn"
+                  onClick={() => onClickRemoveQuiz(item.id!)}
+                >
+                  <DeleteIcon />
+                </button>
               </td>
             </tr>
           ))}

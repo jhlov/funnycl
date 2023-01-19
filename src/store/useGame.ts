@@ -23,7 +23,12 @@ export const useGame = create<State>(set => ({
         if (snapshot.exists()) {
           set(() => ({
             gameList: _.reverse(
-              _.sortBy<Game>(Object.values(snapshot.val()), "created")
+              _.sortBy<Game>(
+                Object.values<Game>(snapshot.val()).filter(
+                  item => !item.deleted
+                ),
+                "created"
+              )
             )
           }));
         } else {

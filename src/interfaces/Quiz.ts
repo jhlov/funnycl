@@ -28,6 +28,7 @@ export interface Quiz {
   // for server
   id?: string;
   created?: string;
+  deleted?: string;
 }
 
 export const initNewQuiz: Quiz = {

@@ -24,6 +24,7 @@ export interface Game {
   id?: string;
   userId?: string;
   created?: string;
+  deleted?: string;
 }
 
 export const initNewGame: Game = {

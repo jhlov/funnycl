@@ -23,7 +23,12 @@ export const useQuiz = create<State>(set => ({
         if (snapshot.exists()) {
           set(() => ({
             quizList: _.reverse(
-              _.sortBy<Quiz>(Object.values(snapshot.val()), "created")
+              _.sortBy<Quiz>(
+                Object.values<Quiz>(snapshot.val()).filter(
+                  item => !item.deleted
+                ),
+                "created"
+              )
             )
           }));
         } else {
