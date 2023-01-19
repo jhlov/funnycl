@@ -7,6 +7,7 @@ import { Game } from "pages/Game";
 import { Home } from "pages/Home";
 import { Login } from "pages/Login";
 import { Logout } from "pages/Logout";
+import { Play } from "pages/Play";
 import { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { useLogin } from "store/useLogin";
@@ -31,6 +32,7 @@ function App() {
     <div className="App">
       <Route path="/" component={Home} exact />
       <Route path="/game" component={Game} />
+      <Route path="/play/:id" component={Play} />
       <Route path="/admin" component={Admin} />
       <Route path="/create-quiz" component={CreateQuiz} />
       <Route path="/login" component={Login} />
