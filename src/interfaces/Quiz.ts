@@ -2,10 +2,10 @@ import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 
 type QuizType = "NONE" | "일반" | "워크시트";
 
-export type QuizSubject = "국어" | "수학";
+export type QuizSubject = "국어" | "수학" | "사회" | "영어";
 type AnswerType = "단답형" | "객관식";
 
-export const quizSubjectList = ["국어", "수학"];
+export const quizSubjectList = ["국어", "수학", "사회", "영어"];
 
 export const answerTypetList = ["단답형", "객관식"];
 
@@ -20,6 +20,7 @@ export interface Quiz {
   answerType: AnswerType;
   shortAnswerQuestionInfo: ShortAnswerQuestionInfo | null;
   hint: string;
+  score: number;
 
   // for local
   image: File | string | null;
@@ -42,6 +43,7 @@ export const initNewQuiz: Quiz = {
   answerType: "단답형",
   shortAnswerQuestionInfo: null,
   hint: "",
+  score: 10,
   image: null,
   imageUrl: ""
 };

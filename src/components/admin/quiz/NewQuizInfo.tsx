@@ -79,6 +79,15 @@ const NewQuizInfo = () => {
         </Form.Group>
 
         <Form.Group className="mb-4">
+          <Form.Label>점수</Form.Label>
+          <Form.Control
+            type="number"
+            value={newQuiz.score}
+            onChange={e => setNewQuiz("score", Number(e.target.value))}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-4">
           <Form.Label>문제유형</Form.Label>
           <Form.Select
             value={newQuiz.answerType}

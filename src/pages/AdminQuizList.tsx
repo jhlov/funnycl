@@ -48,6 +48,7 @@ const AdminQuizList = () => {
             <th style={{ width: "120px" }}>학년</th>
             <th style={{ width: "120px" }}>제시어</th>
             <th style={{ width: "100px" }}>난이도</th>
+            <th style={{ width: "80px" }}>점수</th>
             <th style={{ width: "120px" }}>문제유형</th>
             <th style={{ width: "120px" }}>생성일</th>
             <th style={{ width: "80px" }}>삭제</th>
@@ -71,6 +72,7 @@ const AdminQuizList = () => {
               <td>{yearList[item.year - 1][1]}</td>
               <td className="text-start">{item.keyword}</td>
               <td>{item.difficulty}</td>
+              <td>{item.score ?? 10}</td>
               <td>{item.answerType}</td>
               <td>{item.created}</td>
               <td>
