@@ -1,5 +1,11 @@
 .admin-quiz-list {
+  &__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &__image {
-    height: 100px;
+    height: 80px;
   }
 }
