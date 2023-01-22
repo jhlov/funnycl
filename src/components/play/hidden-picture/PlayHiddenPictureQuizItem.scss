@@ -1,0 +1,33 @@
+.play-hidden-picture-quiz-item {
+  padding: 10px;
+  opacity: 1;
+  transition: all 2s;
+  position: relative;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__badge-list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 2px;
+
+    .star-icon {
+      padding: 0.01em 0.5em;
+
+      svg {
+        width: 14px;
+      }
+    }
+  }
+
+  &__index {
+    font-size: 40px;
+  }
+}

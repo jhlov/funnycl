@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useRouteMatch } from "react-router-dom";
 import { usePlay } from "store/usePlay";
+import { PlayHiddenPicture } from "./PlayHiddenPicture";
 
 interface Params {
   id: string;
@@ -11,7 +12,8 @@ interface Params {
 
 export const Play = (props: any) => {
   const match = useRouteMatch();
-  const { gameInfo, getGameInfo, setGameInfo, getQuizList } = usePlay();
+  const { startGame, gameInfo, getGameInfo, setGameInfo, getQuizList } =
+    usePlay();
   const [checkSetting, setCheckSetting] = useState(false);
   const [showSettingModal, setShowSettingModal] = useState(false);
 
@@ -34,7 +36,7 @@ export const Play = (props: any) => {
     }
   }, [gameInfo, checkSetting]);
 
-  const startGame = () => {
+  const onClickStartGame = () => {
     setShowSettingModal(false);
 
     // 문제 불러오기
@@ -43,7 +45,7 @@ export const Play = (props: any) => {
 
   return (
     <>
-      <div>play</div>
+      {startGame && gameInfo?.type === "숨겨진그림" && <PlayHiddenPicture />}
 
       <Modal show={showSettingModal} backdrop="static" keyboard={false}>
         <Modal.Header>
@@ -186,7 +188,7 @@ export const Play = (props: any) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={startGame}>
+          <Button variant="primary" onClick={onClickStartGame}>
             시작
           </Button>
         </Modal.Footer>
