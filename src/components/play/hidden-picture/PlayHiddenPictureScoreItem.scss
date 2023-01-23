@@ -1,0 +1,38 @@
+.play-hidden-picture-score-item {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 8px 8px 28px;
+
+  &.red {
+    background-color: red;
+  }
+
+  &.blue {
+    background-color: blue;
+  }
+
+  &.green {
+    background-color: green;
+  }
+
+  &.purple {
+    background-color: purple;
+  }
+
+  &.orange {
+    background-color: orange;
+  }
+
+  &__score {
+    background: white;
+    color: black;
+    padding: 0px 20px;
+    border-radius: 8px;
+    width: 100px;
+    text-align: right;
+  }
+}

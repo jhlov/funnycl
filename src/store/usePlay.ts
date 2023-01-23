@@ -1,5 +1,6 @@
 import { child, get as getData, getDatabase, ref } from "firebase/database";
 import { Game } from "interfaces/Game";
+import { Group } from "interfaces/Group";
 import { Quiz } from "interfaces/Quiz";
 import _ from "lodash";
 import create from "zustand";
@@ -11,6 +12,7 @@ interface State {
   setGameInfo: (key: string, value: any) => void;
   quizList: Quiz[];
   getQuizList: () => void;
+  groupList: Group[];
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -82,9 +84,38 @@ export const usePlay = create<State>((set, get) => ({
           quizList = quizList.slice(0, quizCount);
           quizList = _.shuffle(quizList);
 
+          const groupList = [
+            {
+              name: "A조",
+              score: 0,
+              color: "red"
+            },
+            {
+              name: "B조",
+              score: 0,
+              color: "blue"
+            },
+            {
+              name: "C조",
+              score: 0,
+              color: "green"
+            },
+            {
+              name: "D조",
+              score: 0,
+              color: "purple"
+            },
+            {
+              name: "E조",
+              score: 0,
+              color: "orange"
+            }
+          ];
+
           set(() => ({
             startGame: true,
-            quizList
+            quizList,
+            groupList: groupList.slice(0, Number(gameInfo?.groupCount))
           }));
         } else {
           console.log("No data available");
@@ -93,5 +124,6 @@ export const usePlay = create<State>((set, get) => ({
       .catch(error => {
         console.error(error);
       });
-  }
+  },
+  groupList: []
 }));
