@@ -31,3 +31,20 @@
     font-size: 40px;
   }
 }
+
+.play-hidden-picture-quiz-item__quiz-modal {
+  .play-hidden-picture-quiz-item__image-wrapper {
+    max-width: 750px;
+    display: inline-block;
+    position: relative;
+    border: 1px solid gray;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .group-list {
+    text-align: right;
+  }
+}

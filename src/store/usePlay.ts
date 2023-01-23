@@ -13,6 +13,7 @@ interface State {
   quizList: Quiz[];
   getQuizList: () => void;
   groupList: Group[];
+  updateGroupList: (groupName: string, score: number) => void;
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -119,5 +120,17 @@ export const usePlay = create<State>((set, get) => ({
         console.error(error);
       });
   },
-  groupList: []
+  groupList: [],
+  updateGroupList: (groupName: string, score: number) => {
+    set(() => ({
+      groupList: get().groupList.map(item =>
+        item.name === groupName
+          ? {
+              ...item,
+              score: item.score + score
+            }
+          : item
+      )
+    }));
+  }
 }));
