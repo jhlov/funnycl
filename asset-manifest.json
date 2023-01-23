@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/funnycl/static/css/main.ae0e8b0f.css",
-    "main.js": "/funnycl/static/js/main.08cf2ec9.js",
+    "main.css": "/funnycl/static/css/main.3f2ce1e0.css",
+    "main.js": "/funnycl/static/js/main.f8cc41a0.js",
     "static/js/27.8e3afafb.chunk.js": "/funnycl/static/js/27.8e3afafb.chunk.js",
     "index.html": "/funnycl/index.html"
   },
   "entrypoints": [
-    "static/css/main.ae0e8b0f.css",
-    "static/js/main.08cf2ec9.js"
+    "static/css/main.3f2ce1e0.css",
+    "static/js/main.f8cc41a0.js"
   ]
 }
