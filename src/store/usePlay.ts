@@ -72,14 +72,8 @@ export const usePlay = create<State>((set, get) => ({
 
           // 개수
           const quizCount = Number(gameInfo?.sizeX!) * Number(gameInfo?.sizeY!);
-          if (quizList.length < quizCount) {
-            for (
-              let i = 0;
-              i < Math.ceil((quizCount - quizList.length) / quizList.length);
-              ++i
-            ) {
-              quizList = [...quizList, ...quizList];
-            }
+          while (quizList.length < quizCount) {
+            quizList = [...quizList, ...quizList];
           }
           quizList = quizList.slice(0, quizCount);
           quizList = _.shuffle(quizList);
