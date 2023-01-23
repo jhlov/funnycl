@@ -81,10 +81,12 @@ const NewQuizContent = () => {
             <ShortAnswerQuestion
               index={0}
               info={newQuiz.shortAnswerQuestionInfo}
+              answer={newQuiz.shortAnswerQuestionInfo.answer}
               onChange={(info: ShortAnswerQuestionInfo) =>
                 setNewQuiz("shortAnswerQuestionInfo", info)
               }
               onRemove={() => setNewQuiz("shortAnswerQuestionInfo", null)}
+              isEditable={true}
             />
           )}
         </div>

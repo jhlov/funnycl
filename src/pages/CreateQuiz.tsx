@@ -138,10 +138,12 @@ const CreateQuiz = () => {
           <ShortAnswerQuestion
             index={0}
             info={shortAnswerQuestionInfo}
+            answer={shortAnswerQuestionInfo.answer}
             onChange={(info: ShortAnswerQuestionInfo) =>
               setShortAnswerQuestionInfo(info)
             }
             onRemove={() => setShortAnswerQuestionInfo(null)}
+            isEditable={true}
           />
         )}
       </div>

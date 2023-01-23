@@ -8,8 +8,10 @@ import "./ShortAnswerQuestion.scss";
 interface Props {
   index: number;
   info: ShortAnswerQuestionInfo;
+  answer: string;
   onChange: (info: ShortAnswerQuestionInfo) => void;
   onRemove: (index: number) => void;
+  isEditable: boolean;
 }
 
 const ShortAnswerQuestion = (props: Props) => {
@@ -67,41 +69,46 @@ const ShortAnswerQuestion = (props: Props) => {
         top: props.info?.y
       }}
     >
-      <div
-        draggable
-        className="short-answer-question-move"
-        onDragStart={onDragStart}
-        onDrag={onDragMove}
-        // onDragEnter={e => console.log(e)}
-        onDragOver={e => e.preventDefault()}
-        // onDragEnd={e => console.log(e)}
-      >
-        <OpenWithIcon fontSize="small" />
-      </div>
-      <div
-        className="short-answer-question-delete"
-        onClick={() => props.onRemove(props.index)}
-      >
-        <DisabledByDefaultIcon fontSize="small" />
-      </div>
-      <div
-        draggable
-        className="short-answer-question-resize"
-        onDragStart={onDragStart}
-        onDrag={onDragResize}
-        // onDragEnter={e => console.log(e)}
-        onDragOver={e => e.preventDefault()}
-        // onDragEnd={e => console.log(e)}
-      >
-        <SignalCellular4BarIcon fontSize="small" />
-      </div>
+      {props.isEditable && (
+        <>
+          <div
+            draggable
+            className="short-answer-question-move"
+            onDragStart={onDragStart}
+            onDrag={onDragMove}
+            // onDragEnter={e => console.log(e)}
+            onDragOver={e => e.preventDefault()}
+            // onDragEnd={e => console.log(e)}
+          >
+            <OpenWithIcon fontSize="small" />
+          </div>
+          <div
+            className="short-answer-question-delete"
+            onClick={() => props.onRemove(props.index)}
+          >
+            <DisabledByDefaultIcon fontSize="small" />
+          </div>
+          <div
+            draggable
+            className="short-answer-question-resize"
+            onDragStart={onDragStart}
+            onDrag={onDragResize}
+            // onDragEnter={e => console.log(e)}
+            onDragOver={e => e.preventDefault()}
+            // onDragEnd={e => console.log(e)}
+          >
+            <SignalCellular4BarIcon fontSize="small" />
+          </div>
+        </>
+      )}
+
       <input
         type="text"
         style={{
           width: props.info?.width,
           height: props.info?.height
         }}
-        value={props.info?.answer}
+        value={props.answer}
         onChange={onChangeshortAnswerQuestionAnswer}
       />
     </div>

@@ -1,7 +1,9 @@
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
+import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
+import { useEffect, useMemo, useState } from "react";
 import {
   Badge,
   Button,
@@ -28,6 +30,14 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const quizInfo = useMemo(() => {
     return quizList[props.index];
   }, [props.index, quizList]);
+
+  useEffect(() => {
+    if (show) {
+      setAnswer("");
+      setResult("");
+      setGroupName("");
+    }
+  }, [show]);
 
   const onClick = () => {
     if (!finished) {
@@ -112,6 +122,18 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
             <div className="text-center mb-3">
               <div className="play-hidden-picture-quiz-item__image-wrapper">
                 <img src={quizInfo.image as string} />
+                {quizInfo.answerType === "단답형" && (
+                  <ShortAnswerQuestion
+                    index={0}
+                    info={quizInfo.shortAnswerQuestionInfo!}
+                    answer={answer}
+                    onChange={(info: ShortAnswerQuestionInfo) =>
+                      setAnswer(info.answer)
+                    }
+                    onRemove={() => {}}
+                    isEditable={false}
+                  />
+                )}
               </div>
             </div>
           )}
