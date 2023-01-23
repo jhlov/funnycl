@@ -25,7 +25,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const [result, setResult] = useState("");
   const [groupName, setGroupName] = useState("");
 
-  const { quizList, groupList, updateGroupList } = usePlay();
+  const { quizList, groupList, updateGroupListScore } = usePlay();
 
   const quizInfo = useMemo(() => {
     return quizList[props.index];
@@ -66,7 +66,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     if (quizInfo.answerType === "단답형") {
       if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
         setFinished(true);
-        updateGroupList(groupName, quizInfo.score);
+        updateGroupListScore(groupName, quizInfo.score ?? 10);
       }
     }
 

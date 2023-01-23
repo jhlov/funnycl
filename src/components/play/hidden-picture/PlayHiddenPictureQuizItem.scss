@@ -9,6 +9,19 @@
   align-items: center;
   justify-content: center;
 
+  &.finished {
+    opacity: 0.8;
+    background-color: black;
+
+    .play-hidden-picture-quiz-item__badge-list {
+      opacity: 0;
+    }
+
+    .play-hidden-picture-quiz-item__index {
+      opacity: 0;
+    }
+  }
+
   &__badge-list {
     position: absolute;
     left: 0;
