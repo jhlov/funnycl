@@ -40,3 +40,11 @@
     cursor: pointer;
   }
 }
+
+.play-hidden-picture-score-item__result-modal {
+  .modal-body {
+    font-size: 40px;
+    text-align: center;
+    white-space: pre-line;
+  }
+}
