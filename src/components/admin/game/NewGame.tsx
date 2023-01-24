@@ -47,6 +47,19 @@ export const NewGame = () => {
               </Form.Text>
             </Form.Group>
 
+            {newGame.type === "숨겨진그림" && (
+              <Form.Group className="mb-4">
+                <Form.Label>그림 정답</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={newGame.hiddenPictureAnswer}
+                  onChange={e =>
+                    setNewGame("hiddenPictureAnswer", e.target.value)
+                  }
+                />
+              </Form.Group>
+            )}
+
             <ImageInput
               image={newGame.image}
               onChangeImage={v => setNewGame("image", v)}

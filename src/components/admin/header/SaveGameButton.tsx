@@ -28,6 +28,10 @@ export const SaveGameButton = () => {
     }
 
     if (newGame.type === "숨겨진그림") {
+      if (!newGame.hiddenPictureAnswer) {
+        return true;
+      }
+
       if (newGame.image === null) {
         return true;
       }

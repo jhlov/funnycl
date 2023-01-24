@@ -49,6 +49,7 @@ export const AdminGameList = () => {
             <th style={{ width: "120px" }}>타입</th>
             <th>게임 이름</th>
             <th>이미지</th>
+            <th>그림 정답</th>
             <th>설정</th>
             <th style={{ width: "120px" }}>생성일</th>
             <th style={{ width: "80px" }}>플레이</th>
@@ -80,6 +81,9 @@ export const AdminGameList = () => {
                     />
                   </OverlayTrigger>
                 )}
+              </td>
+              <td>
+                {item.type === "숨겨진그림" ? item.hiddenPictureAnswer : ""}
               </td>
               <td>
                 {item.isPlaySetting

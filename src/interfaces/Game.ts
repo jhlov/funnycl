@@ -5,6 +5,7 @@ type GameType = "NONE" | "숨겨진그림";
 export interface Game {
   title: string;
   type: GameType;
+  hiddenPictureAnswer?: string; // 숨겨진 그림일 때, 그림 정답
   sizeX: number;
   sizeY: number;
   groupCount: number;
