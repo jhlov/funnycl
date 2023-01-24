@@ -46,6 +46,7 @@ const AdminQuizList = () => {
             <th style={{ width: "100px", minWidth: "100px" }}>타입</th>
             <th>문제 이름</th>
             <th>이미지</th>
+            <th>답</th>
             <th style={{ width: "60px", minWidth: "60px" }}>과목</th>
             <th style={{ width: "120px", minWidth: "120px" }}>학년</th>
             <th style={{ width: "120px", minWidth: "120px" }}>제시어</th>
@@ -84,6 +85,11 @@ const AdminQuizList = () => {
                     />
                   </OverlayTrigger>
                 )}
+              </td>
+              <td>
+                {item.answerType === "단답형"
+                  ? item.shortAnswerQuestionInfo?.answer
+                  : ""}
               </td>
               <td>{item.subject}</td>
               <td>{yearList[item.year - 1][1]}</td>
