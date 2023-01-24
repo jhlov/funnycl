@@ -61,44 +61,59 @@ export const SaveQuizButton = () => {
     }
 
     // 이미지를 저장 하고
-    const formData = new FormData();
-    formData.append("image", newQuiz.image!);
+    let image = "";
+    if (typeof newQuiz.image === "object") {
+      const formData = new FormData();
+      formData.append("image", newQuiz.image!);
 
-    const r = await axios.post(
-      "https://l0519szlp6.execute-api.ap-northeast-2.amazonaws.com/default/fc-uploadImage",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }
-    );
-
-    if (r.data.success === true) {
-      const db = getDatabase();
-
-      // Get a key for a new Post.
-      const quizUrl = `quiz/${auth.currentUser?.uid}`;
-      const newPostKey = push(child(ref(db), quizUrl)).key;
-
-      // Write the new post's data simultaneously in the posts list and the user's post list.
-      const updates: any = {};
-      updates[`${quizUrl}/${newPostKey}`] = _.omit(
+      const r = await axios.post(
+        "https://l0519szlp6.execute-api.ap-northeast-2.amazonaws.com/default/fc-uploadImage",
+        formData,
         {
-          ...newQuiz,
-          id: newPostKey,
-          image: r.data.data,
-          created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
-        },
-        ["imageUrl"]
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
       );
 
-      const updateResult = await update(ref(db), updates);
-      alert("새로운 문제 저장에 성공하였습니다.");
-      history.push("/admin/quiz/list");
+      if (r.data.success) {
+        image = r.data.data;
+      } else {
+        alert("이미지 저장에 실패하였습니다.");
+        return;
+      }
     } else {
-      alert("이미지 저장에 실패하였습니다.");
+      image = newQuiz.image;
     }
+
+    const db = getDatabase();
+
+    // Get a key for a new Post.
+    const quizUrl = `quiz/${auth.currentUser?.uid}`;
+    const postKey =
+      subMenu === "CREATE_QUIZ"
+        ? push(child(ref(db), quizUrl)).key
+        : modifyQuizId;
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates: any = {};
+    updates[`${quizUrl}/${postKey}`] = _.omit(
+      {
+        ...newQuiz,
+        id: postKey,
+        image,
+        created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
+      },
+      ["imageUrl"]
+    );
+
+    await update(ref(db), updates);
+    alert(
+      subMenu === "CREATE_QUIZ"
+        ? "새로운 문제 저장에 성공하였습니다."
+        : "문제 수정에 성공하였습니다"
+    );
+    history.push("/admin/quiz/list");
   };
 
   return (
