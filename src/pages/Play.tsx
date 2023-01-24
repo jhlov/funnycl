@@ -12,8 +12,7 @@ interface Params {
 
 export const Play = (props: any) => {
   const match = useRouteMatch();
-  const { startGame, gameInfo, getGameInfo, setGameInfo, getQuizList } =
-    usePlay();
+  const { startGame, gameInfo, getGameInfo, setGameInfo, initGame } = usePlay();
   const [checkSetting, setCheckSetting] = useState(false);
   const [showSettingModal, setShowSettingModal] = useState(false);
 
@@ -40,7 +39,7 @@ export const Play = (props: any) => {
     setShowSettingModal(false);
 
     // 문제 불러오기
-    getQuizList();
+    initGame();
   };
 
   return (

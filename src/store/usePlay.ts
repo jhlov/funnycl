@@ -10,10 +10,14 @@ interface State {
   gameInfo: Game | null;
   getGameInfo: (id: string) => void;
   setGameInfo: (key: string, value: any) => void;
+
+  // 게임 시작 후 세팅
   quizList: Quiz[];
-  getQuizList: () => void;
+  initGame: () => void;
   groupList: Group[];
+  keyList: number[];
   updateGroupListScore: (groupName: string, score: number) => void;
+  updateGroupListKey: (groupName: string, delta: number) => void;
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -45,7 +49,7 @@ export const usePlay = create<State>((set, get) => ({
     }));
   },
   quizList: [],
-  getQuizList: () => {
+  initGame: () => {
     const gameInfo = get().gameInfo;
     const dbRef = ref(getDatabase());
     const quizUrl = `quiz/${gameInfo?.userId}`;
@@ -112,7 +116,13 @@ export const usePlay = create<State>((set, get) => ({
           set(() => ({
             startGame: true,
             quizList,
-            groupList: groupList.slice(0, Number(gameInfo?.groupCount))
+            groupList: groupList.slice(0, Number(gameInfo?.groupCount)),
+            keyList: _.sampleSize(
+              Array(quizCount)
+                .fill(0)
+                .map((_, i) => i),
+              Math.round(quizCount / 4)
+            )
           }));
         } else {
           console.log("No data available");
@@ -123,6 +133,7 @@ export const usePlay = create<State>((set, get) => ({
       });
   },
   groupList: [],
+  keyList: [],
   updateGroupListScore: (groupName: string, score: number) => {
     set(() => ({
       groupList: get().groupList.map(item =>
@@ -130,6 +141,18 @@ export const usePlay = create<State>((set, get) => ({
           ? {
               ...item,
               score: item.score + Number(score)
+            }
+          : item
+      )
+    }));
+  },
+  updateGroupListKey: (groupName: string, delta: number) => {
+    set(() => ({
+      groupList: get().groupList.map(item =>
+        item.name === groupName
+          ? {
+              ...item,
+              key: (item.key ?? 0) + delta
             }
           : item
       )

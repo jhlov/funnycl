@@ -25,7 +25,13 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const [result, setResult] = useState("");
   const [groupName, setGroupName] = useState("");
 
-  const { quizList, groupList, updateGroupListScore } = usePlay();
+  const {
+    quizList,
+    groupList,
+    updateGroupListScore,
+    updateGroupListKey,
+    keyList
+  } = usePlay();
 
   const quizInfo = useMemo(() => {
     return quizList[props.index];
@@ -54,7 +60,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setTimeout(() => {
       if (quizInfo.answerType === "단답형") {
         if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
-          setResult("정답입니다.!!!");
+          setResult("정답입니다!!!");
         } else {
           setResult("오답입니다");
         }
@@ -67,6 +73,10 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
       if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
         setFinished(true);
         updateGroupListScore(groupName, quizInfo.score ?? 10);
+
+        if (keyList.includes(props.index)) {
+          updateGroupListKey(groupName, 1);
+        }
       }
     }
 
@@ -180,6 +190,12 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <div>{result}</div>
+          {keyList.includes(props.index) &&
+            quizInfo.shortAnswerQuestionInfo?.answer === answer && (
+              <div className="mt-3">
+                <small>문제 풀이권을 획득 했습니다!!</small>
+              </div>
+            )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseResult}>
