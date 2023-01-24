@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import { getDatabase, ref, update } from "firebase/database";
 import moment from "moment";
 import { useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { useMenus } from "store/useMenus";
 import { useQuiz } from "store/useQuiz";
 import "./AdminQuizList.scss";
@@ -64,10 +64,22 @@ const AdminQuizList = () => {
               </td>
               <td>
                 {item.image && (
-                  <img
-                    className="admin-quiz-list__image"
-                    src={item.image as string}
-                  />
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={
+                      <Tooltip id={`image-tooltip-${item.id}`}>
+                        <img
+                          style={{ maxWidth: "500px" }}
+                          src={item.image as string}
+                        />
+                      </Tooltip>
+                    }
+                  >
+                    <img
+                      className="admin-quiz-list__image"
+                      src={item.image as string}
+                    />
+                  </OverlayTrigger>
                 )}
               </td>
               <td>{item.subject}</td>
