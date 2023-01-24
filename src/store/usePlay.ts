@@ -52,7 +52,9 @@ export const usePlay = create<State>((set, get) => ({
     getData(child(dbRef, quizUrl))
       .then(snapshot => {
         if (snapshot.exists()) {
-          let quizList = Object.values<Quiz>(snapshot.val());
+          let quizList = Object.values<Quiz>(snapshot.val()).filter(
+            item => !item.deleted
+          );
 
           // 1. 필터링
           // 1-1. 과목
