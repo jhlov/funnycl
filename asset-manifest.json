@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/funnycl/static/css/main.e23317f5.css",
-    "main.js": "/funnycl/static/js/main.db9c872d.js",
+    "main.js": "/funnycl/static/js/main.ee17c82f.js",
     "static/js/27.8e3afafb.chunk.js": "/funnycl/static/js/27.8e3afafb.chunk.js",
     "index.html": "/funnycl/index.html"
   },
   "entrypoints": [
     "static/css/main.e23317f5.css",
-    "static/js/main.db9c872d.js"
+    "static/js/main.ee17c82f.js"
   ]
 }
