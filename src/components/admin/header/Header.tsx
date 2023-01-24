@@ -30,7 +30,7 @@ const Header = () => {
           </>
         )}
 
-        {subMenu === "CREATE_GAME" && (
+        {["CREATE_GAME", "MODIFY_GAME"].includes(subMenu) && (
           <>
             <Link className="btn btn-secondary btn-sm" to="/admin/game/list">
               취소

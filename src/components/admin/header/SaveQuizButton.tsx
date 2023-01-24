@@ -96,16 +96,29 @@ export const SaveQuizButton = () => {
         : modifyQuizId;
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
-    const updates: any = {};
-    updates[`${quizUrl}/${postKey}`] = _.omit(
+    const quizData = _.omit(
       {
         ...newQuiz,
         id: postKey,
-        image,
-        created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
+        image
       },
       ["imageUrl"]
     );
+
+    if (subMenu === "CREATE_QUIZ") {
+      quizData["created"] = moment()
+        .utc(false)
+        .add(9, "h")
+        .format("YYYY-MM-DD HH:mm:ss");
+    } else {
+      quizData["modified"] = moment()
+        .utc(false)
+        .add(9, "h")
+        .format("YYYY-MM-DD HH:mm:ss");
+    }
+
+    const updates: any = {};
+    updates[`${quizUrl}/${postKey}`] = quizData;
 
     await update(ref(db), updates);
     alert(

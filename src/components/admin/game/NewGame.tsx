@@ -8,7 +8,8 @@ import { yearList } from "../quiz/NewQuizInfo";
 import "./NewGame.scss";
 
 export const NewGame = () => {
-  const { newGame, gameList, getGameList, initNewGame, setNewGame } = useGame();
+  const { newGame, gameList, getGameList, setNewGame, modifyGameId } =
+    useGame();
 
   useEffect(() => {
     getGameList();
@@ -17,7 +18,10 @@ export const NewGame = () => {
   const gameTitleError = useMemo(() => {
     if (
       newGame.title &&
-      0 < gameList.filter(item => item.title === newGame.title).length
+      0 <
+        gameList.filter(
+          item => item.id !== modifyGameId && item.title === newGame.title
+        ).length
     ) {
       return "동일한 이름의 게임이 존재합니다.";
     }
@@ -65,7 +69,17 @@ export const NewGame = () => {
               onChangeImage={v => setNewGame("image", v)}
               onChangeImageUrl={v => setNewGame("imageUrl", v)}
             />
-            {newGame.image && <img className="w-100" src={newGame.imageUrl} />}
+
+            {newGame.image && (
+              <img
+                className="w-100"
+                src={
+                  typeof newGame.image === "string"
+                    ? newGame.image
+                    : newGame.imageUrl
+                }
+              />
+            )}
           </Form>
         </div>
         <div>

@@ -29,6 +29,7 @@ export interface Quiz {
   // for server
   id?: string;
   created?: string;
+  modified?: string;
   deleted?: string;
 }
 

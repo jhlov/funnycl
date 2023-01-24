@@ -7,11 +7,13 @@ import { useMemo } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useGame } from "store/useGame";
+import { useMenus } from "store/useMenus";
 import "./Header.scss";
 
 export const SaveGameButton = () => {
   const auth = getAuth();
-  const { gameList, newGame } = useGame();
+  const { gameList, newGame, modifyGameId } = useGame();
+  const { subMenu } = useMenus();
   const history = useHistory();
 
   const disabledSaveButton = useMemo(() => {
@@ -22,7 +24,10 @@ export const SaveGameButton = () => {
     // 이름 중복
     if (
       newGame.title &&
-      0 < gameList.filter(item => item.title === newGame.title).length
+      0 <
+        gameList.filter(
+          item => item.id !== modifyGameId && item.title === newGame.title
+        ).length
     ) {
       return true;
     }
@@ -49,52 +54,78 @@ export const SaveGameButton = () => {
     }
 
     // 이미지를 저장 하고
-    const formData = new FormData();
-    formData.append("image", newGame.image!);
+    let image = "";
+    if (typeof newGame.image === "object") {
+      const formData = new FormData();
+      formData.append("image", newGame.image!);
 
-    const r = await axios.post(
-      "https://l0519szlp6.execute-api.ap-northeast-2.amazonaws.com/default/fc-uploadImage",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }
-    );
-
-    if (r.data.success === true) {
-      const db = getDatabase();
-
-      // Get a key for a new Post.
-      const newPostKey = push(child(ref(db), "game/all")).key;
-
-      // Write the new post's data simultaneously in the posts list and the user's post list.
-      const gameData = _.omit(
+      const r = await axios.post(
+        "https://l0519szlp6.execute-api.ap-northeast-2.amazonaws.com/default/fc-uploadImage",
+        formData,
         {
-          ...newGame,
-          id: newPostKey,
-          userId: auth.currentUser?.uid,
-          image: r.data.data,
-          created: moment().utc(false).add(9, "h").format("YYYY-MM-DD HH:mm:ss")
-        },
-        ["imageUrl"]
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
       );
 
-      const updates: any = {};
-      updates[`game/all/${newPostKey}`] = gameData;
-      updates[`game/${auth.currentUser?.uid}/${newPostKey}`] = gameData;
-
-      const updateResult = await update(ref(db), updates);
-      alert("새로운 게임 저장에 성공하였습니다.");
-      history.push("/admin/game/list");
+      if (r.data.success) {
+        image = r.data.data;
+      } else {
+        alert("이미지 저장에 실패하였습니다.");
+        return;
+      }
     } else {
-      alert("이미지 저장에 실패하였습니다.");
+      image = newGame.image;
     }
+
+    const db = getDatabase();
+
+    // Get a key for a new Post.
+    const postKey =
+      subMenu === "CREATE_GAME"
+        ? push(child(ref(db), "game/all")).key
+        : modifyGameId;
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const gameData = _.omit(
+      {
+        ...newGame,
+        id: postKey,
+        userId: auth.currentUser?.uid,
+        image
+      },
+      ["imageUrl"]
+    );
+
+    if (subMenu === "CREATE_GAME") {
+      gameData["created"] = moment()
+        .utc(false)
+        .add(9, "h")
+        .format("YYYY-MM-DD HH:mm:ss");
+    } else {
+      gameData["modified"] = moment()
+        .utc(false)
+        .add(9, "h")
+        .format("YYYY-MM-DD HH:mm:ss");
+    }
+
+    const updates: any = {};
+    updates[`game/all/${postKey}`] = gameData;
+    updates[`game/${auth.currentUser?.uid}/${postKey}`] = gameData;
+
+    await update(ref(db), updates);
+    alert(
+      subMenu === "CREATE_QUIZ"
+        ? "새로운 게임 저장에 성공하였습니다."
+        : "게임 수정에 성공하였습니다"
+    );
+    history.push("/admin/game/list");
   };
 
   return (
     <Button size="sm" disabled={disabledSaveButton} onClick={onClickSaveGame}>
-      저장
+      {subMenu === "CREATE_GAME" ? "저장" : "수정"}
     </Button>
   );
 };

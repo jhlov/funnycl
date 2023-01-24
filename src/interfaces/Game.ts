@@ -25,6 +25,7 @@ export interface Game {
   id?: string;
   userId?: string;
   created?: string;
+  modified?: string;
   deleted?: string;
 }
 

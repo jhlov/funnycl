@@ -8,8 +8,10 @@ interface State {
   gameList: Game[];
   getGameList: () => void;
   newGame: Game;
+  modifyGameId: string;
   initNewGame: () => void;
   setNewGame: (key: string, value: any) => void;
+  getGameInfo: (id: string) => void;
 }
 
 export const useGame = create<State>(set => ({
@@ -39,8 +41,10 @@ export const useGame = create<State>(set => ({
       });
   },
   newGame: initNewGame,
+  modifyGameId: "",
   initNewGame: () =>
     set(() => ({
+      modifyGameId: "",
       newGame: {
         ...initNewGame
       }
@@ -51,5 +55,26 @@ export const useGame = create<State>(set => ({
         ...state.newGame,
         [key]: value
       }
-    }))
+    })),
+  getGameInfo: (id: string) => {
+    set(() => ({
+      modifyGameId: id
+    }));
+
+    const dbRef = ref(getDatabase());
+    const quizUrl = `game/${getAuth().currentUser?.uid}/${id}`;
+    get(child(dbRef, quizUrl))
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          set(() => ({
+            newGame: snapshot.val()
+          }));
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 }));

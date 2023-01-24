@@ -1,4 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, update } from "firebase/database";
@@ -52,7 +53,9 @@ export const AdminGameList = () => {
             <th>그림 정답</th>
             <th>설정</th>
             <th style={{ width: "120px" }}>생성일</th>
+            <th style={{ width: "120px" }}>수정일</th>
             <th style={{ width: "80px" }}>플레이</th>
+            <th style={{ width: "60px", minWidth: "60px" }}>수정</th>
             <th style={{ width: "80px" }}>삭제</th>
           </tr>
         </thead>
@@ -91,9 +94,15 @@ export const AdminGameList = () => {
                   : `크기:${item.sizeX} x ${item.sizeY} / 모둠수:${item.groupCount} / 과목:${item.subject} / 과정:${item.yearStart}~${item.yearEnd} / 난이도:${item.difficultyStart}~${item.difficultyEnd}`}
               </td>
               <td>{item.created}</td>
+              <td>{item.modified}</td>
               <td>
                 <Link to={`/play/${item.id}`} target="_blank">
                   <PlayArrowIcon />
+                </Link>
+              </td>
+              <td>
+                <Link className="btn" to={`/admin/game/modify/${item.id}`}>
+                  <EditIcon />
                 </Link>
               </td>
               <td>

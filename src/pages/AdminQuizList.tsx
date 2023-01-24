@@ -54,6 +54,7 @@ const AdminQuizList = () => {
             <th style={{ width: "60px", minWidth: "60px" }}>점수</th>
             <th style={{ width: "100px", minWidth: "100px" }}>문제유형</th>
             <th style={{ width: "120px", minWidth: "120px" }}>생성일</th>
+            <th style={{ width: "120px", minWidth: "120px" }}>수정일</th>
             <th style={{ width: "60px", minWidth: "60px" }}>수정</th>
             <th style={{ width: "60px", minWidth: "60px" }}>삭제</th>
           </tr>
@@ -98,6 +99,7 @@ const AdminQuizList = () => {
               <td>{item.score ?? 10}</td>
               <td>{item.answerType}</td>
               <td>{item.created}</td>
+              <td>{item.modified}</td>
               <td>
                 <Link className="btn" to={`/admin/quiz/modify/${item.id}`}>
                   <EditIcon />

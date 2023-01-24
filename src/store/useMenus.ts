@@ -4,6 +4,7 @@ type MainMenu = "GAME" | "QUIZ";
 type SubMenu =
   | "GAME_LIST"
   | "CREATE_GAME"
+  | "MODIFY_GAME"
   | "QUIZ_LIST"
   | "CREATE_QUIZ"
   | "MODIFY_QUIZ";
