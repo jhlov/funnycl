@@ -31,6 +31,9 @@ export interface Quiz {
   created?: string;
   modified?: string;
   deleted?: string;
+
+  // 게임 플레이 시 세팅
+  finished?: boolean;
 }
 
 export const initNewQuiz: Quiz = {

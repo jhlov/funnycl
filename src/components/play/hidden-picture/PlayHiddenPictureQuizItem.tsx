@@ -19,7 +19,6 @@ interface Props {
 }
 
 export const PlayHiddenPictureQuizItem = (props: Props) => {
-  const [finished, setFinished] = useState(false);
   const [show, setShow] = useState<boolean>(false);
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState("");
@@ -30,7 +29,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     groupList,
     updateGroupListScore,
     updateGroupListKey,
-    keyList
+    keyList,
+    updateQuizListFinished
   } = usePlay();
 
   const quizInfo = useMemo(() => {
@@ -46,7 +46,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   }, [show]);
 
   const onClick = () => {
-    if (!finished) {
+    if (!quizInfo.finished) {
       setShow(true);
     }
   };
@@ -71,7 +71,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const handleCloseResult = () => {
     if (quizInfo.answerType === "단답형") {
       if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
-        setFinished(true);
+        updateQuizListFinished(props.index);
         updateGroupListScore(groupName, quizInfo.score ?? 10);
 
         if (keyList.includes(props.index)) {
@@ -87,7 +87,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     <>
       <div
         className={classNames("play-hidden-picture-quiz-item", {
-          finished: finished
+          finished: quizInfo.finished
         })}
         onClick={onClick}
       >

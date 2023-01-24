@@ -18,6 +18,7 @@ interface State {
   keyList: number[];
   updateGroupListScore: (groupName: string, score: number) => void;
   updateGroupListKey: (groupName: string, delta: number) => void;
+  updateQuizListFinished: (index: number) => void;
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -153,6 +154,18 @@ export const usePlay = create<State>((set, get) => ({
           ? {
               ...item,
               key: (item.key ?? 0) + delta
+            }
+          : item
+      )
+    }));
+  },
+  updateQuizListFinished: (index: number) => {
+    set(() => ({
+      quizList: get().quizList.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              finished: true
             }
           : item
       )
