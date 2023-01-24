@@ -19,35 +19,40 @@ const Header = () => {
   return (
     <div className="header px-3 py-2 border-bottom align-items-center">
       <div>퍼니클</div>
-      <div className="d-flex align-items-center">
-        {subMenu === "CREATE_QUIZ" && newQuiz.type !== "NONE" && (
-          <div className="me-5">
-            <SaveQuizButton />
-          </div>
+      <div className="header__buttons d-flex align-items-center">
+        {subMenu === "CREATE_QUIZ" && (
+          <>
+            <Link className="btn btn-secondary btn-sm" to="/admin/quiz/list">
+              취소
+            </Link>
+
+            {newQuiz.type !== "NONE" && <SaveQuizButton />}
+          </>
         )}
 
-        {subMenu === "CREATE_GAME" && newGame.type !== "NONE" && (
-          <div className="me-5">
-            <SaveGameButton />
-          </div>
+        {subMenu === "CREATE_GAME" && (
+          <>
+            <Link className="btn btn-secondary btn-sm" to="/admin/game/list">
+              취소
+            </Link>
+
+            {newGame.type !== "NONE" && <SaveGameButton />}
+          </>
         )}
 
         {subMenu === "GAME_LIST" && (
-          <div className="me-3">
-            <Link className="btn btn-primary btn-sm" to="/admin/game/create">
-              새로운 게임 만들기
-            </Link>
-          </div>
+          <Link className="btn btn-primary btn-sm" to="/admin/game/create">
+            새로운 게임 만들기
+          </Link>
         )}
 
         {subMenu === "QUIZ_LIST" && (
-          <div className="me-3">
-            <Link className="btn btn-primary btn-sm" to="/admin/quiz/create">
-              새로운 문제 만들기
-            </Link>
-          </div>
+          <Link className="btn btn-primary btn-sm" to="/admin/quiz/create">
+            새로운 문제 만들기
+          </Link>
         )}
-        <div className="me-3">{auth.currentUser?.email}</div>
+
+        <div className="ms-5 me-3">{auth.currentUser?.email}</div>
         {isLogin && (
           <div className="logout-button" onClick={() => auth.signOut()}>
             <LogoutIcon />

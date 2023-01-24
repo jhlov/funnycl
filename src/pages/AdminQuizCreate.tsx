@@ -1,6 +1,5 @@
 import { NewQuizContent } from "components/admin/quiz/NewQuizContent";
 import { NewQuizInfo } from "components/admin/quiz/NewQuizInfo";
-import { QuizList } from "components/admin/quiz/QuizList";
 import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { useMenus } from "store/useMenus";
@@ -41,7 +40,6 @@ const AdminQuizCreate = () => {
         </div>
       ) : (
         <div className="d-flex h-100">
-          <QuizList />
           <NewQuizContent />
           <NewQuizInfo />
         </div>
