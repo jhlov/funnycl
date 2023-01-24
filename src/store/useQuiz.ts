@@ -8,14 +8,15 @@ interface State {
   quizList: Quiz[];
   getQuizList: () => void;
   newQuiz: Quiz;
+  modifyQuizId: string;
   initNewQuiz: () => void;
   setNewQuiz: (key: string, value: any) => void;
+  getQuizInfo: (id: string) => void;
 }
 
 export const useQuiz = create<State>(set => ({
   quizList: [],
   getQuizList: () => {
-    console.log("getQuizList");
     const dbRef = ref(getDatabase());
     const quizUrl = `quiz/${getAuth().currentUser?.uid}`;
     get(child(dbRef, quizUrl))
@@ -40,8 +41,10 @@ export const useQuiz = create<State>(set => ({
       });
   },
   newQuiz: initNewQuiz,
+  modifyQuizId: "",
   initNewQuiz: () =>
     set(() => ({
+      modifyQuizId: "",
       newQuiz: {
         ...initNewQuiz
       }
@@ -52,5 +55,26 @@ export const useQuiz = create<State>(set => ({
         ...state.newQuiz,
         [key]: value
       }
-    }))
+    })),
+  getQuizInfo: (id: string) => {
+    set(() => ({
+      modifyQuizId: id
+    }));
+
+    const dbRef = ref(getDatabase());
+    const quizUrl = `quiz/${getAuth().currentUser?.uid}/${id}`;
+    get(child(dbRef, quizUrl))
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          set(() => ({
+            newQuiz: snapshot.val()
+          }));
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 }));

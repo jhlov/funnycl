@@ -1,7 +1,12 @@
 import create from "zustand";
 
 type MainMenu = "GAME" | "QUIZ";
-type SubMenu = "GAME_LIST" | "CREATE_GAME" | "QUIZ_LIST" | "CREATE_QUIZ";
+type SubMenu =
+  | "GAME_LIST"
+  | "CREATE_GAME"
+  | "QUIZ_LIST"
+  | "CREATE_QUIZ"
+  | "MODIFY_QUIZ";
 
 interface MenusState {
   mainMenu: MainMenu;

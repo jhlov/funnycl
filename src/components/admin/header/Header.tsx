@@ -20,7 +20,7 @@ const Header = () => {
     <div className="header px-3 py-2 border-bottom align-items-center">
       <div>퍼니클</div>
       <div className="header__buttons d-flex align-items-center">
-        {subMenu === "CREATE_QUIZ" && (
+        {["CREATE_QUIZ", "MODIFY_QUIZ"].includes(subMenu) && (
           <>
             <Link className="btn btn-secondary btn-sm" to="/admin/quiz/list">
               취소

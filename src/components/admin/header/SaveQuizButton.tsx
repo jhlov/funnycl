@@ -6,11 +6,13 @@ import moment from "moment";
 import { useMemo } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useMenus } from "store/useMenus";
 import { useQuiz } from "store/useQuiz";
 
 export const SaveQuizButton = () => {
   const auth = getAuth();
-  const { quizList, newQuiz } = useQuiz();
+  const { quizList, newQuiz, modifyQuizId } = useQuiz();
+  const { subMenu } = useMenus();
   const history = useHistory();
 
   const disabledSaveButton = useMemo(() => {
@@ -21,7 +23,10 @@ export const SaveQuizButton = () => {
     // 이름 중복
     if (
       newQuiz.title &&
-      0 < quizList.filter(item => item.title === newQuiz.title).length
+      0 <
+        quizList.filter(
+          item => item.id !== modifyQuizId && item.title === newQuiz.title
+        ).length
     ) {
       return true;
     }
@@ -45,7 +50,7 @@ export const SaveQuizButton = () => {
     }
 
     return false;
-  }, [newQuiz, quizList]);
+  }, [newQuiz, quizList, modifyQuizId]);
 
   const onClickSaveQuiz = async () => {
     console.log("onClickSaveQuiz");
@@ -98,7 +103,7 @@ export const SaveQuizButton = () => {
 
   return (
     <Button size="sm" disabled={disabledSaveButton} onClick={onClickSaveQuiz}>
-      저장
+      {subMenu === "CREATE_QUIZ" ? "저장" : "수정"}
     </Button>
   );
 };

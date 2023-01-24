@@ -8,8 +8,13 @@ import { Col, Form, Row } from "react-bootstrap";
 import { useQuiz } from "store/useQuiz";
 import "./NewQuizContent.scss";
 
+interface Params {
+  id: string;
+}
+
 const NewQuizContent = () => {
-  const { quizList, getQuizList, newQuiz, setNewQuiz } = useQuiz();
+  const { quizList, getQuizList, newQuiz, setNewQuiz, modifyQuizId } =
+    useQuiz();
 
   useEffect(() => {
     getQuizList();
@@ -18,11 +23,14 @@ const NewQuizContent = () => {
   const quizTitleError = useMemo(() => {
     if (
       newQuiz.title &&
-      0 < quizList.filter(item => item.title === newQuiz.title).length
+      0 <
+        quizList.filter(
+          item => item.id !== modifyQuizId && item.title === newQuiz.title
+        ).length
     ) {
       return "동일한 이름의 문제가 존재합니다.";
     }
-  }, [quizList, newQuiz.title]);
+  }, [quizList, newQuiz.title, modifyQuizId]);
 
   const onClickImg = (e: React.MouseEvent) => {
     const x =
@@ -76,7 +84,14 @@ const NewQuizContent = () => {
 
       {newQuiz.image && (
         <div className="new-quiz-image-wrapper mt-5">
-          <img src={newQuiz.imageUrl} onClick={onClickImg} />
+          <img
+            src={
+              typeof newQuiz.image === "string"
+                ? newQuiz.image
+                : newQuiz.imageUrl
+            }
+            onClick={onClickImg}
+          />
           {newQuiz.shortAnswerQuestionInfo && (
             <ShortAnswerQuestion
               index={0}

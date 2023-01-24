@@ -15,7 +15,6 @@ interface State {
 export const useGame = create<State>(set => ({
   gameList: [],
   getGameList: () => {
-    console.log("getGameList");
     const dbRef = ref(getDatabase());
     const gameUrl = `game/${getAuth().currentUser?.uid}`;
     get(child(dbRef, gameUrl))

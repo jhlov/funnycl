@@ -1,10 +1,12 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { yearList } from "components/admin/quiz/NewQuizInfo";
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, update } from "firebase/database";
 import moment from "moment";
 import { useEffect } from "react";
 import { OverlayTrigger, Table, Tooltip } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useMenus } from "store/useMenus";
 import { useQuiz } from "store/useQuiz";
 import "./AdminQuizList.scss";
@@ -51,6 +53,7 @@ const AdminQuizList = () => {
             <th style={{ width: "60px", minWidth: "60px" }}>점수</th>
             <th style={{ width: "100px", minWidth: "100px" }}>문제유형</th>
             <th style={{ width: "120px", minWidth: "120px" }}>생성일</th>
+            <th style={{ width: "60px", minWidth: "60px" }}>수정</th>
             <th style={{ width: "60px", minWidth: "60px" }}>삭제</th>
           </tr>
         </thead>
@@ -89,6 +92,11 @@ const AdminQuizList = () => {
               <td>{item.score ?? 10}</td>
               <td>{item.answerType}</td>
               <td>{item.created}</td>
+              <td>
+                <Link className="btn" to={`/admin/quiz/modify/${item.id}`}>
+                  <EditIcon />
+                </Link>
+              </td>
               <td>
                 <button
                   className="btn"
