@@ -4,7 +4,10 @@ import "./PlayHiddenPicture.scss";
 
 export const PlayHiddenPicture = () => {
   return (
-    <div className="play-hidden-picture">
+    <div
+      className="play-hidden-picture"
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/bg01.jpg)` }}
+    >
       <PlayHiddenPictureBoard />
       <PlayHiddenPictureScore />
     </div>

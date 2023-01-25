@@ -135,7 +135,11 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         </Modal.Header>
         <Modal.Body>
           {quizInfo.type === "워크시트" && (
-            <div className="text-center mb-3">
+            <div className="position-relative text-center mb-3 py-5">
+              <img
+                className="play-hidden-picture-quiz-item__bg"
+                src={`${process.env.PUBLIC_URL}/img/popup01.jpg`}
+              />
               <div className="play-hidden-picture-quiz-item__image-wrapper">
                 <img src={quizInfo.image as string} />
                 {quizInfo.answerType === "단답형" && (
