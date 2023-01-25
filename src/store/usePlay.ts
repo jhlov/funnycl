@@ -1,3 +1,4 @@
+import { CONST } from "const";
 import { child, get as getData, getDatabase, ref } from "firebase/database";
 import { Game } from "interfaces/Game";
 import { Group } from "interfaces/Group";
@@ -86,38 +87,20 @@ export const usePlay = create<State>((set, get) => ({
           quizList = _.shuffle(quizList);
           quizList = quizList.slice(0, quizCount);
 
-          const groupList = [
-            {
-              name: "A조",
+          const groupList = Array(Number(gameInfo?.groupCount))
+            .fill(0)
+            .map((_, i) => ({
+              name: (gameInfo?.groupNameList
+                ? gameInfo?.groupNameList
+                : CONST.DEFAULT_GROUP_NAME_LIST)[i],
               score: 0,
-              color: "red"
-            },
-            {
-              name: "B조",
-              score: 0,
-              color: "blue"
-            },
-            {
-              name: "C조",
-              score: 0,
-              color: "green"
-            },
-            {
-              name: "D조",
-              score: 0,
-              color: "purple"
-            },
-            {
-              name: "E조",
-              score: 0,
-              color: "orange"
-            }
-          ];
+              color: CONST.DEFAULT_GROUP_COLOR_LIST[i]
+            }));
 
           set(() => ({
             startGame: true,
             quizList,
-            groupList: groupList.slice(0, Number(gameInfo?.groupCount)),
+            groupList,
             keyList: _.sampleSize(
               Array(quizCount)
                 .fill(0)

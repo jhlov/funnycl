@@ -109,6 +109,31 @@ export const Play = (props: any) => {
                       </option>
                     ))}
                 </Form.Select>
+                {Array(gameInfo.groupCount)
+                  .fill(0)
+                  .map((_, i) => (
+                    <Form.Group>
+                      <Form.Control
+                        type="text"
+                        value={
+                          (gameInfo.groupNameList
+                            ? gameInfo.groupNameList
+                            : CONST.DEFAULT_GROUP_NAME_LIST)[i]
+                        }
+                        onChange={e =>
+                          setGameInfo(
+                            "groupNameList",
+                            (gameInfo.groupNameList
+                              ? gameInfo.groupNameList
+                              : CONST.DEFAULT_GROUP_NAME_LIST
+                            ).map((item, j) =>
+                              i === j ? e.target.value : item
+                            )
+                          )
+                        }
+                      />
+                    </Form.Group>
+                  ))}
               </Form.Group>
 
               <Form.Group className="mb-4">

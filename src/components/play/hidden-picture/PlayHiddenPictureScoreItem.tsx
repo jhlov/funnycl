@@ -45,7 +45,7 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
   return (
     <>
       <div
-        className={`play-hidden-picture-score-item mb-2 ${props.group.color}`}
+        className={`play-hidden-picture-score-item mb-1 ${props.group.color}`}
       >
         <div>
           <span>

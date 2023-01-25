@@ -10,6 +10,7 @@ export interface Game {
   sizeX: number;
   sizeY: number;
   groupCount: number;
+  groupNameList: string[];
 
   isPlaySetting: boolean; // 게임 플레이 시에 세팅
   subject: "랜덤" | QuizSubject;
@@ -36,6 +37,7 @@ export const initNewGame: Game = {
   sizeX: CONST.DEFAULT_BOARD_SIZE_X,
   sizeY: CONST.DEFAULT_BOARD_SIZE_Y,
   groupCount: CONST.DEFAULT_GROUP_COUNT,
+  groupNameList: CONST.DEFAULT_GROUP_NAME_LIST,
   isPlaySetting: true,
   subject: "랜덤",
   yearStart: 1,

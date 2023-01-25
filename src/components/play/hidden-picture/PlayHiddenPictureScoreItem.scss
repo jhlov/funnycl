@@ -1,6 +1,6 @@
 .play-hidden-picture-score-item {
   color: white;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: bold;
   border-radius: 16px;
   display: flex;
@@ -25,6 +25,26 @@
 
   &.orange {
     background-color: orange;
+  }
+
+  &.brown {
+    background-color: brown;
+  }
+
+  &.cornflowerblue {
+    background-color: cornflowerblue;
+  }
+
+  &.darkcyan {
+    background-color: darkcyan;
+  }
+
+  &.slateblue {
+    background-color: slateblue;
+  }
+
+  &.slategray {
+    background-color: slategray;
   }
 
   &__score {
