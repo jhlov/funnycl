@@ -92,6 +92,10 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         })}
         onClick={onClick}
       >
+        <img
+          className="play-hidden-picture-quiz-item__back"
+          src={`${process.env.PUBLIC_URL}/img/back02.jpeg`}
+        />
         <div className="play-hidden-picture-quiz-item__badge-list">
           <Badge className="big-badge" bg="danger">
             {quizInfo.subject}
