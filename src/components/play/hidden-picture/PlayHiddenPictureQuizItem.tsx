@@ -93,8 +93,14 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         onClick={onClick}
       >
         <div className="play-hidden-picture-quiz-item__badge-list">
-          <Badge bg="primary">{quizInfo.subject}</Badge>
-          {quizInfo.keyword && <Badge bg="info">{quizInfo.keyword}</Badge>}
+          <Badge className="big-badge" bg="danger">
+            {quizInfo.subject}
+          </Badge>
+          {quizInfo.keyword && (
+            <Badge className="big-badge" bg="dark">
+              {quizInfo.keyword}
+            </Badge>
+          )}
           <Badge className="star-icon" bg="warning" text="dark">
             {Array(Math.floor(Number(quizInfo.difficulty) / 2))
               .fill(0)
@@ -107,7 +113,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
                 <StarHalfIcon key={`star-half-${i}`} fontSize="small" />
               ))}
           </Badge>
-          <Badge bg="danger">{quizInfo.score ?? 10}</Badge>
+          <Badge bg="primary">{quizInfo.score ?? 10}</Badge>
         </div>
         <div className="play-hidden-picture-quiz-item__index">
           {props.index + 1}

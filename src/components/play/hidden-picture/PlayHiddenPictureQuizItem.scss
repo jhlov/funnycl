@@ -28,9 +28,15 @@
     top: 4px;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: end;
     column-gap: 2px;
+    row-gap: 2px;
     font-size: 20px;
+    width: 100%;
+
+    .big-badge {
+      font-size: 20px;
+    }
 
     .star-icon {
       padding: 0.18em 0.5em;
