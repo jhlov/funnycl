@@ -83,8 +83,8 @@ export const usePlay = create<State>((set, get) => ({
           while (quizList.length < quizCount) {
             quizList = [...quizList, ...quizList];
           }
-          quizList = quizList.slice(0, quizCount);
           quizList = _.shuffle(quizList);
+          quizList = quizList.slice(0, quizCount);
 
           const groupList = [
             {
