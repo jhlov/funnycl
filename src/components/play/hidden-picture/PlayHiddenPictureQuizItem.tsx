@@ -2,6 +2,7 @@ import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import classNames from "classnames";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
+import { CONST } from "const";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -72,7 +73,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     if (quizInfo.answerType === "단답형") {
       if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
         updateQuizListFinished(props.index);
-        updateGroupListScore(groupName, quizInfo.score ?? 10);
+        updateGroupListScore(groupName, quizInfo.score ?? CONST.DEFAULT_SCORE);
 
         if (keyList.includes(props.index)) {
           updateGroupListKey(groupName, 1);
@@ -124,7 +125,11 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
           <Modal.Title>
             {`${props.index + 1}번 문제`}{" "}
             <small className="ms-1">
-              ({`${quizInfo.subject} / ${quizInfo.score ?? 10}점`})
+              (
+              {`${quizInfo.subject} / ${
+                quizInfo.score ?? CONST.DEFAULT_SCORE
+              }점`}
+              )
             </small>
           </Modal.Title>
         </Modal.Header>

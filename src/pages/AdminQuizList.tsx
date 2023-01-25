@@ -1,6 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { yearList } from "components/admin/quiz/NewQuizInfo";
+import { CONST } from "const";
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, update } from "firebase/database";
 import moment from "moment";
@@ -96,7 +97,7 @@ const AdminQuizList = () => {
               <td>{yearList[item.year - 1][1]}</td>
               <td className="text-start">{item.keyword}</td>
               <td>{item.difficulty}</td>
-              <td>{item.score ?? 10}</td>
+              <td>{item.score ?? CONST.DEFAULT_SCORE}</td>
               <td>{item.answerType}</td>
               <td>{item.created}</td>
               <td>{item.modified}</td>

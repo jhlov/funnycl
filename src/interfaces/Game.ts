@@ -1,3 +1,4 @@
+import { CONST } from "const";
 import { QuizSubject } from "./Quiz";
 
 type GameType = "NONE" | "숨겨진그림";
@@ -32,15 +33,15 @@ export interface Game {
 export const initNewGame: Game = {
   title: "",
   type: "NONE",
-  sizeX: 4,
-  sizeY: 4,
-  groupCount: 3,
+  sizeX: CONST.DEFAULT_BOARD_SIZE_X,
+  sizeY: CONST.DEFAULT_BOARD_SIZE_Y,
+  groupCount: CONST.DEFAULT_GROUP_COUNT,
   isPlaySetting: true,
   subject: "랜덤",
   yearStart: 1,
   yearEnd: 12,
   difficultyStart: 1,
-  difficultyEnd: 10,
+  difficultyEnd: CONST.DIFFICULTY_END,
   image: null,
   imageUrl: ""
 };

@@ -1,4 +1,5 @@
 import { yearList } from "components/admin/quiz/NewQuizInfo";
+import { CONST } from "const";
 import { quizSubjectList } from "interfaces/Quiz";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
@@ -68,7 +69,7 @@ export const Play = (props: any) => {
                     value={gameInfo.sizeX}
                     onChange={e => setGameInfo("sizeX", Number(e.target.value))}
                   >
-                    {Array(5)
+                    {Array(CONST.MAX_BOARD_SIZE_X)
                       .fill(0)
                       .map((_, i) => (
                         <option key={`sizeX_${i}`} value={i + 1}>
@@ -81,7 +82,7 @@ export const Play = (props: any) => {
                     value={gameInfo.sizeY}
                     onChange={e => setGameInfo("sizeY", Number(e.target.value))}
                   >
-                    {Array(5)
+                    {Array(CONST.MAX_BOARD_SIZE_Y)
                       .fill(0)
                       .map((_, i) => (
                         <option key={`sizeY${i}`} value={i + 1}>
@@ -100,7 +101,7 @@ export const Play = (props: any) => {
                     setGameInfo("groupCount", Number(e.target.value))
                   }
                 >
-                  {Array(5)
+                  {Array(CONST.MAX_GROUP_COUNT)
                     .fill(0)
                     .map((_, i) => (
                       <option key={`groupCount_${i}`} value={i + 1}>
@@ -164,7 +165,7 @@ export const Play = (props: any) => {
                       setGameInfo("difficultyStart", Number(e.target.value))
                     }
                   >
-                    {Array(10)
+                    {Array(CONST.DIFFICULTY_END)
                       .fill(0)
                       .map((_, i) => (
                         <option key={`difficultyStart_${i}`} value={i + 1}>
@@ -179,7 +180,7 @@ export const Play = (props: any) => {
                       setGameInfo("difficultyEnd", Number(e.target.value))
                     }
                   >
-                    {Array(10)
+                    {Array(CONST.DIFFICULTY_END)
                       .fill(0)
                       .map((_, i) => (
                         <option key={`difficultyEnd_${i}`} value={i + 1}>

@@ -1,3 +1,4 @@
+import { CONST } from "const";
 import { answerTypetList, quizSubjectList } from "interfaces/Quiz";
 import Form from "react-bootstrap/Form";
 import { useQuiz } from "store/useQuiz";
@@ -67,7 +68,7 @@ const NewQuizInfo = () => {
             value={newQuiz.difficulty}
             onChange={e => setNewQuiz("difficulty", e.target.value)}
           >
-            {Array(10)
+            {Array(CONST.DIFFICULTY_END)
               .fill(0)
               .map((_, i) => (
                 <option key={`difficulty_${i}`} value={i + 1}>
