@@ -70,9 +70,9 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
         </span>
       </div>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal className="pb-3" show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          {props.group.name} 그림 정답 도전
+          <Modal.Title>{props.group.name} 그림 정답 도전</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -97,12 +97,13 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
       </Modal>
 
       <Modal
-        className="play-hidden-picture-score-item__result-modal"
+        className="play-hidden-picture-score-item__result-modal pb-3"
         size="lg"
         show={!!result}
         onHide={handleCloseResult}
+        centered
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton />
         <Modal.Body>
           <div>{result}</div>
         </Modal.Body>

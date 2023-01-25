@@ -114,10 +114,11 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
       </div>
 
       <Modal
-        className="play-hidden-picture-quiz-item__quiz-modal"
+        className="play-hidden-picture-quiz-item__quiz-modal pb-3"
         size="lg"
         show={show}
         onHide={handleClose}
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -182,12 +183,13 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
       </Modal>
 
       <Modal
-        className="quiz-result-modal"
+        className="quiz-result-modal pb-3"
         size="lg"
         show={!!result}
         onHide={handleCloseResult}
+        centered
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton />
         <Modal.Body>
           <div>{result}</div>
           {keyList.includes(props.index) &&

@@ -46,7 +46,13 @@ export const Play = (props: any) => {
     <>
       {startGame && gameInfo?.type === "숨겨진그림" && <PlayHiddenPicture />}
 
-      <Modal show={showSettingModal} backdrop="static" keyboard={false}>
+      <Modal
+        className="pb-3"
+        show={showSettingModal}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
         <Modal.Header>
           <Modal.Title>
             {gameInfo?.title} <small>({gameInfo?.type})</small>
