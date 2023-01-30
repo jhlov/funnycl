@@ -6,8 +6,10 @@
   background-color: white;
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 1px solid saddlebrown;
 
   &__back {
     position: absolute;
@@ -32,6 +34,37 @@
     .play-hidden-picture-quiz-item__index {
       opacity: 0;
     }
+
+    .score,
+    .star-icon,
+    .subject {
+      display: none;
+    }
+  }
+
+  .score {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    background-color: saddlebrown !important;
+    font-size: 16px;
+  }
+
+  .star-icon {
+    z-index: 1;
+    padding: 0.18em 0.5em;
+
+    svg {
+      width: 20px;
+      color: saddlebrown;
+    }
+  }
+
+  .subject {
+    font-size: 16px;
+    font-weight: bold;
+    color: saddlebrown !important;
+    z-index: 1;
   }
 
   &__badge-list {
@@ -49,18 +82,11 @@
     .big-badge {
       font-size: 20px;
     }
-
-    .star-icon {
-      padding: 0.18em 0.5em;
-
-      svg {
-        width: 16px;
-      }
-    }
   }
 
   &__index {
     font-size: 50px;
+    line-height: 1;
     z-index: 1;
   }
 }

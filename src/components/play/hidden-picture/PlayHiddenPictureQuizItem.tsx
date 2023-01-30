@@ -96,31 +96,28 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
           className="play-hidden-picture-quiz-item__back"
           src={`${process.env.PUBLIC_URL}/img/back02.jpeg`}
         />
-        <div className="play-hidden-picture-quiz-item__badge-list">
-          <Badge className="big-badge" bg="danger">
-            {quizInfo.subject}
-          </Badge>
-          {quizInfo.keyword && (
-            <Badge className="big-badge" bg="dark">
-              {quizInfo.keyword}
-            </Badge>
-          )}
-          <Badge className="star-icon" bg="warning" text="dark">
-            {Array(Math.floor(Number(quizInfo.difficulty) / 2))
-              .fill(0)
-              .map((_, i) => (
-                <StarIcon key={`star-${i}`} fontSize="small" />
-              ))}
-            {Array(quizInfo.difficulty % 2)
-              .fill(0)
-              .map((_, i) => (
-                <StarHalfIcon key={`star-half-${i}`} fontSize="small" />
-              ))}
-          </Badge>
-          <Badge bg="primary">{quizInfo.score ?? 10}</Badge>
-        </div>
+        <Badge className="score" bg="primary">
+          {quizInfo.score ?? 10}
+        </Badge>
+
         <div className="play-hidden-picture-quiz-item__index">
           {props.index + 1}
+        </div>
+        <div className="star-icon">
+          {Array(Math.floor(Number(quizInfo.difficulty) / 2))
+            .fill(0)
+            .map((_, i) => (
+              <StarIcon key={`star-${i}`} fontSize="small" />
+            ))}
+          {Array(quizInfo.difficulty % 2)
+            .fill(0)
+            .map((_, i) => (
+              <StarHalfIcon key={`star-half-${i}`} fontSize="small" />
+            ))}
+        </div>
+        <div className="subject">
+          {quizInfo.subject}
+          {quizInfo.keyword ? ` / ${quizInfo.keyword}` : ""}
         </div>
       </div>
 
