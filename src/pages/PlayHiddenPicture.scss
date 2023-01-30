@@ -2,5 +2,11 @@
   display: flex;
   height: 100vh;
   // background-color: #e3f2f6;
-  background-size: contain;
+  position: relative;
+
+  &__bg {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+  }
 }
