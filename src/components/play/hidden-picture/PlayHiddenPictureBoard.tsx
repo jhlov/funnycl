@@ -8,7 +8,10 @@ export const PlayHiddenPictureBoard = () => {
   return (
     <div className="play-hidden-picture-board">
       <div className="play-hidden-picture-board__box">
-        <img className="" src={gameInfo?.image as string} />
+        <img
+          className="play-hidden-picture-board__answer-picture"
+          src={gameInfo?.image as string}
+        />
 
         <div
           className="play-hidden-picture-board__quiz-list"

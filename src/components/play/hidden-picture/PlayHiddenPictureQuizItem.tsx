@@ -1,17 +1,12 @@
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import classNames from "classnames";
+import { SliceImage } from "components/common/SliceImage";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { CONST } from "const";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import { useEffect, useMemo, useState } from "react";
-import {
-  Badge,
-  Button,
-  ButtonGroup,
-  Modal,
-  ToggleButton
-} from "react-bootstrap";
+import { Button, ButtonGroup, Modal, ToggleButton } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureQuizItem.scss";
 
@@ -92,30 +87,35 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         })}
         onClick={onClick}
       >
-        <img
+        <SliceImage
           className="play-hidden-picture-quiz-item__back"
-          src={`${process.env.PUBLIC_URL}/img/back02.jpeg`}
+          image={`${process.env.PUBLIC_URL}/img/quiz/bg_quizbox.png`}
+          top={83}
+          right={18}
+          bottom={18}
+          left={57}
         />
-        <Badge className="score" bg="primary">
+        <span className="play-hidden-picture-quiz-item__score">
           {quizInfo.score ?? 10}
-        </Badge>
+        </span>
+        <img
+          className="play-hidden-picture-quiz-item__question_icon"
+          src={`${process.env.PUBLIC_URL}/img/quiz/icon_question.png`}
+        />
 
-        <div className="play-hidden-picture-quiz-item__index">
-          {props.index + 1}
-        </div>
-        <div className="star-icon">
+        <div className="play-hidden-picture-quiz-item__star-icon">
           {Array(Math.floor(Number(quizInfo.difficulty) / 2))
             .fill(0)
             .map((_, i) => (
-              <StarIcon key={`star-${i}`} fontSize="small" />
+              <StarIcon key={`star-${i}`} />
             ))}
           {Array(quizInfo.difficulty % 2)
             .fill(0)
             .map((_, i) => (
-              <StarHalfIcon key={`star-half-${i}`} fontSize="small" />
+              <StarHalfIcon key={`star-half-${i}`} />
             ))}
         </div>
-        <div className="subject">
+        <div className="play-hidden-picture-quiz-item__subject">
           {quizInfo.subject}
           {quizInfo.keyword ? ` / ${quizInfo.keyword}` : ""}
         </div>
