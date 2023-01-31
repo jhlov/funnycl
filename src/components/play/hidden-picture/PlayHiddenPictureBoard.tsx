@@ -8,6 +8,18 @@ export const PlayHiddenPictureBoard = () => {
   return (
     <div className="play-hidden-picture-board">
       <div className="play-hidden-picture-board__box">
+        <div className="play-hidden-picture-board__tree">
+          <img
+            src={`${process.env.PUBLIC_URL}/img/quiz/bg_quiz_tree_left_bg.png`}
+          />
+          <img
+            src={`${process.env.PUBLIC_URL}/img/quiz/bg_quiz_tree_center_bg.png`}
+          />
+          <img
+            src={`${process.env.PUBLIC_URL}/img/quiz/bg_quiz_tree_right_bg.png`}
+          />
+        </div>
+
         <img
           className="play-hidden-picture-board__answer-picture"
           src={gameInfo?.image as string}

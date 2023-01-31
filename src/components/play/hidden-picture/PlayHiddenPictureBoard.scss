@@ -1,11 +1,34 @@
 .play-hidden-picture-board {
   flex: 1;
-  padding: 40px;
+  padding: 60px;
 
   &__box {
     height: 100%;
     display: inline-block;
     position: relative;
+
+    .play-hidden-picture-board__tree {
+      position: absolute;
+      left: -15px;
+      top: -15px;
+      width: calc(100% + 30px);
+      height: calc(100% + 30px);
+      display: flex;
+
+      img {
+        &:first-child {
+          width: 72px;
+        }
+
+        &:nth-child(2) {
+          flex: 1;
+        }
+
+        &:last-child {
+          width: 72px;
+        }
+      }
+    }
 
     .play-hidden-picture-board__answer-picture {
       height: 100%;
@@ -15,12 +38,11 @@
   &__quiz-list {
     position: absolute;
     display: grid;
-    row-gap: 2px;
-    column-gap: 2px;
+    row-gap: 4px;
+    column-gap: 4px;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    grid-template-columns: repeat(4, 1fr);
   }
 }
