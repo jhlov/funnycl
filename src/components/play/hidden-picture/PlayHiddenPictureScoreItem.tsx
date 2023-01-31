@@ -66,7 +66,7 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
         </div>
 
         <span className="play-hidden-picture-score-item__score">
-          {props.group.score}
+          {props.group.score}점
         </span>
       </div>
 

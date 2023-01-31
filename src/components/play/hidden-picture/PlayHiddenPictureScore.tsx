@@ -1,3 +1,4 @@
+import { SliceImage } from "components/common/SliceImage";
 import { useMemo } from "react";
 import FlipMove from "react-flip-move";
 import { usePlay } from "store/usePlay";
@@ -14,8 +15,19 @@ export const PlayHiddenPictureScore = () => {
 
   return (
     <div className="play-hidden-picture-score">
-      <div className="title mb-4">SCORE</div>
-      <div>
+      <img
+        className="play-hidden-picture-score__title"
+        src={`${process.env.PUBLIC_URL}/img/score/img_score_title_text.png`}
+      />
+      <SliceImage
+        className="play-hidden-picture-score__bg"
+        image={`${process.env.PUBLIC_URL}/img/score/img_score_title_bg.png`}
+        top={30}
+        right={10}
+        bottom={16}
+        left={10}
+      />
+      <div className="play-hidden-picture-score__item-list">
         <FlipMove>
           {copyList
             .sort((a, b) => b?.score - a?.score)

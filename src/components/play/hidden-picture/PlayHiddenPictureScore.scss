@@ -1,13 +1,23 @@
 .play-hidden-picture-score {
-  width: 300px;
-  min-width: 300px;
-  background-color: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  margin: 40px;
+  width: 326px;
+  min-width: 326px;
+  margin: 45px 40px;
+  position: relative;
 
-  .title {
-    font-size: 36px;
-    font-weight: bold;
+  &__title {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__bg {
+    height: calc(100% - 49px);
+    position: absolute;
+    left: 10px;
+    top: 48px;
+    width: calc(100% - 20px);
+  }
+
+  &__item-list {
+    padding: 0 28px;
   }
 }

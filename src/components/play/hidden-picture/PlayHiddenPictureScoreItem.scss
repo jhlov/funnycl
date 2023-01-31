@@ -1,59 +1,66 @@
 .play-hidden-picture-score-item {
   color: white;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: bold;
-  border-radius: 16px;
+  border-radius: 4px;
   display: flex;
   justify-content: space-between;
-  padding: 8px 8px 8px 28px;
+  padding: 6px 6px 6px 12px;
+
+  @media (max-height: 800px) {
+    font-size: 22px;
+  }
 
   &.red {
-    background-color: red;
+    background-color: #a82424;
   }
 
   &.blue {
-    background-color: blue;
+    background-color: #1d70c4;
   }
 
   &.green {
-    background-color: green;
+    background-color: #1d821d;
   }
 
   &.purple {
-    background-color: purple;
+    background-color: #8d1298;
   }
 
   &.orange {
-    background-color: orange;
+    background-color: #e58700;
   }
 
   &.brown {
-    background-color: brown;
+    background-color: #d23f84;
   }
 
   &.cornflowerblue {
-    background-color: cornflowerblue;
+    background-color: #6495ed;
   }
 
   &.darkcyan {
-    background-color: darkcyan;
+    background-color: #008b8b;
   }
 
   &.slateblue {
-    background-color: slateblue;
+    background-color: #6a5acd;
   }
 
   &.slategray {
-    background-color: slategray;
+    background-color: #708090;
   }
 
   &__score {
-    background: white;
-    color: black;
-    padding: 0px 20px;
-    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 0px 8px;
+    border-radius: 4px;
     width: 100px;
-    text-align: right;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: end;
   }
 
   &__key {
