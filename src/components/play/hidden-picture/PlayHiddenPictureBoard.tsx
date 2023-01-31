@@ -27,7 +27,10 @@ export const PlayHiddenPictureBoard = () => {
 
         <div
           className="play-hidden-picture-board__quiz-list"
-          style={{ gridTemplateColumns: `repeat(${gameInfo?.sizeX}, 1fr)` }}
+          style={{
+            gridTemplateColumns: `repeat(${gameInfo?.sizeX}, 1fr)`,
+            gridTemplateRows: `repeat(${gameInfo?.sizeY}, 1fr)`
+          }}
         >
           {quizList.map((item, i) => (
             <PlayHiddenPictureQuizItem key={`${item.id}-${i}`} index={i} />
