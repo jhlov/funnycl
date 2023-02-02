@@ -6,7 +6,7 @@ import { ImagePrimaryButton } from "components/image-buttons/ImagePrimaryButton"
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import { useEffect, useMemo, useState } from "react";
-import { Modal } from "react-bootstrap";
+import { ButtonGroup, Modal, ToggleButton } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
 import "./QuizModal.scss";
 
@@ -141,6 +141,27 @@ export const QuizModal = (props: Props) => {
           </div>
         )}
 
+        {!gameInfo?.isTurnPlay && (
+          <div className="quiz-modal__group-list">
+            <ButtonGroup className="mb-5" size="lg">
+              {groupList.map((group, idx) => (
+                <ToggleButton
+                  key={idx}
+                  id={`radio-${idx}`}
+                  type="radio"
+                  variant="outline-secondary"
+                  name="radio"
+                  value={group.name}
+                  checked={groupName === group.name}
+                  onChange={e => setGroupName(e.currentTarget.value)}
+                >
+                  {group.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+          </div>
+        )}
+
         <div className="d-flex justify-content-end column-gap-3">
           <ImageNormalButton
             className="me-2"
@@ -150,7 +171,7 @@ export const QuizModal = (props: Props) => {
           <ImagePrimaryButton
             label="정답제출"
             onClick={onSubmit}
-            disabled={!answer}
+            disabled={!answer || !groupName}
           />
         </div>
       </Modal.Body>
