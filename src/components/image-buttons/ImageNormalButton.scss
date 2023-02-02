@@ -1,0 +1,19 @@
+.image-normal-button {
+  padding: 10px 24px;
+  display: inline-flex;
+  position: relative;
+  color: white;
+  justify-content: center;
+  align-items: center;
+
+  &__bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__label {
+    z-index: 1;
+    font-weight: bold;
+  }
+}
