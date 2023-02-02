@@ -17,6 +17,7 @@ interface State {
   initGame: () => void;
   groupList: Group[];
   keyList: number[];
+  turn: number; // 턴제 진행 일때 사용
   updateGroupListScore: (groupName: string, score: number) => void;
   updateGroupListKey: (groupName: string, delta: number) => void;
   updateQuizListFinished: (index: number) => void;
@@ -105,6 +106,7 @@ export const usePlay = create<State>((set, get) => ({
             startGame: true,
             quizList,
             groupList,
+            turn: 0,
             keyList: _.sampleSize(
               Array(quizCount)
                 .fill(0)
@@ -122,6 +124,7 @@ export const usePlay = create<State>((set, get) => ({
   },
   groupList: [],
   keyList: [],
+  turn: 0,
   updateGroupListScore: (groupName: string, score: number) => {
     set(() => ({
       groupList: get().groupList.map(item =>

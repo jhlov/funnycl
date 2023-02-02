@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   padding: 6px 6px 6px 12px;
+  position: relative;
 
   @media (max-height: 800px) {
     font-size: 22px;
@@ -65,6 +66,26 @@
 
   &__key {
     cursor: pointer;
+  }
+
+  &__my-turn {
+    position: absolute;
+    left: -56px;
+    top: -2px;
+    animation-duration: 1s;
+    animation-name: slidein;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+}
+
+@keyframes slidein {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-8px);
   }
 }
 

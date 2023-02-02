@@ -7,6 +7,7 @@ import "./PlayHiddenPictureScoreItem.scss";
 
 interface Props {
   group: Group;
+  groupIndex: number;
 }
 
 export const PlayHiddenPictureScoreItem = (props: Props) => {
@@ -14,7 +15,7 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState("");
 
-  const { gameInfo, quizList, updateGroupListKey } = usePlay();
+  const { gameInfo, turn, updateGroupListKey } = usePlay();
 
   const onClickKey = () => {
     setAnswer("");
@@ -68,6 +69,13 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
         <span className="play-hidden-picture-score-item__score">
           {props.group.score}점
         </span>
+
+        {gameInfo?.isTurnPlay && turn === props.groupIndex && (
+          <img
+            className="play-hidden-picture-score-item__my-turn"
+            src={`${process.env.PUBLIC_URL}/img/score/icon_mylocation.png`}
+          />
+        )}
       </div>
 
       <Modal className="pb-3" show={show} onHide={handleClose} centered>

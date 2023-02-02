@@ -33,7 +33,10 @@ export const PlayHiddenPictureScore = () => {
             .sort((a, b) => b?.score - a?.score)
             .map(group => (
               <div key={group.name}>
-                <PlayHiddenPictureScoreItem group={group} />
+                <PlayHiddenPictureScoreItem
+                  group={group}
+                  groupIndex={groupList.indexOf(group)}
+                />
               </div>
             ))}
         </FlipMove>
