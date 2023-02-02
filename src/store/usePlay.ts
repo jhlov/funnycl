@@ -21,6 +21,7 @@ interface State {
   updateGroupListScore: (groupName: string, score: number) => void;
   updateGroupListKey: (groupName: string, delta: number) => void;
   updateQuizListFinished: (index: number) => void;
+  updateTurn: () => void;
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -159,6 +160,11 @@ export const usePlay = create<State>((set, get) => ({
             }
           : item
       )
+    }));
+  },
+  updateTurn: () => {
+    set(() => ({
+      turn: (get().turn + 1) % get().groupList.length
     }));
   }
 }));

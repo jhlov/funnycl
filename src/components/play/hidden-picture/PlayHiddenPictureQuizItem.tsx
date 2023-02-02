@@ -2,11 +2,10 @@ import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import classNames from "classnames";
 import { SliceImage } from "components/common/SliceImage";
-import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
+import { QuizModal } from "components/modals/QuizModal";
 import { CONST } from "const";
-import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import { useEffect, useMemo, useState } from "react";
-import { Button, ButtonGroup, Modal, ToggleButton } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureQuizItem.scss";
 
@@ -22,11 +21,12 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
 
   const {
     quizList,
-    groupList,
+    gameInfo,
     updateGroupListScore,
     updateGroupListKey,
     keyList,
-    updateQuizListFinished
+    updateQuizListFinished,
+    updateTurn
   } = usePlay();
 
   const quizInfo = useMemo(() => {
@@ -35,8 +35,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
 
   useEffect(() => {
     if (show) {
-      setAnswer("");
       setResult("");
+      setAnswer("");
       setGroupName("");
     }
   }, [show]);
@@ -51,11 +51,13 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setShow(false);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (groupName_: string, answer_: string) => {
+    setAnswer(answer_);
+    setGroupName(groupName_);
     handleClose();
     setTimeout(() => {
       if (quizInfo.answerType === "단답형") {
-        if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
+        if (quizInfo.shortAnswerQuestionInfo?.answer === answer_) {
           setResult("정답입니다!!!");
         } else {
           setResult("오답입니다");
@@ -74,6 +76,10 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
           updateGroupListKey(groupName, 1);
         }
       }
+    }
+
+    if (gameInfo?.isTurnPlay) {
+      updateTurn();
     }
 
     setResult("");
@@ -121,82 +127,12 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         </div>
       </div>
 
-      <Modal
-        className="play-hidden-picture-quiz-item__quiz-modal pb-3"
-        size="lg"
+      <QuizModal
         show={show}
-        onHide={handleClose}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {`${props.index + 1}번 문제`}{" "}
-            <small className="ms-1">
-              (
-              {`${quizInfo.subject} / ${
-                quizInfo.score ?? CONST.DEFAULT_SCORE
-              }점`}
-              )
-            </small>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {quizInfo.type === "워크시트" && (
-            <div className="position-relative text-center mb-3 py-5">
-              <img
-                className="play-hidden-picture-quiz-item__bg"
-                src={`${process.env.PUBLIC_URL}/img/popup01.jpg`}
-              />
-              <div className="play-hidden-picture-quiz-item__image-wrapper">
-                <img src={quizInfo.image as string} />
-                {quizInfo.answerType === "단답형" && (
-                  <ShortAnswerQuestion
-                    index={0}
-                    info={quizInfo.shortAnswerQuestionInfo!}
-                    answer={answer}
-                    onChange={(info: ShortAnswerQuestionInfo) =>
-                      setAnswer(info.answer)
-                    }
-                    onRemove={() => {}}
-                    isEditable={false}
-                  />
-                )}
-              </div>
-            </div>
-          )}
-
-          <div className="group-list">
-            <ButtonGroup className="mb-2" size="lg">
-              {groupList.map((group, idx) => (
-                <ToggleButton
-                  key={idx}
-                  id={`radio-${idx}`}
-                  type="radio"
-                  variant="outline-secondary"
-                  name="radio"
-                  value={group.name}
-                  checked={groupName === group.name}
-                  onChange={e => setGroupName(e.currentTarget.value)}
-                >
-                  {group.name}
-                </ToggleButton>
-              ))}
-            </ButtonGroup>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            닫기
-          </Button>
-          <Button
-            variant="primary"
-            onClick={onSubmit}
-            disabled={!answer || !groupName}
-          >
-            정답 제출
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        index={props.index}
+        onSubmit={onSubmit}
+        onClose={() => setShow(false)}
+      />
 
       <Modal
         className="quiz-result-modal pb-3"

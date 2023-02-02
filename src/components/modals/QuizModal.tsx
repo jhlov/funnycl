@@ -13,20 +13,31 @@ import "./QuizModal.scss";
 interface Props {
   show: boolean;
   index: number;
-  onSubmit: (answer: string) => void;
+  onSubmit: (groupName: string, answer: string) => void;
   onClose: () => void;
 }
 
 export const QuizModal = (props: Props) => {
+  const [groupName, setGroupName] = useState("");
   const [answer, setAnswer] = useState("");
 
   const { quizList, gameInfo, turn, groupList } = usePlay();
 
   useEffect(() => {
     if (props.show) {
+      if (!gameInfo?.isTurnPlay) {
+        setGroupName("");
+      }
+
       setAnswer("");
     }
-  }, [props.show]);
+  }, [props.show, gameInfo?.isTurnPlay]);
+
+  useEffect(() => {
+    if (gameInfo?.isTurnPlay) {
+      setGroupName(groupList[turn].name);
+    }
+  }, [gameInfo?.isTurnPlay, turn]);
 
   const quizInfo = useMemo(() => {
     return quizList[props.index];
@@ -47,7 +58,7 @@ export const QuizModal = (props: Props) => {
   };
 
   const onSubmit = () => {
-    props.onSubmit(answer);
+    props.onSubmit(groupName, answer);
     handleClose();
   };
 
