@@ -12,29 +12,19 @@ import "./QuizModal.scss";
 
 interface Props {
   show: boolean;
-  onClose: () => void;
   index: number;
+  onSubmit: (answer: string) => void;
+  onClose: () => void;
 }
 
 export const QuizModal = (props: Props) => {
   const [answer, setAnswer] = useState("");
-  const [groupName, setGroupName] = useState("");
 
-  const {
-    quizList,
-    gameInfo,
-    turn,
-    groupList,
-    updateGroupListScore,
-    updateGroupListKey,
-    keyList,
-    updateQuizListFinished
-  } = usePlay();
+  const { quizList, gameInfo, turn, groupList } = usePlay();
 
   useEffect(() => {
     if (props.show) {
       setAnswer("");
-      setGroupName("");
     }
   }, [props.show]);
 
@@ -47,16 +37,8 @@ export const QuizModal = (props: Props) => {
   };
 
   const onSubmit = () => {
-    // handleClose();
-    // setTimeout(() => {
-    //   if (quizInfo.answerType === "단답형") {
-    //     if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
-    //       setResult("정답입니다!!!");
-    //     } else {
-    //       setResult("오답입니다");
-    //     }
-    //   }
-    // }, 200);
+    props.onSubmit(answer);
+    handleClose();
   };
 
   return (
@@ -139,8 +121,16 @@ export const QuizModal = (props: Props) => {
         )}
 
         <div className="d-flex justify-content-end column-gap-3">
-          <ImageNormalButton className="me-2" label="닫기" />
-          <ImagePrimaryButton label="정답제출" />
+          <ImageNormalButton
+            className="me-2"
+            label="닫기"
+            onClick={handleClose}
+          />
+          <ImagePrimaryButton
+            label="정답제출"
+            onClick={onSubmit}
+            disabled={!answer}
+          />
         </div>
       </Modal.Body>
     </Modal>

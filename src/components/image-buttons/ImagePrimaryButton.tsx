@@ -1,13 +1,25 @@
+import classNames from "classnames";
 import { SliceImage } from "components/common/SliceImage";
 import "./ImageNormalButton.scss";
 
 interface Props {
   label: string;
+  disabled?: boolean;
+  onClick: () => void;
 }
 
 export const ImagePrimaryButton = (props: Props) => {
   return (
-    <div className="image-normal-button">
+    <div
+      className={classNames("image-normal-button", {
+        disabled: props.disabled
+      })}
+      onClick={() => {
+        if (!props.disabled) {
+          props.onClick();
+        }
+      }}
+    >
       <SliceImage
         className="image-normal-button__bg"
         image={`${process.env.PUBLIC_URL}/img/buttons/btn_completion.png`}

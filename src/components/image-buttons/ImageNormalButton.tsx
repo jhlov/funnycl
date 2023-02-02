@@ -5,11 +5,15 @@ import "./ImageNormalButton.scss";
 interface Props {
   className?: string;
   label: string;
+  onClick: () => void;
 }
 
 export const ImageNormalButton = (props: Props) => {
   return (
-    <div className={classNames(props.className, "image-normal-button")}>
+    <div
+      className={classNames(props.className, "image-normal-button")}
+      onClick={props.onClick}
+    >
       <SliceImage
         className="image-normal-button__bg"
         image={`${process.env.PUBLIC_URL}/img/buttons/btn_close.png`}
