@@ -32,6 +32,16 @@ export const QuizModal = (props: Props) => {
     return quizList[props.index];
   }, [props.index, quizList]);
 
+  const bgUrl = useMemo(() => {
+    if (gameInfo?.isTurnPlay) {
+      return `${process.env.PUBLIC_URL}/img/popup/bg_popup_paper_${(turn + 1)
+        .toString()
+        .padStart(2, "0")}.png`;
+    }
+
+    return `${process.env.PUBLIC_URL}/img/popup/bg_popup_paper_00.png`;
+  }, [gameInfo?.isTurnPlay, turn]);
+
   const handleClose = () => {
     props.onClose();
   };
@@ -52,7 +62,7 @@ export const QuizModal = (props: Props) => {
       <Modal.Body>
         <SliceImage
           className="quiz-modal__bg"
-          image={`${process.env.PUBLIC_URL}/img/popup/bg_popup_paper_00.png`}
+          image={bgUrl}
           top={24}
           right={24}
           bottom={24}
