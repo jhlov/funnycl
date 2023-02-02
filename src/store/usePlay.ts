@@ -32,7 +32,10 @@ export const usePlay = create<State>((set, get) => ({
       .then(snapshot => {
         if (snapshot.exists()) {
           set(() => ({
-            gameInfo: snapshot.val()
+            gameInfo: {
+              ...snapshot.val(),
+              isTurnPlay: snapshot.val().isTurnPlay ?? true
+            }
           }));
         } else {
           console.log("No data available");
@@ -53,6 +56,7 @@ export const usePlay = create<State>((set, get) => ({
   quizList: [],
   initGame: () => {
     const gameInfo = get().gameInfo;
+    console.log(gameInfo);
     const dbRef = ref(getDatabase());
     const quizUrl = `quiz/${gameInfo?.userId}`;
     getData(child(dbRef, quizUrl))

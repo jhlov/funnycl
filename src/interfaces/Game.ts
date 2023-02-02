@@ -13,6 +13,7 @@ export interface Game {
   groupNameList: string[];
 
   isPlaySetting: boolean; // 게임 플레이 시에 세팅
+  isTurnPlay: boolean;
   subject: "랜덤" | QuizSubject;
   yearStart: number;
   yearEnd: number;
@@ -39,6 +40,7 @@ export const initNewGame: Game = {
   groupCount: CONST.DEFAULT_GROUP_COUNT,
   groupNameList: CONST.DEFAULT_GROUP_NAME_LIST,
   isPlaySetting: true,
+  isTurnPlay: true,
   subject: "랜덤",
   yearStart: 1,
   yearEnd: 12,

@@ -57,7 +57,7 @@ export const NewGame = () => {
                 <Form.Label>그림 정답</Form.Label>
                 <Form.Control
                   type="text"
-                  value={newGame.hiddenPictureAnswer}
+                  value={newGame.hiddenPictureAnswer ?? ""}
                   onChange={e =>
                     setNewGame("hiddenPictureAnswer", e.target.value)
                   }
@@ -96,6 +96,15 @@ export const NewGame = () => {
 
             {!newGame.isPlaySetting && (
               <>
+                <Form.Group className="mb-4">
+                  <Form.Check
+                    type="checkbox"
+                    label="턴제 게임 진행"
+                    checked={newGame.isTurnPlay ?? true}
+                    onChange={e => setNewGame("isTurnPlay", e.target.checked)}
+                  />
+                </Form.Group>
+
                 <Form.Group className="new-game__size mb-4">
                   <Form.Label>크기 (가로 x 세로) </Form.Label>
                   <div className="d-flex">

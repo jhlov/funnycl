@@ -62,6 +62,14 @@ export const Play = (props: any) => {
         <Modal.Body>
           {gameInfo && (
             <Form className="text-start">
+              <Form.Group className="mb-4">
+                <Form.Check
+                  type="checkbox"
+                  label="턴제 게임 진행"
+                  checked={gameInfo.isTurnPlay ?? true}
+                  onChange={e => setGameInfo("isTurnPlay", e.target.checked)}
+                />
+              </Form.Group>
               <Form.Group className="new-game__size mb-4">
                 <Form.Label>크기 (가로 x 세로) </Form.Label>
                 <div className="d-flex">
