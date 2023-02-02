@@ -12,6 +12,7 @@ interface Props {
   onChange: (info: ShortAnswerQuestionInfo) => void;
   onRemove: (index: number) => void;
   isEditable: boolean;
+  multiple?: number;
 }
 
 const ShortAnswerQuestion = (props: Props) => {
@@ -65,8 +66,8 @@ const ShortAnswerQuestion = (props: Props) => {
     <div
       className="short-answer-question"
       style={{
-        left: props.info?.x,
-        top: props.info?.y
+        left: (props.multiple ?? 1) * props.info?.x,
+        top: (props.multiple ?? 1) * props.info?.y
       }}
     >
       {props.isEditable && (
@@ -105,8 +106,8 @@ const ShortAnswerQuestion = (props: Props) => {
       <input
         type="text"
         style={{
-          width: props.info?.width,
-          height: props.info?.height
+          width: (props.multiple ?? 1) * props.info?.width,
+          height: (props.multiple ?? 1) * props.info?.height
         }}
         value={props.answer}
         onChange={onChangeshortAnswerQuestionAnswer}

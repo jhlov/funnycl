@@ -5,7 +5,7 @@ import { ImageNormalButton } from "components/image-buttons/ImageNormalButton";
 import { ImagePrimaryButton } from "components/image-buttons/ImagePrimaryButton";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ButtonGroup, Modal, ToggleButton } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
 import "./QuizModal.scss";
@@ -20,8 +20,12 @@ interface Props {
 export const QuizModal = (props: Props) => {
   const [groupName, setGroupName] = useState("");
   const [answer, setAnswer] = useState("");
+  const [imageWidth, setImageWidth] = useState(0);
+  const [imageNaturalWidth, setImageNaturalWidth] = useState(0);
 
   const { quizList, gameInfo, turn, groupList } = usePlay();
+
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     if (props.show) {
@@ -62,10 +66,15 @@ export const QuizModal = (props: Props) => {
     handleClose();
   };
 
+  const onLoadImage = () => {
+    setImageWidth(imageRef.current?.width ?? 0);
+    setImageNaturalWidth(imageRef.current?.naturalWidth ?? 0);
+  };
+
   return (
     <Modal
       className="quiz-modal pb-3"
-      size="lg"
+      size="xl"
       show={props.show}
       onHide={handleClose}
       centered
@@ -122,9 +131,13 @@ export const QuizModal = (props: Props) => {
         </div>
 
         {quizInfo.type === "워크시트" && (
-          <div className="position-relative text-center pt-4 pb-5">
+          <div className="position-relative d-flex justify-content-center pt-4 pb-5">
             <div className="quiz-modal__image-wrapper">
-              <img src={quizInfo.image as string} />
+              <img
+                ref={imageRef}
+                src={quizInfo.image as string}
+                onLoad={onLoadImage}
+              />
               {quizInfo.answerType === "단답형" && (
                 <ShortAnswerQuestion
                   index={0}
@@ -135,6 +148,11 @@ export const QuizModal = (props: Props) => {
                   }
                   onRemove={() => {}}
                   isEditable={false}
+                  multiple={
+                    imageNaturalWidth === 0
+                      ? 1
+                      : imageWidth / Math.min(748, imageNaturalWidth)
+                  }
                 />
               )}
             </div>

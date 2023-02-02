@@ -56,13 +56,13 @@
   }
 
   &__image-wrapper {
-    max-width: 750px;
-    display: inline-block;
+    width: 750px;
+    // display: inline-block;
     position: relative;
-    border: 1px solid gray;
+    // border: 1px solid gray;
 
     img {
-      max-width: 100%;
+      width: 100%;
     }
   }
 
