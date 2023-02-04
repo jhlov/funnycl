@@ -3,6 +3,7 @@ import StarHalfIcon from "@mui/icons-material/StarHalf";
 import classNames from "classnames";
 import { SliceImage } from "components/common/SliceImage";
 import { QuizModal } from "components/modals/QuizModal";
+import { QuizSuccessModal } from "components/modals/QuizSuceessModal";
 import { CONST } from "const";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
@@ -15,6 +16,8 @@ interface Props {
 
 export const PlayHiddenPictureQuizItem = (props: Props) => {
   const [show, setShow] = useState<boolean>(false);
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const [showFailModal, setShowFailModal] = useState<boolean>(false);
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState("");
   const [groupName, setGroupName] = useState("");
@@ -58,7 +61,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setTimeout(() => {
       if (quizInfo.answerType === "단답형") {
         if (quizInfo.shortAnswerQuestionInfo?.answer === answer_) {
-          setResult("정답입니다!!!");
+          setShowSuccessModal(true);
         } else {
           setResult("오답입니다");
         }
@@ -83,6 +86,21 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     }
 
     setResult("");
+  };
+
+  const handleCloseSuccessModal = () => {
+    updateQuizListFinished(props.index);
+    updateGroupListScore(groupName, quizInfo.score ?? CONST.DEFAULT_SCORE);
+
+    if (keyList.includes(props.index)) {
+      updateGroupListKey(groupName, 1);
+    }
+
+    if (gameInfo?.isTurnPlay) {
+      updateTurn();
+    }
+
+    setShowSuccessModal(false);
   };
 
   return (
@@ -136,6 +154,11 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         index={props.index}
         onSubmit={onSubmit}
         onClose={() => setShow(false)}
+      />
+
+      <QuizSuccessModal
+        show={showSuccessModal}
+        onClose={handleCloseSuccessModal}
       />
 
       <Modal
