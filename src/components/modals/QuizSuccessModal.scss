@@ -34,4 +34,32 @@
     padding-top: 46px;
     padding-bottom: 46px;
   }
+
+  &__reward-icon {
+    position: absolute;
+    top: 203px;
+    right: 144px;
+    width: 100px;
+    animation-duration: 1s;
+    animation-name: show-reward;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+
+  &__reward-text {
+    color: white;
+    margin-top: -48px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+}
+
+@keyframes show-reward {
+  from {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }

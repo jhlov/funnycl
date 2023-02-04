@@ -1,18 +1,31 @@
+import { ItemType } from "aws-sdk/clients/ssmincidents";
 import { CloseButton } from "components/common/CloseButton";
 import { SliceImage } from "components/common/SliceImage";
 import { ImageNormalButton } from "components/image-buttons/ImageNormalButton";
+import { useMemo } from "react";
 import { Modal } from "react-bootstrap";
 import "./QuizSuccessModal.scss";
 
-interface Props {
+export interface SuccessModalProps {
   show: boolean;
-  onClose: () => void;
+  reward?: ItemType;
+  onClose?: () => void;
 }
 
-export const QuizSuccessModal = (props: Props) => {
+export const QuizSuccessModal = (props: SuccessModalProps) => {
   const handleClose = () => {
-    props.onClose();
+    if (props.onClose) {
+      props.onClose();
+    }
   };
+
+  const rewardText = useMemo(() => {
+    if (props.reward === "KEY") {
+      return "문제 풀이권을 획득했습니다.";
+    }
+
+    return "";
+  }, [props.reward]);
 
   return (
     <Modal
@@ -49,7 +62,25 @@ export const QuizSuccessModal = (props: Props) => {
         <CloseButton onClick={handleClose} />
 
         <div className="quiz-success-modal__correct">
-          <img src={`${process.env.PUBLIC_URL}/img/popup/img_correct.png`} />
+          <img
+            src={
+              props.reward && props.reward !== "NONE"
+                ? `${process.env.PUBLIC_URL}/img/popup/img_correct_reward.png`
+                : `${process.env.PUBLIC_URL}/img/popup/img_correct.png`
+            }
+          />
+
+          {props.reward === "KEY" && (
+            <>
+              <img
+                className="quiz-success-modal__reward-icon"
+                src={`${process.env.PUBLIC_URL}/img/items/icon_key.png`}
+              />
+              <div className="quiz-success-modal__reward-text">
+                {rewardText}
+              </div>
+            </>
+          )}
         </div>
 
         <div className="d-flex justify-content-center column-gap-3 mt-3">

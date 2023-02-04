@@ -4,7 +4,10 @@ import classNames from "classnames";
 import { SliceImage } from "components/common/SliceImage";
 import { QuizFailModal } from "components/modals/QuizFailModal";
 import { QuizModal } from "components/modals/QuizModal";
-import { QuizSuccessModal } from "components/modals/QuizSuceessModal";
+import {
+  QuizSuccessModal,
+  SuccessModalProps
+} from "components/modals/QuizSuccessModal";
 import { CONST } from "const";
 import { useEffect, useMemo, useState } from "react";
 import { usePlay } from "store/usePlay";
@@ -16,7 +19,9 @@ interface Props {
 
 export const PlayHiddenPictureQuizItem = (props: Props) => {
   const [show, setShow] = useState<boolean>(false);
-  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const [successModalProps, setSuccessModalProps] = useState<SuccessModalProps>(
+    { show: false }
+  );
   const [showFailModal, setShowFailModal] = useState<boolean>(false);
   const [groupName, setGroupName] = useState("");
 
@@ -56,7 +61,10 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setTimeout(() => {
       if (quizInfo.answerType === "단답형") {
         if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
-          setShowSuccessModal(true);
+          setSuccessModalProps({
+            show: true,
+            reward: keyList.includes(props.index) ? "KEY" : "NONE"
+          });
         } else {
           setShowFailModal(true);
         }
@@ -76,7 +84,9 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
       updateTurn();
     }
 
-    setShowSuccessModal(false);
+    setSuccessModalProps({
+      show: false
+    });
   };
 
   const handleCloseFailModal = () => {
@@ -141,7 +151,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
       />
 
       <QuizSuccessModal
-        show={showSuccessModal}
+        {...successModalProps}
         onClose={handleCloseSuccessModal}
       />
 
