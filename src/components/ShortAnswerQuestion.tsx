@@ -2,7 +2,7 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import OpenWithIcon from "@mui/icons-material/OpenWith";
 import SignalCellular4BarIcon from "@mui/icons-material/SignalCellular4Bar";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./ShortAnswerQuestion.scss";
 
 interface Props {
@@ -18,6 +18,12 @@ interface Props {
 const ShortAnswerQuestion = (props: Props) => {
   const [prevClientX, setPrevClientX] = useState(0);
   const [prevClientY, setPrevClicntY] = useState(0);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const onChangeshortAnswerQuestionAnswer = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -104,6 +110,7 @@ const ShortAnswerQuestion = (props: Props) => {
       )}
 
       <input
+        ref={inputRef}
         type="text"
         style={{
           width: (props.multiple ?? 1) * props.info?.width,

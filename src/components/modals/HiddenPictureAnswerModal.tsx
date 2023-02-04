@@ -2,7 +2,7 @@ import { CloseButton } from "components/common/CloseButton";
 import { SliceImage } from "components/common/SliceImage";
 import { ImageNormalButton } from "components/image-buttons/ImageNormalButton";
 import { ImagePrimaryButton } from "components/image-buttons/ImagePrimaryButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import "./HiddenPictureAnswerModal.scss";
 
@@ -16,9 +16,12 @@ interface Props {
 export const HiddenPictureAnswerModal = (props: Props) => {
   const [answer, setAnswer] = useState("");
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (props.show) {
       setAnswer("");
+      inputRef.current?.focus();
     }
   }, [props.show]);
 
@@ -83,6 +86,7 @@ export const HiddenPictureAnswerModal = (props: Props) => {
           <Form className="text-start">
             <Form.Group className="mb-4">
               <Form.Control
+                ref={inputRef}
                 type="text"
                 value={answer}
                 onChange={e => setAnswer(e.target.value)}
