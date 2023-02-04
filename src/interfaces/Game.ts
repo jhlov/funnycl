@@ -7,6 +7,7 @@ export interface Game {
   title: string;
   type: GameType;
   hiddenPictureAnswer?: string; // 숨겨진 그림일 때, 그림 정답
+  keyCount: number;
   sizeX: number;
   sizeY: number;
   groupCount: number;
@@ -34,6 +35,7 @@ export interface Game {
 export const initNewGame: Game = {
   title: "",
   type: "NONE",
+  keyCount: CONST.DEFAULT_KEY_COUNT,
   sizeX: CONST.DEFAULT_BOARD_SIZE_X,
   sizeY: CONST.DEFAULT_BOARD_SIZE_Y,
   groupCount: CONST.DEFAULT_GROUP_COUNT,

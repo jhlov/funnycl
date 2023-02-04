@@ -1,4 +1,6 @@
 export const CONST = {
+  DEFAULT_KEY_COUNT: 4,
+
   // baord size
   MAX_BOARD_SIZE_X: 7,
   MAX_BOARD_SIZE_Y: 7,

@@ -124,7 +124,10 @@ export const usePlay = create<State>((set, get) => ({
               Array(quizCount)
                 .fill(0)
                 .map((_, i) => i),
-              Math.round(quizCount / 4)
+              Math.min(
+                gameInfo?.keyCount ?? CONST.DEFAULT_KEY_COUNT,
+                quizList.length
+              )
             )
           }));
         } else {

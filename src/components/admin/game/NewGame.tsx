@@ -125,6 +125,15 @@ export const NewGame = () => {
               </div>
             </Form.Group>
 
+            <Form.Group className="mb-4">
+              <Form.Label>문제풀이권 개수</Form.Label>
+              <Form.Control
+                type="text"
+                value={newGame.keyCount ?? CONST.DEFAULT_KEY_COUNT}
+                onChange={e => setNewGame("keyCount", Number(e.target.value))}
+              />
+            </Form.Group>
+
             <Form.Group className="new-game__group mb-4">
               <Form.Label>모둠수</Form.Label>
               <Form.Select

@@ -99,6 +99,17 @@ export const Play = (props: any) => {
                 </div>
               </Form.Group>
 
+              <Form.Group className="mb-4">
+                <Form.Label>문제풀이권 개수</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={gameInfo.keyCount ?? CONST.DEFAULT_KEY_COUNT}
+                  onChange={e =>
+                    setGameInfo("keyCount", Number(e.target.value))
+                  }
+                />
+              </Form.Group>
+
               <Form.Group className="new-game__group mb-4">
                 <Form.Label>모둠수</Form.Label>
                 <Form.Select

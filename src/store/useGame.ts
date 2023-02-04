@@ -6,9 +6,10 @@ import create from "zustand";
 
 interface State {
   gameList: Game[];
-  getGameList: () => void;
   newGame: Game;
   modifyGameId: string;
+  //////
+  getGameList: () => void;
   initNewGame: () => void;
   setNewGame: (key: string, value: any) => void;
   getGameInfo: (id: string) => void;
@@ -16,6 +17,9 @@ interface State {
 
 export const useGame = create<State>(set => ({
   gameList: [],
+  newGame: initNewGame,
+  modifyGameId: "",
+  //////
   getGameList: () => {
     const dbRef = ref(getDatabase());
     const gameUrl = `game/${getAuth().currentUser?.uid}`;
@@ -40,8 +44,7 @@ export const useGame = create<State>(set => ({
         console.error(error);
       });
   },
-  newGame: initNewGame,
-  modifyGameId: "",
+
   initNewGame: () =>
     set(() => ({
       modifyGameId: "",
