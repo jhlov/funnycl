@@ -30,9 +30,7 @@ export const Play = (props: any) => {
   useEffect(() => {
     if (!checkSetting && gameInfo) {
       setCheckSetting(true);
-      if (gameInfo.isPlaySetting) {
-        setShowSettingModal(true);
-      }
+      setShowSettingModal(true);
     }
   }, [gameInfo, checkSetting]);
 
