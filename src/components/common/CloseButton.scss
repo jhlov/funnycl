@@ -1,0 +1,11 @@
+.close-button {
+  z-index: 1;
+  position: absolute;
+  right: 20px;
+  top: 36px;
+  color: #1a1511;
+
+  svg {
+    font-size: 36px;
+  }
+}

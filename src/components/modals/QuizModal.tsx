@@ -1,5 +1,6 @@
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
+import { CloseButton } from "components/common/CloseButton";
 import { SliceImage } from "components/common/SliceImage";
 import { ImageNormalButton } from "components/image-buttons/ImageNormalButton";
 import { ImagePrimaryButton } from "components/image-buttons/ImagePrimaryButton";
@@ -102,6 +103,8 @@ export const QuizModal = (props: Props) => {
           className="quiz-modal__spring"
           src={`${process.env.PUBLIC_URL}/img/popup/img_popup_spring.png`}
         />
+
+        <CloseButton onClick={handleClose} />
 
         <div className="quiz-modal__title">
           <img
