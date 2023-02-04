@@ -1,7 +1,8 @@
+import { HiddenPictureAnswerModal } from "components/modals/HiddenPictureAnswerModal";
 import { Group } from "interfaces/Group";
 import { ItemType } from "interfaces/Items";
 import { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureScoreItem.scss";
 
@@ -12,14 +13,12 @@ interface Props {
 
 export const PlayHiddenPictureScoreItem = (props: Props) => {
   const [show, setShow] = useState(false);
-  const [answer, setAnswer] = useState("");
   const [result, setResult] = useState("");
 
   const { gameInfo, turn, updateGroupListItem } = usePlay();
 
   const onClickItem = (item: ItemType) => {
     if (item === "KEY") {
-      setAnswer("");
       setShow(true);
     }
   };
@@ -28,7 +27,7 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
     setShow(false);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (answer: string) => {
     handleClose();
 
     setTimeout(() => {
@@ -78,31 +77,12 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
         )}
       </div>
 
-      <Modal className="pb-3" show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{props.group.name} 그림 정답 도전</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-4">
-              <Form.Label>그림 정답</Form.Label>
-              <Form.Control
-                type="text"
-                value={answer}
-                onChange={e => setAnswer(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            닫기
-          </Button>
-          <Button variant="primary" onClick={onSubmit} disabled={!answer}>
-            정답 제출
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <HiddenPictureAnswerModal
+        show={show}
+        groupName={props.group.name}
+        onSubmit={onSubmit}
+        onClose={handleClose}
+      />
 
       <Modal
         className="play-hidden-picture-score-item__result-modal pb-3"
