@@ -180,7 +180,7 @@ export const QuizModal = (props: Props) => {
           </div>
         )}
 
-        <div className="d-flex justify-content-end column-gap-3">
+        <div className="d-flex justify-content-end column-gap-3 mt-3">
           <ImageNormalButton
             className="me-2"
             label="닫기"

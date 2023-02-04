@@ -123,8 +123,12 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         </div>
         <div className="play-hidden-picture-quiz-item__subject">
           {quizInfo.subject}
-          {quizInfo.keyword ? ` / ${quizInfo.keyword}` : ""}
         </div>
+        {quizInfo.keyword && (
+          <div className="play-hidden-picture-quiz-item__subject">
+            {quizInfo.keyword}
+          </div>
+        )}
       </div>
 
       <QuizModal
