@@ -107,7 +107,11 @@ const ShortAnswerQuestion = (props: Props) => {
         type="text"
         style={{
           width: (props.multiple ?? 1) * props.info?.width,
-          height: (props.multiple ?? 1) * props.info?.height
+          height: (props.multiple ?? 1) * props.info?.height,
+          fontSize: `${Math.round(
+            (props.multiple ?? 1) * props.info?.height * 0.7
+          )}px`,
+          fontWeight: "bold"
         }}
         value={props.answer}
         onChange={onChangeshortAnswerQuestionAnswer}
