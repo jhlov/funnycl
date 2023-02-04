@@ -29,6 +29,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     quizList,
     gameInfo,
     keyList,
+    finished,
     updateGroupListScore,
     updateGroupListItem,
     updateQuizListFinished,
@@ -101,7 +102,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     <>
       <div
         className={classNames("play-hidden-picture-quiz-item", {
-          finished: quizInfo.finished
+          finished: quizInfo.finished || finished,
+          "game-finished": finished
         })}
         onClick={onClick}
       >

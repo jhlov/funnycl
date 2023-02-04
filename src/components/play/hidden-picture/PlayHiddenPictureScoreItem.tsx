@@ -1,8 +1,9 @@
 import { HiddenPictureAnswerModal } from "components/modals/HiddenPictureAnswerModal";
+import { QuizFailModal } from "components/modals/QuizFailModal";
+import { QuizSuccessModal } from "components/modals/QuizSuccessModal";
 import { Group } from "interfaces/Group";
 import { ItemType } from "interfaces/Items";
 import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureScoreItem.scss";
 
@@ -13,9 +14,10 @@ interface Props {
 
 export const PlayHiddenPictureScoreItem = (props: Props) => {
   const [show, setShow] = useState(false);
-  const [result, setResult] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showFailModal, setShowFailModal] = useState(false);
 
-  const { gameInfo, turn, updateGroupListItem } = usePlay();
+  const { gameInfo, turn, updateGroupListItem, setFinished } = usePlay();
 
   const onClickItem = (item: ItemType) => {
     if (item === "KEY") {
@@ -33,15 +35,16 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
     setTimeout(() => {
       updateGroupListItem(props.group.name, "KEY", -1);
       if (gameInfo?.hiddenPictureAnswer === answer) {
-        setResult(`정답입니다.!!\n\n게임 승리 ${props.group.name}`);
+        setShowSuccessModal(true);
       } else {
-        setResult("오답입니다");
+        setShowFailModal(true);
       }
     }, 200);
   };
 
-  const handleCloseResult = () => {
-    setResult("");
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+    setFinished();
   };
 
   return (
@@ -84,23 +87,15 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
         onClose={handleClose}
       />
 
-      <Modal
-        className="play-hidden-picture-score-item__result-modal pb-3"
-        size="lg"
-        show={!!result}
-        onHide={handleCloseResult}
-        centered
-      >
-        <Modal.Header closeButton />
-        <Modal.Body>
-          <div>{result}</div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseResult}>
-            닫기
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <QuizSuccessModal
+        show={showSuccessModal}
+        onClose={handleCloseSuccessModal}
+      />
+
+      <QuizFailModal
+        show={showFailModal}
+        onClose={() => setShowFailModal(false)}
+      />
     </>
   );
 };

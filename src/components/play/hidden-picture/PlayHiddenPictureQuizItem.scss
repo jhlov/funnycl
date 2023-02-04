@@ -42,6 +42,10 @@
     }
   }
 
+  &.game-finished {
+    opacity: 0;
+  }
+
   &__score {
     position: absolute;
     white-space: pre;

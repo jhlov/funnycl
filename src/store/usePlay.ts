@@ -18,6 +18,7 @@ interface State {
   groupList: Group[];
   keyList: number[];
   turn: number; // 턴제 진행 일때 사용
+  finished: boolean;
   initGame: () => void;
   updateGroupListScore: (groupName: string, score: number) => void;
   updateGroupListItem: (
@@ -27,6 +28,7 @@ interface State {
   ) => void;
   updateQuizListFinished: (index: number) => void;
   updateTurn: () => void;
+  setFinished: () => void;
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -64,6 +66,7 @@ export const usePlay = create<State>((set, get) => ({
   groupList: [],
   keyList: [],
   turn: 0,
+  finished: false,
   initGame: () => {
     const gameInfo = get().gameInfo;
     console.log(gameInfo);
@@ -174,6 +177,11 @@ export const usePlay = create<State>((set, get) => ({
   updateTurn: () => {
     set(() => ({
       turn: (get().turn + 1) % get().groupList.length
+    }));
+  },
+  setFinished: () => {
+    set(() => ({
+      finished: true
     }));
   }
 }));
