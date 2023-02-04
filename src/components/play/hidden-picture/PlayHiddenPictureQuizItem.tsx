@@ -28,9 +28,9 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const {
     quizList,
     gameInfo,
-    updateGroupListScore,
-    updateGroupListKey,
     keyList,
+    updateGroupListScore,
+    updateGroupListItem,
     updateQuizListFinished,
     updateTurn
   } = usePlay();
@@ -77,7 +77,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     updateGroupListScore(groupName, quizInfo.score ?? CONST.DEFAULT_SCORE);
 
     if (keyList.includes(props.index)) {
-      updateGroupListKey(groupName, 1);
+      updateGroupListItem(groupName, "KEY", 1);
     }
 
     if (gameInfo?.isTurnPlay) {

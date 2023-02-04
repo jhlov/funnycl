@@ -1,5 +1,5 @@
-import KeyIcon from "@mui/icons-material/Key";
 import { Group } from "interfaces/Group";
+import { ItemType } from "interfaces/Items";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
@@ -15,11 +15,13 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState("");
 
-  const { gameInfo, turn, updateGroupListKey } = usePlay();
+  const { gameInfo, turn, updateGroupListItem } = usePlay();
 
-  const onClickKey = () => {
-    setAnswer("");
-    setShow(true);
+  const onClickItem = (item: ItemType) => {
+    if (item === "KEY") {
+      setAnswer("");
+      setShow(true);
+    }
   };
 
   const handleClose = () => {
@@ -30,7 +32,7 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
     handleClose();
 
     setTimeout(() => {
-      updateGroupListKey(props.group.name, -1);
+      updateGroupListItem(props.group.name, "KEY", -1);
       if (gameInfo?.hiddenPictureAnswer === answer) {
         setResult(`정답입니다.!!\n\n게임 승리 ${props.group.name}`);
       } else {
@@ -52,15 +54,13 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
           <span>
             {props.group.name}
 
-            {0 < (props.group.key ?? 0) && (
-              <span className="ms-2">
-                <small>
-                  <KeyIcon
-                    className="play-hidden-picture-score-item__key"
-                    onClick={onClickKey}
-                  />
-                  {`x${props.group.key}`}
-                </small>
+            {0 < (props.group.items["KEY"] ?? 0) && (
+              <span
+                className="play-hidden-picture-score-item__reward ms-2"
+                onClick={() => onClickItem("KEY")}
+              >
+                <img src={`${process.env.PUBLIC_URL}/img/items/icon_key.png`} />
+                <small>{`x${props.group.items["KEY"]}`}</small>
               </span>
             )}
           </span>

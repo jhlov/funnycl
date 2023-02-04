@@ -64,8 +64,14 @@
     justify-content: end;
   }
 
-  &__key {
+  &__reward {
     cursor: pointer;
+    color: #ffe731;
+
+    img {
+      width: 45px;
+      margin: -10px 0;
+    }
   }
 
   &__my-turn {

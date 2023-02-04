@@ -1,3 +1,4 @@
+import { ItemType } from "aws-sdk/clients/ssmincidents";
 import { CONST } from "const";
 import { child, get as getData, getDatabase, ref } from "firebase/database";
 import { Game } from "interfaces/Game";
@@ -14,12 +15,16 @@ interface State {
 
   // 게임 시작 후 세팅
   quizList: Quiz[];
-  initGame: () => void;
   groupList: Group[];
   keyList: number[];
   turn: number; // 턴제 진행 일때 사용
+  initGame: () => void;
   updateGroupListScore: (groupName: string, score: number) => void;
-  updateGroupListKey: (groupName: string, delta: number) => void;
+  updateGroupListItem: (
+    groupName: string,
+    item: ItemType,
+    delta: number
+  ) => void;
   updateQuizListFinished: (index: number) => void;
   updateTurn: () => void;
 }
@@ -56,6 +61,9 @@ export const usePlay = create<State>((set, get) => ({
     }));
   },
   quizList: [],
+  groupList: [],
+  keyList: [],
+  turn: 0,
   initGame: () => {
     const gameInfo = get().gameInfo;
     console.log(gameInfo);
@@ -100,7 +108,8 @@ export const usePlay = create<State>((set, get) => ({
                 ? gameInfo?.groupNameList
                 : CONST.DEFAULT_GROUP_NAME_LIST)[i],
               score: 0,
-              color: CONST.DEFAULT_GROUP_COLOR_LIST[i]
+              color: CONST.DEFAULT_GROUP_COLOR_LIST[i],
+              items: {}
             }));
 
           set(() => ({
@@ -123,9 +132,6 @@ export const usePlay = create<State>((set, get) => ({
         console.error(error);
       });
   },
-  groupList: [],
-  keyList: [],
-  turn: 0,
   updateGroupListScore: (groupName: string, score: number) => {
     set(() => ({
       groupList: get().groupList.map(item =>
@@ -138,15 +144,18 @@ export const usePlay = create<State>((set, get) => ({
       )
     }));
   },
-  updateGroupListKey: (groupName: string, delta: number) => {
+  updateGroupListItem: (groupName: string, item: ItemType, delta: number) => {
     set(() => ({
-      groupList: get().groupList.map(item =>
-        item.name === groupName
+      groupList: get().groupList.map(group =>
+        group.name === groupName
           ? {
-              ...item,
-              key: (item.key ?? 0) + delta
+              ...group,
+              items: {
+                ...group.items,
+                [item]: (group.items[item] ?? 0) + delta
+              }
             }
-          : item
+          : group
       )
     }));
   },
