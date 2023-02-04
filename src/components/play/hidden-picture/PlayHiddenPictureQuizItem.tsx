@@ -102,7 +102,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
           left={57}
         />
         <span className="play-hidden-picture-quiz-item__score">
-          {quizInfo.score ?? 10}
+          {(props.index + 1).toString().padStart(2, " ")}
         </span>
         <img
           className="play-hidden-picture-quiz-item__question_icon"
