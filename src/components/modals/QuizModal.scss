@@ -1,6 +1,12 @@
 .quiz-modal {
   position: relative;
 
+  @media (min-width: 1600px) {
+    .modal-xl {
+      max-width: 1500px;
+    }
+  }
+
   .modal-content {
     background-color: transparent;
   }
@@ -60,6 +66,10 @@
     // display: inline-block;
     position: relative;
     // border: 1px solid gray;
+
+    @media (min-width: 1600px) {
+      width: 1100px;
+    }
 
     img {
       width: 100%;
