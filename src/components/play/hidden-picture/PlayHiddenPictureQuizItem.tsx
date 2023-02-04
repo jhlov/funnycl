@@ -2,11 +2,11 @@ import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import classNames from "classnames";
 import { SliceImage } from "components/common/SliceImage";
+import { QuizFailModal } from "components/modals/QuizFailModal";
 import { QuizModal } from "components/modals/QuizModal";
 import { QuizSuccessModal } from "components/modals/QuizSuceessModal";
 import { CONST } from "const";
 import { useEffect, useMemo, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureQuizItem.scss";
 
@@ -18,8 +18,6 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
   const [showFailModal, setShowFailModal] = useState<boolean>(false);
-  const [answer, setAnswer] = useState("");
-  const [result, setResult] = useState("");
   const [groupName, setGroupName] = useState("");
 
   const {
@@ -38,8 +36,6 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
 
   useEffect(() => {
     if (show) {
-      setResult("");
-      setAnswer("");
       setGroupName("");
     }
   }, [show]);
@@ -54,38 +50,18 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setShow(false);
   };
 
-  const onSubmit = (groupName_: string, answer_: string) => {
-    setAnswer(answer_);
+  const onSubmit = (groupName_: string, answer: string) => {
     setGroupName(groupName_);
     handleClose();
     setTimeout(() => {
       if (quizInfo.answerType === "단답형") {
-        if (quizInfo.shortAnswerQuestionInfo?.answer === answer_) {
+        if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
           setShowSuccessModal(true);
         } else {
-          setResult("오답입니다");
+          setShowFailModal(true);
         }
       }
     }, 200);
-  };
-
-  const handleCloseResult = () => {
-    if (quizInfo.answerType === "단답형") {
-      if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
-        updateQuizListFinished(props.index);
-        updateGroupListScore(groupName, quizInfo.score ?? CONST.DEFAULT_SCORE);
-
-        if (keyList.includes(props.index)) {
-          updateGroupListKey(groupName, 1);
-        }
-      }
-    }
-
-    if (gameInfo?.isTurnPlay) {
-      updateTurn();
-    }
-
-    setResult("");
   };
 
   const handleCloseSuccessModal = () => {
@@ -101,6 +77,14 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     }
 
     setShowSuccessModal(false);
+  };
+
+  const handleCloseFailModal = () => {
+    if (gameInfo?.isTurnPlay) {
+      updateTurn();
+    }
+
+    setShowFailModal(false);
   };
 
   return (
@@ -161,29 +145,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         onClose={handleCloseSuccessModal}
       />
 
-      <Modal
-        className="quiz-result-modal pb-3"
-        size="lg"
-        show={!!result}
-        onHide={handleCloseResult}
-        centered
-      >
-        <Modal.Header closeButton />
-        <Modal.Body>
-          <div>{result}</div>
-          {keyList.includes(props.index) &&
-            quizInfo.shortAnswerQuestionInfo?.answer === answer && (
-              <div className="mt-3">
-                <small>문제 풀이권을 획득 했습니다!!</small>
-              </div>
-            )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseResult}>
-            닫기
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <QuizFailModal show={showFailModal} onClose={handleCloseFailModal} />
     </>
   );
 };
