@@ -112,6 +112,7 @@ const ShortAnswerQuestion = (props: Props) => {
       <input
         ref={inputRef}
         type="text"
+        className="text-center"
         style={{
           width: (props.multiple ?? 1) * props.info?.width,
           height: (props.multiple ?? 1) * props.info?.height,
