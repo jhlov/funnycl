@@ -34,6 +34,16 @@ export const HiddenPictureAnswerModal = (props: Props) => {
     handleClose();
   };
 
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.code === "Enter") {
+      if (answer) {
+        onSubmit();
+      } else {
+        handleClose();
+      }
+    }
+  };
+
   return (
     <Modal
       className="hidden-picture-answer-modal pb-3"
@@ -83,13 +93,19 @@ export const HiddenPictureAnswerModal = (props: Props) => {
         <div className="hidden-picture-answer-modal__body">
           <div className="hidden-picture-answer-modal__divide" />
           <div className="mb-1">그림 정답을 입력해 주세요~</div>
-          <Form className="text-start">
+          <Form
+            className="text-start"
+            onSubmit={e => {
+              e.preventDefault();
+            }}
+          >
             <Form.Group className="mb-4">
               <Form.Control
                 ref={inputRef}
                 type="text"
                 value={answer}
                 onChange={e => setAnswer(e.target.value)}
+                onKeyDown={onKeyDown}
               />
             </Form.Group>
           </Form>

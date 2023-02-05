@@ -156,6 +156,13 @@ export const QuizModal = (props: Props) => {
                       ? 1
                       : imageWidth / Math.min(748, imageNaturalWidth)
                   }
+                  onEnter={() => {
+                    if (answer) {
+                      onSubmit();
+                    } else {
+                      handleClose();
+                    }
+                  }}
                 />
               )}
             </div>

@@ -13,6 +13,7 @@ interface Props {
   onRemove: (index: number) => void;
   isEditable: boolean;
   multiple?: number;
+  onEnter?: () => void;
 }
 
 const ShortAnswerQuestion = (props: Props) => {
@@ -65,6 +66,14 @@ const ShortAnswerQuestion = (props: Props) => {
 
       setPrevClientX(e.clientX);
       setPrevClicntY(e.clientY);
+    }
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.code === "Enter") {
+      if (props.onEnter) {
+        props.onEnter();
+      }
     }
   };
 
@@ -123,6 +132,7 @@ const ShortAnswerQuestion = (props: Props) => {
         }}
         value={props.answer}
         onChange={onChangeshortAnswerQuestionAnswer}
+        onKeyDown={onKeyDown}
       />
     </div>
   );
