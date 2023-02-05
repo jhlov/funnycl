@@ -129,7 +129,7 @@ export const Play = (props: any) => {
                 {Array(gameInfo.groupCount)
                   .fill(0)
                   .map((_, i) => (
-                    <Form.Group>
+                    <Form.Group key={`groupName${i}`}>
                       <Form.Control
                         type="text"
                         value={
