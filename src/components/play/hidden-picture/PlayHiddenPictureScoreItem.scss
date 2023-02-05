@@ -62,6 +62,7 @@
     display: flex;
     align-items: center;
     justify-content: end;
+    user-select: none;
   }
 
   &__reward {

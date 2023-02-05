@@ -47,6 +47,10 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
     setFinished();
   };
 
+  const onDoubleClick = () => {
+    updateGroupListItem(props.group.name, "KEY", 1);
+  };
+
   return (
     <>
       <div
@@ -68,7 +72,10 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
           </span>
         </div>
 
-        <span className="play-hidden-picture-score-item__score">
+        <span
+          className="play-hidden-picture-score-item__score"
+          onDoubleClick={onDoubleClick}
+        >
           {props.group.score}점
         </span>
 
