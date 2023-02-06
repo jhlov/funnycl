@@ -1,6 +1,5 @@
 import { HiddenPictureAnswerModal } from "components/modals/HiddenPictureAnswerModal";
 import { QuizFailModal } from "components/modals/QuizFailModal";
-import { QuizSuccessModal } from "components/modals/QuizSuccessModal";
 import { Group } from "interfaces/Group";
 import { ItemType } from "interfaces/Items";
 import { useState } from "react";
@@ -14,10 +13,15 @@ interface Props {
 
 export const PlayHiddenPictureScoreItem = (props: Props) => {
   const [show, setShow] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showFailModal, setShowFailModal] = useState(false);
 
-  const { gameInfo, turn, updateGroupListItem, setFinished } = usePlay();
+  const {
+    gameInfo,
+    turn,
+    finished,
+    updateGroupListItem,
+    setGameWinModalProps
+  } = usePlay();
 
   const onClickItem = (item: ItemType) => {
     if (item === "KEY") {
@@ -35,16 +39,14 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
     setTimeout(() => {
       updateGroupListItem(props.group.name, "KEY", -1);
       if (gameInfo?.hiddenPictureAnswer === answer) {
-        setShowSuccessModal(true);
+        setGameWinModalProps({
+          show: true,
+          group: props.group
+        });
       } else {
         setShowFailModal(true);
       }
     }, 200);
-  };
-
-  const handleCloseSuccessModal = () => {
-    setShowSuccessModal(false);
-    setFinished();
   };
 
   const onDoubleClick = () => {
@@ -79,7 +81,7 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
           {props.group.score}점
         </span>
 
-        {gameInfo?.isTurnPlay && turn === props.groupIndex && (
+        {gameInfo?.isTurnPlay && !finished && turn === props.groupIndex && (
           <img
             className="play-hidden-picture-score-item__my-turn"
             src={`${process.env.PUBLIC_URL}/img/score/icon_mylocation.png`}
@@ -92,11 +94,6 @@ export const PlayHiddenPictureScoreItem = (props: Props) => {
         groupName={props.group.name}
         onSubmit={onSubmit}
         onClose={handleClose}
-      />
-
-      <QuizSuccessModal
-        show={showSuccessModal}
-        onClose={handleCloseSuccessModal}
       />
 
       <QuizFailModal

@@ -1,0 +1,19 @@
+.game-win-modal {
+  .modal-body {
+    padding: 100px 0 28px;
+  }
+
+  &__group {
+    font-family: "Jua";
+    font-size: 100px;
+    margin-bottom: -50px;
+    color: #ffe731;
+  }
+
+  &__congratulation {
+    font-family: "Jua";
+    font-size: 40px;
+    color: white;
+    margin-bottom: 70px;
+  }
+}

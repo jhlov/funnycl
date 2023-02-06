@@ -1,4 +1,5 @@
 import { ItemType } from "aws-sdk/clients/ssmincidents";
+import { GameWinModalProps } from "components/modals/GameWinModal";
 import { CONST } from "const";
 import { child, get as getData, getDatabase, ref } from "firebase/database";
 import { Game } from "interfaces/Game";
@@ -19,6 +20,7 @@ interface State {
   keyList: number[];
   turn: number; // 턴제 진행 일때 사용
   finished: boolean;
+  gameWinModalProps: GameWinModalProps;
   initGame: () => void;
   updateGroupListScore: (groupName: string, score: number) => void;
   updateGroupListItem: (
@@ -29,6 +31,7 @@ interface State {
   updateQuizListFinished: (index: number) => void;
   updateTurn: () => void;
   setFinished: () => void;
+  setGameWinModalProps: (props: GameWinModalProps) => void;
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -67,6 +70,7 @@ export const usePlay = create<State>((set, get) => ({
   keyList: [],
   turn: 0,
   finished: false,
+  gameWinModalProps: { show: false },
   initGame: () => {
     const gameInfo = get().gameInfo;
     console.log(gameInfo);
@@ -185,6 +189,11 @@ export const usePlay = create<State>((set, get) => ({
   setFinished: () => {
     set(() => ({
       finished: true
+    }));
+  },
+  setGameWinModalProps: (props: GameWinModalProps) => {
+    set(() => ({
+      gameWinModalProps: props
     }));
   }
 }));
