@@ -92,49 +92,29 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
               r = Math.random();
               if (r < CONST.KEY_EXCHANGE_ITEM_RATE) {
                 reward = "KEY_EXCHANGE";
+                rewardText =
+                  "문제풀이권 교환 아이템을 획득 했습니다. 문제풀이권을 교환할 모둠이 없습니다.";
 
-                // 가장 많은 문제풀이권 개수
-                const highKeyCount = Math.max(
-                  ...groupList.map(group => group.items["KEY"] ?? 0)
-                );
+                const myKeyCount = group?.items["KEY"] ?? 0;
 
-                // 두번째 많은 문제풀이권 개수
-                const secondKeyCount = Math.max(
-                  ...groupList
-                    .filter(group => group.items["KEY"] !== highKeyCount)
-                    .map(group => group.items["KEY"] ?? 0)
-                );
+                // 내가 가진 개수를 제외한 가장 많은 문제풀이권 개수 구허가
+                const keyCountList = groupList
+                  .filter(group => (group.items["KEY"] ?? 0) !== myKeyCount)
+                  .map(group => group.items["KEY"] ?? 0);
 
-                let changeGroupName = "";
+                if (!_.isEmpty(keyCountList)) {
+                  const maxKeyCount = Math.max(...keyCountList);
+                  const changeGroupName =
+                    _.sample(
+                      groupList
+                        .filter(group => group.items["KEY"] === maxKeyCount)
+                        .map(group => group.name)
+                    ) ?? "";
 
-                // 모두 같은 개수를 가지고 있을때는 패스
-                if (highKeyCount !== secondKeyCount) {
-                  if (group?.items["KEY"] ?? 0 === highKeyCount) {
-                    // 내가 제일 많은 문제 교환권을 가지고 있음
-                    changeGroupName =
-                      _.sample(
-                        groupList
-                          .filter(
-                            group => group.items["KEY"] === secondKeyCount
-                          )
-                          .map(group => group.name)
-                      ) ?? "";
-                  } else {
-                    changeGroupName =
-                      _.sample(
-                        groupList
-                          .filter(group => group.items["KEY"] === highKeyCount)
-                          .map(group => group.name)
-                      ) ?? "";
+                  if (changeGroupName) {
+                    rewardText = `문제풀이권 교환 아이템을 획득 했습니다. '${changeGroupName}'모둠과 교환합니다.`;
+                    changeKeyItem(groupName, changeGroupName);
                   }
-                }
-
-                if (changeGroupName) {
-                  rewardText = `문제풀이권 교환 아이템을 획득 했습니다. '${changeGroupName}'모둠과 교환합니다.`;
-                  changeKeyItem(groupName, changeGroupName);
-                } else {
-                  rewardText =
-                    "문제풀이권 교환 아이템을 획득 했습니다. 문제풀이권을 교환할 모둠이 없습니다.";
                 }
               } else if (
                 r <
