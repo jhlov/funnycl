@@ -9,7 +9,7 @@ import {
   SuccessModalProps
 } from "components/modals/QuizSuccessModal";
 import { CONST } from "const";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureQuizItem.scss";
 
@@ -25,6 +25,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const [showFailModal, setShowFailModal] = useState<boolean>(false);
   const [groupName, setGroupName] = useState("");
 
+  const divRef = useRef<HTMLDivElement>(null);
+
   const {
     quizList,
     gameInfo,
@@ -39,6 +41,14 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
   const quizInfo = useMemo(() => {
     return quizList[props.index];
   }, [props.index, quizList]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [successModalProps.show, showFailModal]);
 
   useEffect(() => {
     if (show) {
@@ -98,6 +108,18 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setShowFailModal(false);
   };
 
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.code === "Enter") {
+      if (successModalProps.show) {
+        handleCloseSuccessModal();
+      }
+
+      if (showFailModal) {
+        handleCloseFailModal();
+      }
+    }
+  };
+
   return (
     <>
       <div
@@ -106,6 +128,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
           "game-finished": finished
         })}
         onClick={onClick}
+        ref={divRef}
       >
         <SliceImage
           className="play-hidden-picture-quiz-item__back"
