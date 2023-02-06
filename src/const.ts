@@ -1,5 +1,5 @@
 export const CONST = {
-  DEFAULT_KEY_COUNT: 4,
+  DEFAULT_KEY_RANGE: 20,
 
   // baord size
   MAX_BOARD_SIZE_X: 7,

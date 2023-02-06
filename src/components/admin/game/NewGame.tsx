@@ -126,11 +126,11 @@ export const NewGame = () => {
             </Form.Group>
 
             <Form.Group className="mb-4">
-              <Form.Label>문제풀이권 개수</Form.Label>
+              <Form.Label>문제풀이권 획득 점수 간격</Form.Label>
               <Form.Control
                 type="text"
-                value={newGame.keyCount ?? CONST.DEFAULT_KEY_COUNT}
-                onChange={e => setNewGame("keyCount", Number(e.target.value))}
+                value={newGame.keyRange ?? CONST.DEFAULT_KEY_RANGE}
+                onChange={e => setNewGame("keyRange", Number(e.target.value))}
               />
             </Form.Group>
 

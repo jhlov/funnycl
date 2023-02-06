@@ -9,6 +9,7 @@ import {
   SuccessModalProps
 } from "components/modals/QuizSuccessModal";
 import { CONST } from "const";
+import { ItemType } from "interfaces/Items";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureQuizItem.scss";
@@ -23,15 +24,14 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     { show: false }
   );
   const [showFailModal, setShowFailModal] = useState<boolean>(false);
-  const [groupName, setGroupName] = useState("");
 
   const divRef = useRef<HTMLDivElement>(null);
 
   const {
     quizList,
     gameInfo,
-    keyList,
     finished,
+    groupList,
     updateGroupListScore,
     updateGroupListItem,
     updateQuizListFinished,
@@ -50,12 +50,6 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     };
   }, [successModalProps.show, showFailModal]);
 
-  useEffect(() => {
-    if (show) {
-      setGroupName("");
-    }
-  }, [show]);
-
   const onClick = () => {
     if (!quizInfo.finished) {
       setShow(true);
@@ -66,15 +60,34 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setShow(false);
   };
 
-  const onSubmit = (groupName_: string, answer: string) => {
-    setGroupName(groupName_);
+  const onSubmit = (groupName: string, answer: string) => {
     handleClose();
     setTimeout(() => {
       if (quizInfo.answerType === "단답형") {
         if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
+          let reward: ItemType = "NONE";
+
+          // 문제풀이권 획득
+          const group = groupList.find(group => group.name === groupName);
+          const keyRange = gameInfo?.keyRange ?? CONST.DEFAULT_KEY_RANGE;
+          if (group) {
+            if (
+              Math.floor(group.score! / keyRange) <
+              Math.floor((group.score + quizInfo.score) / keyRange)
+            ) {
+              reward = "KEY";
+              updateGroupListItem(groupName, "KEY", 1);
+            }
+          }
+
+          updateGroupListScore(
+            groupName,
+            quizInfo.score ?? CONST.DEFAULT_SCORE
+          );
+
           setSuccessModalProps({
             show: true,
-            reward: keyList.includes(props.index) ? "KEY" : "NONE"
+            reward
           });
         } else {
           setShowFailModal(true);
@@ -85,11 +98,6 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
 
   const handleCloseSuccessModal = () => {
     updateQuizListFinished(props.index);
-    updateGroupListScore(groupName, quizInfo.score ?? CONST.DEFAULT_SCORE);
-
-    if (keyList.includes(props.index)) {
-      updateGroupListItem(groupName, "KEY", 1);
-    }
 
     if (gameInfo?.isTurnPlay) {
       updateTurn();

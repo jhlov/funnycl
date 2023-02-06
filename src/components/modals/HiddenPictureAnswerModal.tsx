@@ -35,7 +35,7 @@ export const HiddenPictureAnswerModal = (props: Props) => {
   };
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.code === "Enter") {
+    if (e.code === "Enter" && e.keyCode === 13) {
       if (answer) {
         onSubmit();
       } else {

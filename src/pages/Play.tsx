@@ -100,12 +100,12 @@ export const Play = (props: any) => {
               </Form.Group>
 
               <Form.Group className="mb-4">
-                <Form.Label>문제풀이권 개수</Form.Label>
+                <Form.Label>문제풀이권 획득 점수 간격</Form.Label>
                 <Form.Control
                   type="text"
-                  value={gameInfo.keyCount ?? CONST.DEFAULT_KEY_COUNT}
+                  value={gameInfo.keyRange ?? CONST.DEFAULT_KEY_RANGE}
                   onChange={e =>
-                    setGameInfo("keyCount", Number(e.target.value))
+                    setGameInfo("keyRange", Number(e.target.value))
                   }
                 />
               </Form.Group>

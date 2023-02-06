@@ -17,7 +17,6 @@ interface State {
   // 게임 시작 후 세팅
   quizList: Quiz[];
   groupList: Group[];
-  keyList: number[];
   turn: number; // 턴제 진행 일때 사용
   finished: boolean;
   gameWinModalProps: GameWinModalProps;
@@ -67,7 +66,6 @@ export const usePlay = create<State>((set, get) => ({
   },
   quizList: [],
   groupList: [],
-  keyList: [],
   turn: 0,
   finished: false,
   gameWinModalProps: { show: false },
@@ -123,16 +121,7 @@ export const usePlay = create<State>((set, get) => ({
             startGame: true,
             quizList,
             groupList,
-            turn: 0,
-            keyList: _.sampleSize(
-              Array(quizCount)
-                .fill(0)
-                .map((_, i) => i),
-              Math.min(
-                gameInfo?.keyCount ?? CONST.DEFAULT_KEY_COUNT,
-                quizList.length
-              )
-            )
+            turn: 0
           }));
         } else {
           console.log("No data available");
