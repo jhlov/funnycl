@@ -9,6 +9,7 @@ import "./QuizSuccessModal.scss";
 export interface SuccessModalProps {
   show: boolean;
   reward?: ItemType;
+  rewardText?: string;
   onClose?: () => void;
 }
 
@@ -19,9 +20,11 @@ export const QuizSuccessModal = (props: SuccessModalProps) => {
     }
   };
 
-  const rewardText = useMemo(() => {
+  const rewardImg = useMemo(() => {
     if (props.reward === "KEY") {
-      return "문제 풀이권을 획득했습니다.";
+      return `${process.env.PUBLIC_URL}/img/items/icon_key.png`;
+    } else if (props.reward === "KEY_EXCHANGE") {
+      return `${process.env.PUBLIC_URL}/img/items/icon_exchange.png`;
     }
 
     return "";
@@ -70,14 +73,14 @@ export const QuizSuccessModal = (props: SuccessModalProps) => {
             }
           />
 
-          {props.reward === "KEY" && (
+          {props.reward && (
             <>
               <img
                 className="quiz-success-modal__reward-icon"
-                src={`${process.env.PUBLIC_URL}/img/items/icon_key.png`}
+                src={rewardImg}
               />
               <div className="quiz-success-modal__reward-text">
-                {rewardText}
+                {props.rewardText}
               </div>
             </>
           )}

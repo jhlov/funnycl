@@ -1,6 +1,4 @@
 export const CONST = {
-  DEFAULT_KEY_RANGE: 20,
-
   // baord size
   MAX_BOARD_SIZE_X: 7,
   MAX_BOARD_SIZE_Y: 7,
@@ -38,5 +36,10 @@ export const CONST = {
   // difficult
   DIFFICULTY_END: 10,
 
-  DEFAULT_SCORE: 10
+  DEFAULT_SCORE: 10,
+  DEFAULT_KEY_RANGE: 20,
+  GET_ITEM_RATE: 0.2,
+  KEY_EXCHANGE_ITEM_RATE: 0.2,
+  MINE_ITEM_RATE: 0.5,
+  MINE_DEFENSE_ITEM_RATE: 0.3
 };

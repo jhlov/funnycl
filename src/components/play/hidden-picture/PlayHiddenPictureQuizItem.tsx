@@ -10,6 +10,7 @@ import {
 } from "components/modals/QuizSuccessModal";
 import { CONST } from "const";
 import { ItemType } from "interfaces/Items";
+import _ from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureQuizItem.scss";
@@ -35,7 +36,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     updateGroupListScore,
     updateGroupListItem,
     updateQuizListFinished,
-    updateTurn
+    updateTurn,
+    changeKeyItem
   } = usePlay();
 
   const quizInfo = useMemo(() => {
@@ -66,6 +68,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
       if (quizInfo.answerType === "단답형") {
         if (quizInfo.shortAnswerQuestionInfo?.answer === answer) {
           let reward: ItemType = "NONE";
+          let rewardText = "";
 
           // 문제풀이권 획득
           const group = groupList.find(group => group.name === groupName);
@@ -76,7 +79,71 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
               Math.floor((group.score + quizInfo.score) / keyRange)
             ) {
               reward = "KEY";
+              rewardText = "문제 풀이권을 획득했습니다.";
               updateGroupListItem(groupName, "KEY", 1);
+            }
+          }
+
+          if (reward === "NONE") {
+            let r = Math.random();
+            // 아이템 획득 확률 20%
+            if (r < CONST.GET_ITEM_RATE) {
+              // 아이템 종류 랜덤
+              r = Math.random();
+              if (r < CONST.KEY_EXCHANGE_ITEM_RATE) {
+                reward = "KEY_EXCHANGE";
+
+                // 가장 많은 문제풀이권 개수
+                const highKeyCount = Math.max(
+                  ...groupList.map(group => group.items["KEY"] ?? 0)
+                );
+
+                // 두번째 많은 문제풀이권 개수
+                const secondKeyCount = Math.max(
+                  ...groupList
+                    .filter(group => group.items["KEY"] !== highKeyCount)
+                    .map(group => group.items["KEY"] ?? 0)
+                );
+
+                let changeGroupName = "";
+
+                // 모두 같은 개수를 가지고 있을때는 패스
+                if (highKeyCount !== secondKeyCount) {
+                  if (group?.items["KEY"] ?? 0 === highKeyCount) {
+                    // 내가 제일 많은 문제 교환권을 가지고 있음
+                    changeGroupName =
+                      _.sample(
+                        groupList
+                          .filter(
+                            group => group.items["KEY"] === secondKeyCount
+                          )
+                          .map(group => group.name)
+                      ) ?? "";
+                  } else {
+                    changeGroupName =
+                      _.sample(
+                        groupList
+                          .filter(group => group.items["KEY"] === highKeyCount)
+                          .map(group => group.name)
+                      ) ?? "";
+                  }
+                }
+
+                if (changeGroupName) {
+                  rewardText = `문제풀이권 교환 아이템을 획득 했습니다. '${changeGroupName}'모둠과 교환합니다.`;
+                  changeKeyItem(groupName, changeGroupName);
+                } else {
+                  rewardText =
+                    "문제풀이권 교환 아이템을 획득 했습니다. 문제풀이권을 교환할 모둠이 없습니다.";
+                }
+              } else if (
+                r <
+                CONST.KEY_EXCHANGE_ITEM_RATE + CONST.MINE_DEFENSE_ITEM_RATE
+              ) {
+                // 지뢰방어
+              } else {
+                // 지뢰
+              }
             }
           }
 
@@ -87,7 +154,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
 
           setSuccessModalProps({
             show: true,
-            reward
+            reward,
+            rewardText
           });
         } else {
           setShowFailModal(true);

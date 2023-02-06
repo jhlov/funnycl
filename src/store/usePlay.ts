@@ -31,6 +31,7 @@ interface State {
   updateTurn: () => void;
   setFinished: () => void;
   setGameWinModalProps: (props: GameWinModalProps) => void;
+  changeKeyItem: (aGroupName: string, bGroupName: string) => void;
 }
 
 export const usePlay = create<State>((set, get) => ({
@@ -183,6 +184,37 @@ export const usePlay = create<State>((set, get) => ({
   setGameWinModalProps: (props: GameWinModalProps) => {
     set(() => ({
       gameWinModalProps: props
+    }));
+  },
+  changeKeyItem: (aGroupName: string, bGroupName: string) => {
+    const aGroupKeyCount =
+      get().groupList.find(group => group.name === aGroupName)?.items["KEY"] ??
+      0;
+    const bGroupKeyCount =
+      get().groupList.find(group => group.name === bGroupName)?.items["KEY"] ??
+      0;
+    set(() => ({
+      groupList: get().groupList.map(group => {
+        if (group.name === aGroupName) {
+          return {
+            ...group,
+            items: {
+              ...group.items,
+              ["KEY"]: bGroupKeyCount
+            }
+          };
+        } else if (group.name === bGroupName) {
+          return {
+            ...group,
+            items: {
+              ...group.items,
+              ["KEY"]: aGroupKeyCount
+            }
+          };
+        }
+
+        return group;
+      })
     }));
   }
 }));

@@ -1,1 +1,1 @@
-export type ItemType = "NONE" | "KEY";
+export type ItemType = "NONE" | "KEY" | "KEY_EXCHANGE";
