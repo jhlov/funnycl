@@ -137,6 +137,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
           right={18}
           bottom={18}
           left={57}
+          topWidth={60}
+          leftWidth={43}
         />
         <span className="play-hidden-picture-quiz-item__score">
           {(props.index + 1).toString().padStart(2, " ")}
@@ -160,12 +162,8 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         </div>
         <div className="play-hidden-picture-quiz-item__subject">
           {quizInfo.subject}
+          {quizInfo.keyword ? ` / ${quizInfo.keyword}` : ""}
         </div>
-        {quizInfo.keyword && (
-          <div className="play-hidden-picture-quiz-item__subject">
-            {quizInfo.keyword}
-          </div>
-        )}
       </div>
 
       <QuizModal

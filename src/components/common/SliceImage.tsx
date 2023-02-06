@@ -5,6 +5,10 @@ interface Props {
   right: number;
   bottom: number;
   left: number;
+  topWidth?: number;
+  rightWidth?: number;
+  bottomWidth?: number;
+  leftWidth?: number;
 }
 
 export const SliceImage = (props: Props) => {
@@ -14,7 +18,11 @@ export const SliceImage = (props: Props) => {
       style={{
         borderImageSource: `url(${props.image})`,
         borderImageSlice: `${props.top} ${props.right} ${props.bottom} ${props.left} fill`,
-        borderImageWidth: `${props.top}px ${props.right}px ${props.bottom}px ${props.left}px`
+        borderImageWidth: `${props.topWidth ?? props.top}px ${
+          props.rightWidth ?? props.right
+        }px ${props.bottomWidth ?? props.bottom}px ${
+          props.leftWidth ?? props.left
+        }px`
       }}
     />
   );
