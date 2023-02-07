@@ -10,7 +10,6 @@ import {
 } from "components/modals/QuizSuccessModal";
 import { CONST } from "const";
 import { ItemType } from "interfaces/Items";
-import _ from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePlay } from "store/usePlay";
 import "./PlayHiddenPictureQuizItem.scss";
@@ -84,48 +83,48 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
             }
           }
 
-          if (reward === "NONE") {
-            let r = Math.random();
-            // 아이템 획득 확률 20%
-            if (r < CONST.GET_ITEM_RATE) {
-              // 아이템 종류 랜덤
-              r = Math.random();
-              if (r < CONST.KEY_EXCHANGE_ITEM_RATE) {
-                reward = "KEY_EXCHANGE";
-                rewardText =
-                  "문제풀이권 교환 아이템을 획득 했습니다. 문제풀이권을 교환할 모둠이 없습니다.";
+          // if (reward === "NONE") {
+          //   let r = Math.random();
+          //   // 아이템 획득 확률 20%
+          //   if (r < CONST.GET_ITEM_RATE) {
+          //     // 아이템 종류 랜덤
+          //     r = Math.random();
+          //     if (r < CONST.KEY_EXCHANGE_ITEM_RATE) {
+          //       reward = "KEY_EXCHANGE";
+          //       rewardText =
+          //         "문제풀이권 교환 아이템을 획득 했습니다. 문제풀이권을 교환할 모둠이 없습니다.";
 
-                const myKeyCount = group?.items["KEY"] ?? 0;
+          //       const myKeyCount = group?.items["KEY"] ?? 0;
 
-                // 내가 가진 개수를 제외한 가장 많은 문제풀이권 개수 구허가
-                const keyCountList = groupList
-                  .filter(group => (group.items["KEY"] ?? 0) !== myKeyCount)
-                  .map(group => group.items["KEY"] ?? 0);
+          //       // 내가 가진 개수를 제외한 가장 많은 문제풀이권 개수 구허가
+          //       const keyCountList = groupList
+          //         .filter(group => (group.items["KEY"] ?? 0) !== myKeyCount)
+          //         .map(group => group.items["KEY"] ?? 0);
 
-                if (!_.isEmpty(keyCountList)) {
-                  const maxKeyCount = Math.max(...keyCountList);
-                  const changeGroupName =
-                    _.sample(
-                      groupList
-                        .filter(group => group.items["KEY"] === maxKeyCount)
-                        .map(group => group.name)
-                    ) ?? "";
+          //       if (!_.isEmpty(keyCountList)) {
+          //         const maxKeyCount = Math.max(...keyCountList);
+          //         const changeGroupName =
+          //           _.sample(
+          //             groupList
+          //               .filter(group => group.items["KEY"] === maxKeyCount)
+          //               .map(group => group.name)
+          //           ) ?? "";
 
-                  if (changeGroupName) {
-                    rewardText = `문제풀이권 교환 아이템을 획득 했습니다. '${changeGroupName}'모둠과 교환합니다.`;
-                    changeKeyItem(groupName, changeGroupName);
-                  }
-                }
-              } else if (
-                r <
-                CONST.KEY_EXCHANGE_ITEM_RATE + CONST.MINE_DEFENSE_ITEM_RATE
-              ) {
-                // 지뢰방어
-              } else {
-                // 지뢰
-              }
-            }
-          }
+          //         if (changeGroupName) {
+          //           rewardText = `문제풀이권 교환 아이템을 획득 했습니다. '${changeGroupName}'모둠과 교환합니다.`;
+          //           changeKeyItem(groupName, changeGroupName);
+          //         }
+          //       }
+          //     } else if (
+          //       r <
+          //       CONST.KEY_EXCHANGE_ITEM_RATE + CONST.MINE_DEFENSE_ITEM_RATE
+          //     ) {
+          //       // 지뢰방어
+          //     } else {
+          //       // 지뢰
+          //     }
+          //   }
+          // }
 
           updateGroupListScore(
             groupName,
