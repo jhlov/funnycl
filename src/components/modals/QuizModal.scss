@@ -7,7 +7,7 @@
     }
   }
 
-  .modal-content {
+  &:not(.legacy) .modal-content {
     background-color: transparent;
   }
 

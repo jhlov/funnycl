@@ -84,7 +84,12 @@ const QuizItem = (props: Props) => {
         <div className="quiz-number">{props.index + 1}</div>
       </div>
 
-      <Modal className="quiz-modal" size="lg" show={show} onHide={handleClose}>
+      <Modal
+        className="quiz-modal legacy"
+        size="lg"
+        show={show}
+        onHide={handleClose}
+      >
         <Modal.Header closeButton>
           <Modal.Title>
             {`${props.index + 1}번 문제`}{" "}
