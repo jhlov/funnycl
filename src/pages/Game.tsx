@@ -1,6 +1,6 @@
 import { QuizItem } from "components/QuizItem";
 import { ScoreItem } from "components/ScoreItem";
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import FlipMove from "react-flip-move";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
@@ -15,6 +15,8 @@ const Game = () => {
 
   useEffect(() => {
     dispatch(init());
+
+    window.document.body.style.backgroundColor = "lightblue";
   }, []);
 
   const copyGroupList = useMemo(() => {
