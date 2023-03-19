@@ -15,6 +15,17 @@ export const SaveQuizButton = () => {
   const { subMenu } = useMenus();
   const history = useHistory();
 
+  const exceptKeys = useMemo<string[]>(() => {
+    const keys = ["imageUrl"];
+    if (newQuiz.answerType === "객관식") {
+      keys.push("shortAnswerQuestionInfo");
+    } else if (newQuiz.answerType === "단답형") {
+      keys.push("multipleChoiceInfo");
+    }
+
+    return keys;
+  }, [newQuiz.answerType]);
+
   const disabledSaveButton = useMemo(() => {
     if (_.isEmpty(newQuiz.title)) {
       return true;
@@ -71,8 +82,8 @@ export const SaveQuizButton = () => {
     }
 
     // 이미지를 저장 하고
-    let image = "";
-    if (typeof newQuiz.image === "object") {
+    let image: string | null = "";
+    if (newQuiz.image && typeof newQuiz.image === "object") {
       const formData = new FormData();
       formData.append("image", newQuiz.image!);
 
@@ -112,7 +123,7 @@ export const SaveQuizButton = () => {
         id: postKey,
         image
       },
-      ["imageUrl"]
+      exceptKeys
     );
 
     if (subMenu === "CREATE_QUIZ") {
