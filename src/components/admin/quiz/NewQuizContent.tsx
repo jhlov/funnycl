@@ -6,11 +6,9 @@ import _ from "lodash";
 import { useEffect, useMemo } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { useQuiz } from "store/useQuiz";
+import { MultipleChoiceNormal } from "./MultipleChoiceNormal";
 import "./NewQuizContent.scss";
-
-interface Params {
-  id: string;
-}
+import { ShortAnswerQuestionNormal } from "./ShortAnswerQuestionNormal";
 
 const NewQuizContent = () => {
   const { quizList, getQuizList, newQuiz, setNewQuiz, modifyQuizId } =
@@ -74,6 +72,30 @@ const NewQuizContent = () => {
             </Col>
           </Row>
         </Form.Group>
+
+        {newQuiz.type === "일반" && (
+          <Form.Group className="mb-4">
+            <Form.Label>문제 내용</Form.Label>
+            <Row>
+              <Col xs="6">
+                <Form.Control
+                  as="textarea"
+                  value={newQuiz.content}
+                  rows={3}
+                  onChange={e => setNewQuiz("content", e.target.value)}
+                />
+              </Col>
+            </Row>
+          </Form.Group>
+        )}
+
+        {newQuiz.type === "일반" && newQuiz.answerType === "단답형" && (
+          <ShortAnswerQuestionNormal />
+        )}
+
+        {newQuiz.type === "일반" && newQuiz.answerType === "객관식" && (
+          <MultipleChoiceNormal />
+        )}
 
         <ImageInput
           image={newQuiz.image}

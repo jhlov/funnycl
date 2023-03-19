@@ -1,4 +1,5 @@
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
+import { MultipleChoiceInfo } from "./MultipleChoiceInfo";
 
 type QuizType = "NONE" | "일반" | "워크시트";
 
@@ -12,6 +13,7 @@ export const answerTypetList = ["단답형", "객관식"];
 export interface Quiz {
   title: string;
   type: QuizType;
+  content: string; // 일반 문제에서 문제 내용
   subject: QuizSubject;
   year: number; // 1 ~ 12
   keyword: string; // 제시어
@@ -19,6 +21,7 @@ export interface Quiz {
   difficulty: number; // 1 ~ 10;
   answerType: AnswerType;
   shortAnswerQuestionInfo: ShortAnswerQuestionInfo | null;
+  multipleChoiceInfo: MultipleChoiceInfo | null;
   hint: string;
   score: number;
 
@@ -39,6 +42,7 @@ export interface Quiz {
 export const initNewQuiz: Quiz = {
   title: "",
   type: "NONE",
+  content: "",
   subject: "국어",
   year: 1,
   keyword: "",
@@ -46,6 +50,7 @@ export const initNewQuiz: Quiz = {
   difficulty: 1,
   answerType: "단답형",
   shortAnswerQuestionInfo: null,
+  multipleChoiceInfo: null,
   hint: "",
   score: 10,
   image: null,
