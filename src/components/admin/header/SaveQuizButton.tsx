@@ -31,20 +31,30 @@ export const SaveQuizButton = () => {
       return true;
     }
 
-    if (!newQuiz.keyword) {
-      return true;
-    }
+    if (newQuiz.type === "일반") {
+      if (!newQuiz.content) {
+        return true;
+      }
 
-    if (newQuiz.type === "워크시트") {
+      if (newQuiz.answerType === "객관식") {
+        if (
+          newQuiz.multipleChoiceInfo?.answerStringList?.some(answer => !answer)
+        ) {
+          return true;
+        }
+      }
+    } else if (newQuiz.type === "워크시트") {
       if (newQuiz.image === null) {
         return true;
       }
 
-      if (newQuiz.answerType === "단답형") {
-        if (_.isEmpty(newQuiz.shortAnswerQuestionInfo?.answer)) {
-          return true;
-        }
-      } else {
+      if (newQuiz.answerType !== "단답형") {
+        return true;
+      }
+    }
+
+    if (newQuiz.answerType === "단답형") {
+      if (_.isEmpty(newQuiz.shortAnswerQuestionInfo?.answer)) {
         return true;
       }
     }
