@@ -31,6 +31,10 @@ const NewQuizContent = () => {
   }, [quizList, newQuiz.title, modifyQuizId]);
 
   const onClickImg = (e: React.MouseEvent) => {
+    if (newQuiz.type !== "워크시트") {
+      return;
+    }
+
     const x =
       e.pageX -
       ((e.target as HTMLElement).offsetParent as HTMLElement).offsetLeft;
@@ -118,7 +122,7 @@ const NewQuizContent = () => {
             }
             onClick={onClickImg}
           />
-          {newQuiz.shortAnswerQuestionInfo && (
+          {newQuiz.type === "워크시트" && newQuiz.shortAnswerQuestionInfo && (
             <ShortAnswerQuestion
               index={0}
               info={newQuiz.shortAnswerQuestionInfo}

@@ -1,7 +1,7 @@
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import { MultipleChoiceInfo } from "./MultipleChoiceInfo";
 
-type QuizType = "NONE" | "일반" | "워크시트";
+export type QuizType = "NONE" | "일반" | "워크시트";
 
 export type QuizSubject = "국어" | "수학" | "사회" | "영어";
 type AnswerType = "단답형" | "객관식";
