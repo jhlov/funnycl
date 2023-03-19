@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { CONST } from "const";
 import _ from "lodash";
 import { useEffect } from "react";
@@ -96,6 +97,12 @@ export const MultipleChoiceNormal = () => {
           <Col xs="4">
             <Form.Control
               type="text"
+              className={classNames({
+                "border-danger": !(newQuiz.multipleChoiceInfo
+                  ?.answerStringList ?? [])[
+                  newQuiz.multipleChoiceInfo?.rightAnswer ?? 0
+                ]
+              })}
               value={
                 (newQuiz.multipleChoiceInfo?.answerStringList ?? [])[
                   newQuiz.multipleChoiceInfo?.rightAnswer ?? 0
@@ -120,6 +127,10 @@ export const MultipleChoiceNormal = () => {
               <Col xs="4">
                 <Form.Control
                   type="text"
+                  className={classNames({
+                    "border-danger": !(newQuiz.multipleChoiceInfo
+                      ?.answerStringList ?? [])[i + 1]
+                  })}
                   value={
                     (newQuiz.multipleChoiceInfo?.answerStringList ?? [])[
                       i + 1
