@@ -61,6 +61,9 @@ const NewQuizContent = () => {
             <Col xs="6">
               <Form.Control
                 type="text"
+                className={classNames({
+                  "border-danger": !newQuiz.title || quizTitleError
+                })}
                 value={newQuiz.title}
                 onChange={e => setNewQuiz("title", e.target.value)}
               />
@@ -80,6 +83,7 @@ const NewQuizContent = () => {
               <Col xs="6">
                 <Form.Control
                   as="textarea"
+                  className={classNames({ "border-danger": !newQuiz.content })}
                   value={newQuiz.content}
                   rows={3}
                   onChange={e => setNewQuiz("content", e.target.value)}

@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Col, Form, Row } from "react-bootstrap";
 import { useQuiz } from "store/useQuiz";
 
@@ -13,6 +14,9 @@ export const ShortAnswerQuestionNormal = () => {
           <Col xs="6">
             <Form.Control
               type="text"
+              className={classNames({
+                "border-danger": !newQuiz.shortAnswerQuestionInfo?.answer
+              })}
               value={newQuiz.shortAnswerQuestionInfo?.answer ?? ""}
               onChange={e =>
                 setNewQuiz("shortAnswerQuestionInfo", {
