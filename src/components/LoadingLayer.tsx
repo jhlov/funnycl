@@ -1,11 +1,9 @@
-import React from "react";
 import { Spinner } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { RootState } from "store";
+import { useCommon } from "store/useCommon";
 import "./LoadingLayer.scss";
 
 export const LoadingLayer = () => {
-  const isLoading = useSelector((state: RootState) => state.common.isLoading);
+  const { isLoading } = useCommon();
 
   return (
     <>

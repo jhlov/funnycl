@@ -1,6 +1,6 @@
 import FormatShapesIcon from "@mui/icons-material/FormatShapes";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import axios from "axios";
+import axios from "api";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import React, { useRef, useState } from "react";

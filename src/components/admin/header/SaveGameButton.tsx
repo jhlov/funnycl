@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "api";
 import { getAuth } from "firebase/auth";
 import { child, getDatabase, push, ref, update } from "firebase/database";
 import _ from "lodash";
