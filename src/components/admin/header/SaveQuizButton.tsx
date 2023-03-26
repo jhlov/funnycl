@@ -18,9 +18,11 @@ export const SaveQuizButton = () => {
   const exceptKeys = useMemo<string[]>(() => {
     const keys = ["imageUrl"];
     if (newQuiz.answerType === "객관식") {
-      keys.push("shortAnswerQuestionInfo");
+      keys.push("shortAnswerQuestionInfo", "oxAnswer");
     } else if (newQuiz.answerType === "단답형") {
-      keys.push("multipleChoiceInfo");
+      keys.push("multipleChoiceInfo", "oxAnswer");
+    } else if (newQuiz.answerType === "OX") {
+      keys.push("shortAnswerQuestionInfo", "multipleChoiceInfo");
     }
 
     return keys;
