@@ -94,11 +94,15 @@ const NewQuizInfo = () => {
             value={newQuiz.answerType}
             onChange={e => setNewQuiz("answerType", e.target.value)}
           >
-            {answerTypetList.map(item => (
-              <option key={`answerType_${item}`} value={item}>
-                {item}
-              </option>
-            ))}
+            {answerTypetList
+              .filter(type =>
+                newQuiz.type === "워크시트" ? type === "단답형" : true
+              )
+              .map(item => (
+                <option key={`answerType_${item}`} value={item}>
+                  {item}
+                </option>
+              ))}
           </Form.Select>
         </Form.Group>
       </Form>
