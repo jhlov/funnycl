@@ -4,11 +4,11 @@ import { MultipleChoiceInfo } from "./MultipleChoiceInfo";
 export type QuizType = "NONE" | "일반" | "워크시트";
 
 export type QuizSubject = "국어" | "수학" | "사회" | "영어";
-type AnswerType = "단답형" | "객관식";
+type AnswerType = "단답형" | "객관식" | "OX";
 
 export const quizSubjectList = ["국어", "수학", "사회", "영어"];
 
-export const answerTypetList = ["단답형", "객관식"];
+export const answerTypetList = ["단답형", "객관식", "OX"];
 
 export interface Quiz {
   title: string;
@@ -22,6 +22,7 @@ export interface Quiz {
   answerType: AnswerType;
   shortAnswerQuestionInfo: ShortAnswerQuestionInfo | null;
   multipleChoiceInfo: MultipleChoiceInfo | null;
+  oxAnswer: boolean;
   hint: string;
   score: number;
 
@@ -51,6 +52,7 @@ export const initNewQuiz: Quiz = {
   answerType: "단답형",
   shortAnswerQuestionInfo: null,
   multipleChoiceInfo: null,
+  oxAnswer: true,
   hint: "",
   score: 10,
   image: null,

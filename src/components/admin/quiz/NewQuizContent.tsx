@@ -8,6 +8,7 @@ import { Col, Form, Row } from "react-bootstrap";
 import { useQuiz } from "store/useQuiz";
 import { MultipleChoiceNormal } from "./MultipleChoiceNormal";
 import "./NewQuizContent.scss";
+import { OXNormal } from "./OXNormal";
 import { ShortAnswerQuestionNormal } from "./ShortAnswerQuestionNormal";
 
 const NewQuizContent = () => {
@@ -104,6 +105,8 @@ const NewQuizContent = () => {
         {newQuiz.type === "일반" && newQuiz.answerType === "객관식" && (
           <MultipleChoiceNormal />
         )}
+
+        {newQuiz.type === "일반" && newQuiz.answerType === "OX" && <OXNormal />}
 
         <ImageInput
           image={newQuiz.image}

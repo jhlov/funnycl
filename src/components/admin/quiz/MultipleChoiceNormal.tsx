@@ -119,7 +119,7 @@ export const MultipleChoiceNormal = () => {
       )
         .fill(0)
         .map((_, i) => (
-          <Form.Group className="mb-1">
+          <Form.Group key={`wrong-answer-${i}`} className="mb-1">
             <Row>
               <Col xs="2">
                 <Form.Label>오답 {i + 1}</Form.Label>
