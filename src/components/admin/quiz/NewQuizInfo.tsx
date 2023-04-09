@@ -1,5 +1,5 @@
 import { CONST } from "const";
-import { answerTypetList, quizSubjectList } from "interfaces/Quiz";
+import { AnswerType, answerTypetList, quizSubjectList } from "interfaces/Quiz";
 import Form from "react-bootstrap/Form";
 import { useQuiz } from "store/useQuiz";
 import "./NewQuizInfo.scss";
@@ -21,6 +21,20 @@ export const yearList = [
 
 const NewQuizInfo = () => {
   const { newQuiz, setNewQuiz } = useQuiz();
+
+  const onChangeAnswerType = (type: AnswerType) => {
+    setNewQuiz("answerType", type);
+    if (
+      newQuiz.type === "워크시트" &&
+      type === "객관식" &&
+      !newQuiz.multipleChoiceInfo
+    ) {
+      setNewQuiz("multipleChoiceInfo", {
+        random: false,
+        count: CONST.DEFAULT_MULTIPLE_CHIOCE_COUNT
+      });
+    }
+  };
 
   return (
     <div className="new-quiz-info p-3">
@@ -92,11 +106,13 @@ const NewQuizInfo = () => {
           <Form.Label>문제유형</Form.Label>
           <Form.Select
             value={newQuiz.answerType}
-            onChange={e => setNewQuiz("answerType", e.target.value)}
+            onChange={e => onChangeAnswerType(e.target.value as AnswerType)}
           >
             {answerTypetList
               .filter(type =>
-                newQuiz.type === "워크시트" ? type === "단답형" : true
+                newQuiz.type === "워크시트"
+                  ? ["단답형", "객관식"].includes(type)
+                  : true
               )
               .map(item => (
                 <option key={`answerType_${item}`} value={item}>
@@ -105,6 +121,32 @@ const NewQuizInfo = () => {
               ))}
           </Form.Select>
         </Form.Group>
+
+        {newQuiz.type === "워크시트" && newQuiz.answerType === "객관식" && (
+          <Form.Group className="mb-4">
+            <Form.Label>문항 수</Form.Label>
+            <Form.Select
+              value={
+                newQuiz.multipleChoiceInfo?.count ??
+                CONST.DEFAULT_MULTIPLE_CHIOCE_COUNT
+              }
+              onChange={e =>
+                setNewQuiz("multipleChoiceInfo", {
+                  ...newQuiz.multipleChoiceInfo,
+                  count: Number(e.target.value)
+                })
+              }
+            >
+              {Array(4)
+                .fill(0)
+                .map((n, i) => (
+                  <option key={`count_${i}`} value={i + 3}>
+                    {i + 3}
+                  </option>
+                ))}
+            </Form.Select>
+          </Form.Group>
+        )}
       </Form>
     </div>
   );
