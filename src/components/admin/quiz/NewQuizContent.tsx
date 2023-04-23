@@ -148,19 +148,22 @@ const NewQuizContent = () => {
             }
             onClick={onClickImg}
           />
-          {newQuiz.type === "워크시트" && newQuiz.shortAnswerQuestionInfo && (
-            <ShortAnswerQuestion
-              index={0}
-              info={newQuiz.shortAnswerQuestionInfo}
-              answer={newQuiz.shortAnswerQuestionInfo.answer}
-              onChange={(info: ShortAnswerQuestionInfo) =>
-                setNewQuiz("shortAnswerQuestionInfo", info)
-              }
-              onRemove={() => setNewQuiz("shortAnswerQuestionInfo", null)}
-              isEditable={true}
-            />
-          )}
           {newQuiz.type === "워크시트" &&
+            newQuiz.answerType === "단답형" &&
+            newQuiz.shortAnswerQuestionInfo && (
+              <ShortAnswerQuestion
+                index={0}
+                info={newQuiz.shortAnswerQuestionInfo}
+                answer={newQuiz.shortAnswerQuestionInfo.answer}
+                onChange={(info: ShortAnswerQuestionInfo) =>
+                  setNewQuiz("shortAnswerQuestionInfo", info)
+                }
+                onRemove={() => setNewQuiz("shortAnswerQuestionInfo", null)}
+                isEditable={true}
+              />
+            )}
+          {newQuiz.type === "워크시트" &&
+            newQuiz.answerType === "객관식" &&
             newQuiz.multipleChoiceInfo?.answerList && (
               <MultipleChoiceWorksheet
                 isEditable={true}
