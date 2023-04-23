@@ -1,5 +1,6 @@
 import { CONST } from "const";
 import { AnswerType, answerTypetList, quizSubjectList } from "interfaces/Quiz";
+import _ from "lodash";
 import Form from "react-bootstrap/Form";
 import { useQuiz } from "store/useQuiz";
 import "./NewQuizInfo.scss";
@@ -33,6 +34,41 @@ const NewQuizInfo = () => {
         random: false,
         count: CONST.DEFAULT_MULTIPLE_CHIOCE_COUNT
       });
+    }
+  };
+
+  const onChangeMultipleCount = (count: number) => {
+    setNewQuiz("multipleChoiceInfo", {
+      ...newQuiz.multipleChoiceInfo,
+      count
+    });
+
+    if (
+      !_.isEmpty(newQuiz.multipleChoiceInfo?.answerList) &&
+      newQuiz.multipleChoiceInfo?.count
+    ) {
+      if (newQuiz.multipleChoiceInfo?.count < count) {
+        const answerList = [...newQuiz.multipleChoiceInfo.answerList!];
+        const lastItem = answerList[newQuiz.multipleChoiceInfo?.count - 1];
+        for (let i = 0; i < count - newQuiz.multipleChoiceInfo?.count; ++i) {
+          answerList.push({
+            x: lastItem.x,
+            y: lastItem.y + (i + 1) * 20
+          });
+        }
+
+        setNewQuiz("multipleChoiceInfo", {
+          ...newQuiz.multipleChoiceInfo,
+          count,
+          answerList
+        });
+      } else if (count < newQuiz.multipleChoiceInfo?.count) {
+        setNewQuiz("multipleChoiceInfo", {
+          ...newQuiz.multipleChoiceInfo,
+          count,
+          answerList: newQuiz.multipleChoiceInfo.answerList?.slice(0, count)
+        });
+      }
     }
   };
 
@@ -130,12 +166,7 @@ const NewQuizInfo = () => {
                 newQuiz.multipleChoiceInfo?.count ??
                 CONST.DEFAULT_MULTIPLE_CHIOCE_COUNT
               }
-              onChange={e =>
-                setNewQuiz("multipleChoiceInfo", {
-                  ...newQuiz.multipleChoiceInfo,
-                  count: Number(e.target.value)
-                })
-              }
+              onChange={e => onChangeMultipleCount(Number(e.target.value))}
             >
               {Array(4)
                 .fill(0)

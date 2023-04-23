@@ -12,6 +12,7 @@ export const MultipleChoiceWorksheet = (props: Props) => {
       {props.multipleChoiceInfo.answerList?.map((answer, i) => {
         return (
           <MultipleChoiceCircle
+            key={`${i}_${answer.x}_${answer.y}_${props.multipleChoiceInfo.rightAnswer}`}
             x={answer.x}
             y={answer.y}
             checked={i === props.multipleChoiceInfo.rightAnswer}
