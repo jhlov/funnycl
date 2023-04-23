@@ -62,8 +62,8 @@ const NewQuizContent = () => {
           answerList: Array(newQuiz.multipleChoiceInfo?.count)
             .fill(0)
             .map((n, i) => ({
-              x,
-              y: y + i * 10
+              x: x - 9,
+              y: y - 14 + i * 20
             }))
         });
       }
@@ -152,7 +152,9 @@ const NewQuizContent = () => {
           )}
           {newQuiz.type === "워크시트" &&
             newQuiz.multipleChoiceInfo?.answerList && (
-              <MultipleChoiceWorksheet />
+              <MultipleChoiceWorksheet
+                multipleChoiceInfo={newQuiz.multipleChoiceInfo}
+              />
             )}
         </div>
       )}
