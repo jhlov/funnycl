@@ -70,6 +70,16 @@ const NewQuizContent = () => {
     }
   };
 
+  const onChangeCirclePosition = (index: number, x: number, y: number) => {
+    const answerList = [...newQuiz.multipleChoiceInfo?.answerList!];
+    answerList.splice(index, 1, { x, y });
+
+    setNewQuiz("multipleChoiceInfo", {
+      ...newQuiz.multipleChoiceInfo,
+      answerList
+    });
+  };
+
   return (
     <div className="new-quiz-content flex-fill border-end  p-3">
       <Form className="text-start">
@@ -153,7 +163,9 @@ const NewQuizContent = () => {
           {newQuiz.type === "워크시트" &&
             newQuiz.multipleChoiceInfo?.answerList && (
               <MultipleChoiceWorksheet
+                isEditable={true}
                 multipleChoiceInfo={newQuiz.multipleChoiceInfo}
+                onChangePosition={onChangeCirclePosition}
                 onClickCircle={(rightAnswer: number) => {
                   setNewQuiz("multipleChoiceInfo", {
                     ...newQuiz.multipleChoiceInfo,
