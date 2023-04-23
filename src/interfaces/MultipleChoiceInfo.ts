@@ -3,5 +3,5 @@ export interface MultipleChoiceInfo {
   count: number; // 문항수
   rightAnswer?: number;
   answerStringList?: string[];
-  answerList?: { x: number; y: number; answer: string }[];
+  answerList?: { x: number; y: number }[];
 }

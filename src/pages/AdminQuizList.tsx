@@ -82,9 +82,7 @@ const AdminQuizList = () => {
       return quiz.shortAnswerQuestionInfo?.answer;
     } else if (quiz.answerType === "객관식") {
       if (!_.isEmpty(quiz.multipleChoiceInfo?.answerList)) {
-        return (quiz.multipleChoiceInfo?.answerList ?? [])[
-          quiz.multipleChoiceInfo?.rightAnswer ?? 0
-        ].answer;
+        return quiz.multipleChoiceInfo?.rightAnswer;
       } else if (!_.isEmpty(quiz.multipleChoiceInfo?.answerStringList)) {
         return (quiz.multipleChoiceInfo?.answerStringList ?? [])[
           quiz.multipleChoiceInfo?.rightAnswer ?? 0

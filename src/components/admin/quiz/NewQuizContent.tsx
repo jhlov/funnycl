@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { ImageInput } from "components/common/ImageInput";
+import { MultipleChoiceWorksheet } from "components/MultipleChoiceWorksheet";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import _ from "lodash";
@@ -52,6 +53,18 @@ const NewQuizContent = () => {
           width: 100,
           height: 30,
           answer: ""
+        });
+      }
+    } else if (newQuiz.answerType === "객관식") {
+      if (!newQuiz.multipleChoiceInfo?.answerList) {
+        setNewQuiz("multipleChoiceInfo", {
+          ...newQuiz.multipleChoiceInfo,
+          answerList: Array(newQuiz.multipleChoiceInfo?.count)
+            .fill(0)
+            .map((n, i) => ({
+              x,
+              y: y + i * 10
+            }))
         });
       }
     }
@@ -137,6 +150,10 @@ const NewQuizContent = () => {
               isEditable={true}
             />
           )}
+          {newQuiz.type === "워크시트" &&
+            newQuiz.multipleChoiceInfo?.answerList && (
+              <MultipleChoiceWorksheet />
+            )}
         </div>
       )}
     </div>
