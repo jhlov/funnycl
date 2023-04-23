@@ -154,6 +154,12 @@ const NewQuizContent = () => {
             newQuiz.multipleChoiceInfo?.answerList && (
               <MultipleChoiceWorksheet
                 multipleChoiceInfo={newQuiz.multipleChoiceInfo}
+                onClickCircle={(rightAnswer: number) => {
+                  setNewQuiz("multipleChoiceInfo", {
+                    ...newQuiz.multipleChoiceInfo,
+                    rightAnswer
+                  });
+                }}
               />
             )}
         </div>

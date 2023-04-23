@@ -7,6 +7,7 @@ interface Props {
   x: number;
   y: number;
   checked: boolean;
+  onClickCircle: () => void;
 }
 
 export const MultipleChoiceCircle = (props: Props) => {
@@ -17,6 +18,7 @@ export const MultipleChoiceCircle = (props: Props) => {
         left: (props.multiple ?? 1) * props.x,
         top: (props.multiple ?? 1) * props.y
       }}
+      onClick={props.onClickCircle}
     >
       {props.checked ? (
         <RadioButtonCheckedIcon />

@@ -3,6 +3,7 @@ import { MultipleChoiceCircle } from "./MultipleChoiceCircle";
 
 interface Props {
   multipleChoiceInfo: MultipleChoiceInfo;
+  onClickCircle: (index: number) => void;
 }
 
 export const MultipleChoiceWorksheet = (props: Props) => {
@@ -14,6 +15,7 @@ export const MultipleChoiceWorksheet = (props: Props) => {
             x={answer.x}
             y={answer.y}
             checked={i === props.multipleChoiceInfo.rightAnswer}
+            onClickCircle={() => props.onClickCircle(i)}
           />
         );
       })}
