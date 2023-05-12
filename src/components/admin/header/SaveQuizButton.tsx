@@ -141,7 +141,7 @@ export const SaveQuizButton = () => {
     }
 
     const updates: any = {};
-    updates[`${quizUrl}/${postKey}`] = quizData;
+    updates[`${quizUrl}/${postKey}`] = _.pickBy(quizData);
 
     await update(ref(db), updates);
     alert(
