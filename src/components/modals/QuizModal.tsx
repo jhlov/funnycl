@@ -27,6 +27,7 @@ export const QuizModal = (props: Props) => {
   const { quizList, gameInfo, turn, groupList } = usePlay();
 
   const imageRef = useRef<HTMLImageElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (props.show) {
@@ -35,6 +36,10 @@ export const QuizModal = (props: Props) => {
       }
 
       setAnswer("");
+
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   }, [props.show, gameInfo?.isTurnPlay]);
 
@@ -70,6 +75,14 @@ export const QuizModal = (props: Props) => {
   const onLoadImage = () => {
     setImageWidth(imageRef.current?.width ?? 0);
     setImageNaturalWidth(imageRef.current?.naturalWidth ?? 0);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.code === "Enter" && e.keyCode === 13) {
+      if (answer && groupName) {
+        onSubmit();
+      }
+    }
   };
 
   return (
@@ -166,6 +179,25 @@ export const QuizModal = (props: Props) => {
                 />
               )}
             </div>
+          </div>
+        )}
+
+        {quizInfo.type === "일반" && (
+          <div className="position-relative uiz-modal__normal p-5 text-center">
+            <div className="quiz-modal__normal-content mb-4">
+              {quizInfo.content}
+            </div>
+
+            {quizInfo.answerType === "단답형" && (
+              <input
+                ref={inputRef}
+                type="text"
+                className="text-center quiz-modal__normal-short-answer-input"
+                value={answer}
+                onChange={e => setAnswer(e.target.value)}
+                onKeyDown={onKeyDown}
+              />
+            )}
           </div>
         )}
 
