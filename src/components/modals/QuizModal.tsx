@@ -188,6 +188,14 @@ export const QuizModal = (props: Props) => {
               {quizInfo.content}
             </div>
 
+            {quizInfo.image && (
+              <img
+                className="w-100 mb-4"
+                src={quizInfo.image! as string}
+                alt=""
+              />
+            )}
+
             {quizInfo.answerType === "단답형" && (
               <input
                 ref={inputRef}
