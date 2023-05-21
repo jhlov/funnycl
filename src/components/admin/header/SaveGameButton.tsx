@@ -111,8 +111,14 @@ export const SaveGameButton = () => {
     }
 
     const updates: any = {};
-    updates[`game/all/${postKey}`] = _.pickBy(gameData);
-    updates[`game/${auth.currentUser?.uid}/${postKey}`] = _.pickBy(gameData);
+    updates[`game/all/${postKey}`] = _.pickBy(
+      gameData,
+      value => !_.isNil(value) && value !== ""
+    );
+    updates[`game/${auth.currentUser?.uid}/${postKey}`] = _.pickBy(
+      gameData,
+      value => !_.isNil(value) && value !== ""
+    );
 
     await update(ref(db), updates);
     alert(

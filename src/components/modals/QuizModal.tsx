@@ -206,6 +206,26 @@ export const QuizModal = (props: Props) => {
                 onKeyDown={onKeyDown}
               />
             )}
+
+            {quizInfo.answerType === "OX" && (
+              <ButtonGroup>
+                {["O", "X"].map((radio, idx) => (
+                  <ToggleButton
+                    key={idx}
+                    id={`radio-${idx}`}
+                    type="radio"
+                    size="lg"
+                    variant="outline-success"
+                    name="radio"
+                    value={radio}
+                    checked={answer === radio}
+                    onChange={e => setAnswer(e.currentTarget.value)}
+                  >
+                    {radio}
+                  </ToggleButton>
+                ))}
+              </ButtonGroup>
+            )}
           </div>
         )}
 
