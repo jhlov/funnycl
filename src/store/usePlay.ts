@@ -107,6 +107,39 @@ export const usePlay = create<State>((set, get) => ({
           quizList = _.shuffle(quizList);
           quizList = quizList.slice(0, quizCount);
 
+          // 객관식 랜덤일 경우 정답 섞기
+          quizList = quizList.map(quiz => {
+            if (
+              quiz.type === "일반" &&
+              quiz.answerType === "객관식" &&
+              quiz.multipleChoiceInfo?.random
+            ) {
+              const answer =
+                quiz.multipleChoiceInfo.answerStringList![
+                  quiz.multipleChoiceInfo.rightAnswer!
+                ];
+
+              let answerStringList = [
+                ...quiz.multipleChoiceInfo.answerStringList!
+              ];
+              answerStringList.splice(quiz.multipleChoiceInfo.rightAnswer!, 1);
+              answerStringList = _.shuffle(answerStringList);
+              const rightAnswer = _.random(quiz.multipleChoiceInfo.count - 1);
+              answerStringList.splice(rightAnswer, 0, answer);
+
+              return {
+                ...quiz,
+                multipleChoiceInfo: {
+                  ...quiz.multipleChoiceInfo,
+                  answerStringList,
+                  rightAnswer
+                }
+              };
+            }
+
+            return quiz;
+          });
+
           const groupList = Array(Number(gameInfo?.groupCount))
             .fill(0)
             .map((_, i) => ({
