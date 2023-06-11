@@ -61,7 +61,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     setShow(false);
   };
 
-  const onSubmit = (groupName: string, answer: string) => {
+  const onSubmit = (groupName: string, answer: string | number) => {
     handleClose();
     setTimeout(() => {
       let isAnswer = false;
@@ -71,6 +71,10 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         }
       } else if (quizInfo.answerType === "OX") {
         if (quizInfo.oxAnswer === (answer === "O")) {
+          isAnswer = true;
+        }
+      } else if (quizInfo.answerType === "객관식") {
+        if (quizInfo.multipleChoiceInfo?.rightAnswer === answer) {
           isAnswer = true;
         }
       }

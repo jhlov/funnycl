@@ -1,10 +1,10 @@
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
+import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { CloseButton } from "components/common/CloseButton";
 import { SliceImage } from "components/common/SliceImage";
 import { ImageNormalButton } from "components/image-buttons/ImageNormalButton";
 import { ImagePrimaryButton } from "components/image-buttons/ImagePrimaryButton";
-import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ButtonGroup, Modal, ToggleButton } from "react-bootstrap";
@@ -14,13 +14,13 @@ import "./QuizModal.scss";
 interface Props {
   show: boolean;
   index: number;
-  onSubmit: (groupName: string, answer: string) => void;
+  onSubmit: (groupName: string, answer: string | number) => void;
   onClose: () => void;
 }
 
 export const QuizModal = (props: Props) => {
   const [groupName, setGroupName] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState<string | number>("");
   const [imageWidth, setImageWidth] = useState(0);
   const [imageNaturalWidth, setImageNaturalWidth] = useState(0);
 
@@ -158,7 +158,7 @@ export const QuizModal = (props: Props) => {
                 <ShortAnswerQuestion
                   index={0}
                   info={quizInfo.shortAnswerQuestionInfo!}
-                  answer={answer}
+                  answer={answer as string}
                   onChange={(info: ShortAnswerQuestionInfo) =>
                     setAnswer(info.answer)
                   }
@@ -226,6 +226,32 @@ export const QuizModal = (props: Props) => {
                 ))}
               </ButtonGroup>
             )}
+
+            {quizInfo.answerType === "객관식" && (
+              <div>
+                <ButtonGroup className="flex-wrap">
+                  {quizInfo.multipleChoiceInfo?.answerStringList!.map(
+                    (radio, idx) => (
+                      <ToggleButton
+                        key={idx}
+                        id={`radio-${idx}`}
+                        className="d-flex align-items-center"
+                        type="radio"
+                        size="lg"
+                        variant="outline-success"
+                        name="radio"
+                        value={idx}
+                        checked={answer === idx}
+                        onChange={e => setAnswer(idx)}
+                      >
+                        <span className="circle-number">{idx + 1}</span>
+                        {radio}
+                      </ToggleButton>
+                    )
+                  )}
+                </ButtonGroup>
+              </div>
+            )}
           </div>
         )}
 
@@ -259,7 +285,7 @@ export const QuizModal = (props: Props) => {
           <ImagePrimaryButton
             label="정답제출"
             onClick={onSubmit}
-            disabled={!answer || !groupName}
+            disabled={answer === "" || !groupName}
           />
         </div>
       </Modal.Body>
