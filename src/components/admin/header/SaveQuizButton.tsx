@@ -60,10 +60,6 @@ export const SaveQuizButton = () => {
       if (newQuiz.image === null) {
         return true;
       }
-
-      if (newQuiz.answerType !== "단답형") {
-        return true;
-      }
     }
 
     if (newQuiz.answerType === "단답형") {
