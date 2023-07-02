@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import { ImageInput } from "components/common/ImageInput";
 import { MultipleChoiceWorksheet } from "components/MultipleChoiceWorksheet";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
+import { ImageInput } from "components/common/ImageInput";
 import { ShortAnswerQuestionInfo } from "interfaces/ShortAnswerQustionInfo";
 import _ from "lodash";
 import { useEffect, useMemo } from "react";
@@ -168,6 +168,7 @@ const NewQuizContent = () => {
               <MultipleChoiceWorksheet
                 isEditable={true}
                 multipleChoiceInfo={newQuiz.multipleChoiceInfo}
+                answer={newQuiz.multipleChoiceInfo.rightAnswer}
                 onChangePosition={onChangeCirclePosition}
                 onClickCircle={(rightAnswer: number) => {
                   setNewQuiz("multipleChoiceInfo", {

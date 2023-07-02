@@ -4,6 +4,8 @@ import { MultipleChoiceCircle } from "./MultipleChoiceCircle";
 interface Props {
   isEditable: boolean;
   multipleChoiceInfo: MultipleChoiceInfo;
+  answer?: number;
+  multiple?: number;
   onChangePosition: (index: number, x: number, y: number) => void;
   onClickCircle: (index: number) => void;
 }
@@ -18,7 +20,8 @@ export const MultipleChoiceWorksheet = (props: Props) => {
             isEditable={props.isEditable}
             x={answer.x}
             y={answer.y}
-            checked={i === props.multipleChoiceInfo.rightAnswer}
+            multiple={props.multiple}
+            checked={i === props.answer}
             onChangePosition={(x, y) => props.onChangePosition(i, x, y)}
             onClickCircle={() => props.onClickCircle(i)}
           />

@@ -1,5 +1,6 @@
 import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
+import { MultipleChoiceWorksheet } from "components/MultipleChoiceWorksheet";
 import { ShortAnswerQuestion } from "components/ShortAnswerQuestion";
 import { CloseButton } from "components/common/CloseButton";
 import { SliceImage } from "components/common/SliceImage";
@@ -22,7 +23,7 @@ export const QuizModal = (props: Props) => {
   const [groupName, setGroupName] = useState("");
   const [answer, setAnswer] = useState<string | number>("");
   const [imageWidth, setImageWidth] = useState(0);
-  const [imageNaturalWidth, setImageNaturalWidth] = useState(0);
+  const [imageNaturalWidth, setImageNaturalWidth] = useState(0); // 이미지 원본 사이즈
 
   const { quizList, gameInfo, turn, groupList } = usePlay();
 
@@ -62,6 +63,12 @@ export const QuizModal = (props: Props) => {
 
     return `${process.env.PUBLIC_URL}/img/popup/bg_popup_paper_00.png`;
   }, [gameInfo?.isTurnPlay, turn]);
+
+  const multiple = useMemo(() => {
+    return imageNaturalWidth === 0
+      ? 1
+      : imageWidth / Math.min(748, imageNaturalWidth);
+  }, [imageNaturalWidth, imageWidth]);
 
   const handleClose = () => {
     props.onClose();
@@ -164,11 +171,7 @@ export const QuizModal = (props: Props) => {
                   }
                   onRemove={() => {}}
                   isEditable={false}
-                  multiple={
-                    imageNaturalWidth === 0
-                      ? 1
-                      : imageWidth / Math.min(748, imageNaturalWidth)
-                  }
+                  multiple={multiple}
                   onEnter={() => {
                     if (answer) {
                       onSubmit();
@@ -176,6 +179,16 @@ export const QuizModal = (props: Props) => {
                       handleClose();
                     }
                   }}
+                />
+              )}
+              {quizInfo.answerType === "객관식" && (
+                <MultipleChoiceWorksheet
+                  isEditable={false}
+                  multipleChoiceInfo={quizInfo.multipleChoiceInfo!}
+                  answer={answer as number}
+                  onChangePosition={() => {}}
+                  onClickCircle={index => setAnswer(index)}
+                  multiple={multiple}
                 />
               )}
             </div>

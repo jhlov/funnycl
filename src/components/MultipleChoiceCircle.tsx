@@ -50,8 +50,13 @@ export const MultipleChoiceCircle = (props: Props) => {
       draggable={props.isEditable}
       className="multiple-choice-circle position-absolute"
       style={{
-        left: (props.multiple ?? 1) * props.x,
-        top: (props.multiple ?? 1) * props.y
+        left:
+          (props.multiple ?? 1) * props.x +
+          (18 * ((props.multiple ?? 1) - 1)) / 2,
+        top:
+          (props.multiple ?? 1) * props.y +
+          (24 * ((props.multiple ?? 1) - 1)) / 2,
+        transform: `scale(${props.multiple ?? 1})`
       }}
       onClick={props.onClickCircle}
       onDragStart={onDragStart}
