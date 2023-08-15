@@ -1,6 +1,6 @@
 import { getAuth } from "firebase/auth";
 import { child, get, getDatabase, ref } from "firebase/database";
-import { initNewQuiz, Quiz } from "interfaces/Quiz";
+import { Quiz, initNewQuiz } from "interfaces/Quiz";
 import _ from "lodash";
 import create from "zustand";
 
@@ -49,13 +49,33 @@ export const useQuiz = create<State>(set => ({
         ...initNewQuiz
       }
     })),
-  setNewQuiz: (key: string, value: any) =>
+  setNewQuiz: (key: string, value: any) => {
     set(state => ({
       newQuiz: {
         ...state.newQuiz,
         [key]: value
       }
-    })),
+    }));
+
+    // 새로운 문제 출제 일 때(type 이 변경 되었을 때), 저장한 정보를 넣는다.
+    if (key === "type") {
+      const lastQuizInfo = JSON.parse(
+        localStorage.getItem("create_quiz_info") ?? "{}"
+      );
+      if (!_.isEmpty(lastQuizInfo)) {
+        set(state => ({
+          newQuiz: {
+            ...state.newQuiz,
+            subject: lastQuizInfo.subject,
+            year: lastQuizInfo.year,
+            keyword: lastQuizInfo.keyword,
+            difficulty: lastQuizInfo.difficulty,
+            score: lastQuizInfo.score
+          }
+        }));
+      }
+    }
+  },
   getQuizInfo: (id: string) => {
     set(() => ({
       modifyQuizId: id

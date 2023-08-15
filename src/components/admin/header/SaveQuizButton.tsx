@@ -143,6 +143,12 @@ export const SaveQuizButton = () => {
     );
 
     await update(ref(db), updates);
+
+    // 새로운 문제일 경우 문제 정보 저장하기
+    if (subMenu === "CREATE_QUIZ") {
+      localStorage.setItem("create_quiz_info", JSON.stringify(newQuiz));
+    }
+
     alert(
       subMenu === "CREATE_QUIZ"
         ? "새로운 문제 저장에 성공하였습니다."
