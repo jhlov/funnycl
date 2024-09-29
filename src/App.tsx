@@ -15,7 +15,7 @@ import "./App.scss";
 
 function App() {
   const auth = getAuth();
-  const { setIsLogin } = useLogin();
+  const { setIsLogin, getUserInfo } = useLogin();
 
   useEffect(() => {
     auth.onAuthStateChanged(() => {
@@ -24,8 +24,9 @@ function App() {
   }, []);
 
   const onAuthStateChanged = async () => {
-    console.log("onAuthStateChanged", auth.currentUser);
+    // console.log("onAuthStateChanged", auth.currentUser);
     setIsLogin(!_.isNil(auth.currentUser));
+    getUserInfo();
   };
 
   return (
