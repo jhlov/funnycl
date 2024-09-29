@@ -9,6 +9,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import { OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useLogin } from "store/useLogin";
 import { useMenus } from "store/useMenus";
 import { useQuiz } from "store/useQuiz";
 import "./AdminQuizList.scss";
@@ -31,12 +32,18 @@ const shortYearList = [
 const AdminQuizList = () => {
   const auth = getAuth();
   const { setSubMenu } = useMenus();
+  const { userInfo } = useLogin();
   const { quizList, getQuizList } = useQuiz();
 
   useEffect(() => {
     setSubMenu("QUIZ_LIST");
-    getQuizList();
   }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      getQuizList();
+    }
+  }, [userInfo]);
 
   const onClickRemoveQuiz = (id: string) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {

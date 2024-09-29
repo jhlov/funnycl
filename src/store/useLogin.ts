@@ -31,6 +31,9 @@ export const useLogin = create<LoginState>(set => ({
           }));
         } else {
           console.log("No data available");
+          set(() => ({
+            userInfo: {}
+          }));
         }
       })
       .catch(error => {

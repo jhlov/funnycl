@@ -3,6 +3,7 @@ import { child, get, getDatabase, ref } from "firebase/database";
 import { Quiz, initNewQuiz } from "interfaces/Quiz";
 import _ from "lodash";
 import create from "zustand";
+import { useLogin } from "./useLogin";
 
 interface State {
   quizList: Quiz[];
@@ -18,16 +19,21 @@ export const useQuiz = create<State>(set => ({
   quizList: [],
   getQuizList: () => {
     const dbRef = ref(getDatabase());
-    const quizUrl = `quiz/${getAuth().currentUser?.uid}`;
+    const isMaster = useLogin.getState().userInfo?.isMaster ?? false;
+    const quizUrl = isMaster ? "quiz" : `quiz/${getAuth().currentUser?.uid}`;
     get(child(dbRef, quizUrl))
       .then(snapshot => {
         if (snapshot.exists()) {
+          console.log("result", snapshot.val());
+          const result: Quiz[] = isMaster
+            ? ((Object.values(snapshot.val()) as { string: Quiz }[])
+                .map((obj: { string: Quiz }) => Object.values(obj))
+                .flat() as Quiz[])
+            : Object.values(snapshot.val());
           set(() => ({
             quizList: _.reverse(
               _.sortBy<Quiz>(
-                Object.values<Quiz>(snapshot.val()).filter(
-                  item => !item.deleted
-                ),
+                result.filter(item => !item.deleted),
                 "created"
               )
             )
