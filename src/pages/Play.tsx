@@ -35,7 +35,9 @@ export const Play = (props: any) => {
   }, [id]);
 
   useEffect(() => {
-    getUserInfo();
+    if (gameInfo?.userId) {
+      getUserInfo();
+    }
   }, [gameInfo?.userId]);
 
   useEffect(() => {
@@ -111,7 +113,25 @@ export const Play = (props: any) => {
               </Form.Group>
 
               <Form.Group className="mb-4">
-                <Form.Label>문제풀이권 획득 점수 간격</Form.Label>
+                <Form.Label>문제풀이권 획득 방법</Form.Label>
+                <Form.Select
+                  value={gameInfo.keyAcquisitionType}
+                  onChange={e =>
+                    setGameInfo("keyAcquisitionType", e.target.value)
+                  }
+                >
+                  <option value="SCORE">점수 획득</option>
+                  <option value="RANDOM">랜덤</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group className="mb-4">
+                <Form.Label>
+                  {(gameInfo.keyAcquisitionType ??
+                    CONST.DEFAULT_KEY_ACQUISITION_TYPE) === "SCORE"
+                    ? "문제풀이권 획득 점수 간격"
+                    : "문제풀이권 획득 랜덤 %"}
+                </Form.Label>
                 <Form.Control
                   type="text"
                   value={gameInfo.keyRange ?? CONST.DEFAULT_KEY_RANGE}

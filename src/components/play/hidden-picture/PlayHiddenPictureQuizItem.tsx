@@ -32,6 +32,7 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
     gameInfo,
     finished,
     groupList,
+    keyQuizIndexList,
     updateGroupListScore,
     updateGroupListItem,
     updateQuizListFinished,
@@ -84,13 +85,27 @@ export const PlayHiddenPictureQuizItem = (props: Props) => {
         let rewardText = "";
 
         // 문제풀이권 획득
-        const group = groupList.find(group => group.name === groupName);
-        const keyRange = gameInfo?.keyRange ?? CONST.DEFAULT_KEY_RANGE;
-        if (group) {
-          if (
-            Math.floor(group.score! / keyRange) <
-            Math.floor((group.score + quizInfo.score) / keyRange)
-          ) {
+        if (
+          (gameInfo?.keyAcquisitionType ??
+            CONST.DEFAULT_KEY_ACQUISITION_TYPE) === "SCORE"
+        ) {
+          const group = groupList.find(group => group.name === groupName);
+          const keyRange = gameInfo?.keyRange ?? CONST.DEFAULT_KEY_RANGE;
+          if (group) {
+            if (
+              Math.floor(group.score! / keyRange) <
+              Math.floor((group.score + quizInfo.score) / keyRange)
+            ) {
+              reward = "KEY";
+              rewardText = "문제 풀이권을 획득했습니다.";
+              updateGroupListItem(groupName, "KEY", 1);
+            }
+          }
+        } else if (
+          (gameInfo?.keyAcquisitionType ??
+            CONST.DEFAULT_KEY_ACQUISITION_TYPE) === "RANDOM"
+        ) {
+          if (keyQuizIndexList.includes(props.index)) {
             reward = "KEY";
             rewardText = "문제 풀이권을 획득했습니다.";
             updateGroupListItem(groupName, "KEY", 1);

@@ -2,12 +2,14 @@ import { CONST } from "const";
 import { QuizSubject } from "./Quiz";
 
 type GameType = "NONE" | "숨겨진그림";
+type keyAcquisitionType = "SCORE" | "RANDOM";
 
 export interface Game {
   title: string;
   type: GameType;
   hiddenPictureAnswer?: string; // 숨겨진 그림일 때, 그림 정답
-  keyRange: number; // 문제 풀이권 획득 점수 간격
+  keyAcquisitionType?: keyAcquisitionType;
+  keyRange: number; // 문제 풀이권 획득 점수 간격 or 랜덤 퍼센트
   sizeX: number;
   sizeY: number;
   groupCount: number;

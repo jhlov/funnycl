@@ -20,6 +20,7 @@ interface State {
   // 게임 시작 후 세팅
   quizList: Quiz[];
   groupList: Group[];
+  keyQuizIndexList: number[]; // 문제풀이권 랜덤일 경우, 문제풀이권이 나오는 문제 리스트
   turn: number; // 턴제 진행 일때 사용
   finished: boolean;
   gameWinModalProps: GameWinModalProps;
@@ -92,6 +93,7 @@ export const usePlay = create<State>((set, get) => ({
   },
   quizList: [],
   groupList: [],
+  keyQuizIndexList: [],
   turn: 0,
   finished: false,
   gameWinModalProps: { show: false },
@@ -135,8 +137,7 @@ export const usePlay = create<State>((set, get) => ({
           while (quizList.length < quizCount) {
             quizList = [...quizList, ...quizList];
           }
-          quizList = _.shuffle(quizList);
-          quizList = quizList.slice(0, quizCount);
+          quizList = _.sampleSize(quizList, quizCount);
 
           // 객관식 랜덤일 경우 정답 섞기
           quizList = quizList.map(quiz => {
@@ -182,10 +183,24 @@ export const usePlay = create<State>((set, get) => ({
               items: {}
             }));
 
+          let keyQuizIndexList: number[] = [];
+          if (gameInfo?.keyAcquisitionType === "RANDOM") {
+            keyQuizIndexList = _.sampleSize(
+              Array(quizCount)
+                .fill(0)
+                .map((e, i) => i),
+              Math.round(
+                (quizCount * (gameInfo.keyRange ?? CONST.DEFAULT_KEY_RANGE)) /
+                  100
+              )
+            );
+          }
+
           set(() => ({
             startGame: true,
             quizList,
             groupList,
+            keyQuizIndexList,
             turn: 0
           }));
         } else {
