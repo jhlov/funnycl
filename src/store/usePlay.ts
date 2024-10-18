@@ -5,14 +5,17 @@ import { child, get as getData, getDatabase, ref } from "firebase/database";
 import { Game } from "interfaces/Game";
 import { Group } from "interfaces/Group";
 import { Quiz } from "interfaces/Quiz";
+import { UserInfo } from "interfaces/UserInfo";
 import _ from "lodash";
 import create from "zustand";
 
 interface State {
   startGame: boolean;
   gameInfo: Game | null;
+  userInfo?: UserInfo;
   getGameInfo: (id: string) => void;
   setGameInfo: (key: string, value: any) => void;
+  getUserInfo: () => void;
 
   // 게임 시작 후 세팅
   quizList: Quiz[];
@@ -65,6 +68,28 @@ export const usePlay = create<State>((set, get) => ({
       }
     }));
   },
+  getUserInfo: () => {
+    const dbRef = ref(getDatabase());
+    const url = `userInfo/${get().gameInfo?.userId}`;
+
+    getData(child(dbRef, url))
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          // console.log(snapshot.val());
+          set(() => ({
+            userInfo: snapshot.val()
+          }));
+        } else {
+          console.log("No data available");
+          set(() => ({
+            userInfo: {}
+          }));
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  },
   quizList: [],
   groupList: [],
   turn: 0,
@@ -74,13 +99,19 @@ export const usePlay = create<State>((set, get) => ({
     const gameInfo = get().gameInfo;
     console.log(gameInfo);
     const dbRef = ref(getDatabase());
-    const quizUrl = `quiz/${gameInfo?.userId}`;
+
+    const isMaster = get().userInfo?.isMaster ?? false;
+    const quizUrl = isMaster ? "quiz" : `quiz/${gameInfo?.userId}`;
     getData(child(dbRef, quizUrl))
       .then(snapshot => {
         if (snapshot.exists()) {
-          let quizList = Object.values<Quiz>(snapshot.val()).filter(
-            item => !item.deleted
-          );
+          let quizList: Quiz[] = isMaster
+            ? ((Object.values(snapshot.val()) as { string: Quiz }[])
+                .map((obj: { string: Quiz }) => Object.values(obj))
+                .flat() as Quiz[])
+            : Object.values(snapshot.val());
+
+          quizList = quizList.filter(item => !item.deleted);
 
           // 1. 필터링
           // 1-1. 과목

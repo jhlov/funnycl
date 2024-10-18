@@ -13,7 +13,14 @@ interface Params {
 
 export const Play = (props: any) => {
   const match = useRouteMatch();
-  const { startGame, gameInfo, getGameInfo, setGameInfo, initGame } = usePlay();
+  const {
+    startGame,
+    gameInfo,
+    getGameInfo,
+    setGameInfo,
+    initGame,
+    getUserInfo
+  } = usePlay();
   const [checkSetting, setCheckSetting] = useState(false);
   const [showSettingModal, setShowSettingModal] = useState(false);
 
@@ -26,6 +33,10 @@ export const Play = (props: any) => {
       getGameInfo(id);
     }
   }, [id]);
+
+  useEffect(() => {
+    getUserInfo();
+  }, [gameInfo?.userId]);
 
   useEffect(() => {
     if (!checkSetting && gameInfo) {
