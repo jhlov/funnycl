@@ -3,10 +3,10 @@ import { MultipleChoiceInfo } from "./MultipleChoiceInfo";
 
 export type QuizType = "NONE" | "일반" | "워크시트";
 
-export type QuizSubject = "국어" | "수학" | "사회" | "영어";
+export type QuizSubject = "국어" | "수학" | "사회" | "영어" | "스마일투어";
 export type AnswerType = "단답형" | "객관식" | "OX";
 
-export const quizSubjectList = ["국어", "수학", "사회", "영어"];
+export const quizSubjectList = ["국어", "수학", "사회", "영어", "스마일투어"];
 
 export const answerTypetList = ["단답형", "객관식", "OX"];
 
