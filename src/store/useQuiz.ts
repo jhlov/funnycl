@@ -20,6 +20,7 @@ export const useQuiz = create<State>(set => ({
   getQuizList: () => {
     const dbRef = ref(getDatabase());
     const isMaster = useLogin.getState().userInfo?.isMaster ?? false;
+    console.log("isMaster", isMaster);
     const quizUrl = isMaster ? "quiz" : `quiz/${getAuth().currentUser?.uid}`;
     get(child(dbRef, quizUrl))
       .then(snapshot => {
@@ -36,11 +37,11 @@ export const useQuiz = create<State>(set => ({
                   }));
                 })
                 .flat() as Quiz[])
-            : Object.values(
-                (snapshot.val() as Quiz[]).map(quiz => ({
+            : Object.values(snapshot.val() as Record<string, Quiz>).map(
+                quiz => ({
                   ...quiz,
                   userId: getAuth().currentUser?.uid
-                }))
+                })
               );
           set(() => ({
             quizList: _.reverse(
