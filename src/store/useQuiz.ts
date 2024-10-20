@@ -26,10 +26,22 @@ export const useQuiz = create<State>(set => ({
         if (snapshot.exists()) {
           console.log("result", snapshot.val());
           const result: Quiz[] = isMaster
-            ? ((Object.values(snapshot.val()) as { string: Quiz }[])
-                .map((obj: { string: Quiz }) => Object.values(obj))
+            ? (Object.entries(
+                snapshot.val() as Record<string, Record<string, Quiz>>
+              )
+                .map(([userId, quizList]) => {
+                  return Object.values(quizList).map(quiz => ({
+                    ...quiz,
+                    userId
+                  }));
+                })
                 .flat() as Quiz[])
-            : Object.values(snapshot.val());
+            : Object.values(
+                (snapshot.val() as Quiz[]).map(quiz => ({
+                  ...quiz,
+                  userId: getAuth().currentUser?.uid
+                }))
+              );
           set(() => ({
             quizList: _.reverse(
               _.sortBy<Quiz>(

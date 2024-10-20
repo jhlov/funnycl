@@ -36,6 +36,9 @@ export interface Quiz {
   modified?: string;
   deleted?: string;
 
+  // 퀴즈 리스트 받아올때 세팅
+  userId?: string;
+
   // 게임 플레이 시 세팅
   finished?: boolean;
 }

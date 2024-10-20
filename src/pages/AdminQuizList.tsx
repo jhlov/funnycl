@@ -1,5 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import classNames from "classnames";
 import { CONST } from "const";
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, update } from "firebase/database";
@@ -124,7 +125,13 @@ const AdminQuizList = () => {
         </thead>
         <tbody>
           {quizList.map((item: Quiz, i) => (
-            <tr key={item.id}>
+            <tr
+              key={item.id}
+              className={classNames({
+                "fw-bold":
+                  userInfo?.isMaster && item.userId === auth.currentUser?.uid
+              })}
+            >
               <td>{i + 1}</td>
               <td>{item.type}</td>
               <td className="text-start admin-quiz-list__title">
