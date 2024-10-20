@@ -46,12 +46,12 @@ const AdminQuizList = () => {
     }
   }, [userInfo]);
 
-  const onClickRemoveQuiz = (id: string) => {
+  const onClickRemoveQuiz = (userId: string, id: string) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       const db = getDatabase();
 
       const updates: any = {};
-      updates[`quiz/${auth.currentUser?.uid}/${id}/deleted`] = moment()
+      updates[`quiz/${userId}/${id}/deleted`] = moment()
         .utc(false)
         .add(9, "h")
         .format("YYYY-MM-DD HH:mm:ss");
@@ -158,7 +158,7 @@ const AdminQuizList = () => {
               <td>
                 <button
                   className="btn"
-                  onClick={() => onClickRemoveQuiz(item.id!)}
+                  onClick={() => onClickRemoveQuiz(item.userId!, item.id!)}
                 >
                   <DeleteIcon />
                 </button>
