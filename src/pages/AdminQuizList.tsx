@@ -113,24 +113,6 @@ const AdminQuizList = () => {
 
   return (
     <div className="admin-quiz-list p-5">
-      {userInfo?.isMaster === true && (
-        <Form className="text-start">
-          <Form.Group className="mb-4" style={{ width: "100px" }}>
-            <Form.Label className="fw-bold">과목</Form.Label>
-            <Form.Select
-              value={filterSubject}
-              onChange={e => setFilterSubject(e.target.value)}
-            >
-              {["All", ...quizSubjectList].map(item => (
-                <option key={`subject${item}`} value={item}>
-                  {item}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-        </Form>
-      )}
-
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -139,7 +121,25 @@ const AdminQuizList = () => {
             <th>문제 이름</th>
             <th>문제 내용</th>
             <th>답</th>
-            <th style={{ width: "60px", minWidth: "60px" }}>과목</th>
+            <th style={{ width: "100px", minWidth: "60px" }}>
+              과목
+              {userInfo?.isMaster === true && (
+                <Form>
+                  <Form.Group>
+                    <Form.Select
+                      value={filterSubject}
+                      onChange={e => setFilterSubject(e.target.value)}
+                    >
+                      {["All", ...quizSubjectList].map(item => (
+                        <option key={`subject${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Form>
+              )}
+            </th>
             <th style={{ width: "60px", minWidth: "60px" }}>학년</th>
             <th style={{ width: "120px", minWidth: "120px" }}>제시어</th>
             <th style={{ width: "80px", minWidth: "80px" }}>난이도</th>
