@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { child, get, getDatabase, ref } from "firebase/database";
+import { child, get as getData, getDatabase, ref } from "firebase/database";
 import { Quiz, initNewQuiz } from "interfaces/Quiz";
 import _ from "lodash";
 import create from "zustand";
@@ -9,20 +9,21 @@ interface State {
   quizList: Quiz[];
   getQuizList: () => void;
   newQuiz: Quiz;
+  modifyQuizUserId: string;
   modifyQuizId: string;
   initNewQuiz: () => void;
   setNewQuiz: (key: string, value: any) => void;
-  getQuizInfo: (id: string) => void;
+  getQuizInfo: (userId: string, id: string) => void;
 }
 
-export const useQuiz = create<State>(set => ({
+export const useQuiz = create<State>((set, get) => ({
   quizList: [],
   getQuizList: () => {
     const dbRef = ref(getDatabase());
     const isMaster = useLogin.getState().userInfo?.isMaster ?? false;
     console.log("isMaster", isMaster);
     const quizUrl = isMaster ? "quiz" : `quiz/${getAuth().currentUser?.uid}`;
-    get(child(dbRef, quizUrl))
+    getData(child(dbRef, quizUrl))
       .then(snapshot => {
         if (snapshot.exists()) {
           console.log("result", snapshot.val());
@@ -60,6 +61,7 @@ export const useQuiz = create<State>(set => ({
       });
   },
   newQuiz: initNewQuiz,
+  modifyQuizUserId: "",
   modifyQuizId: "",
   initNewQuiz: () =>
     set(() => ({
@@ -95,14 +97,15 @@ export const useQuiz = create<State>(set => ({
       }
     }
   },
-  getQuizInfo: (id: string) => {
+  getQuizInfo: (userId: string, id: string) => {
     set(() => ({
+      modifyQuizUserId: userId,
       modifyQuizId: id
     }));
 
     const dbRef = ref(getDatabase());
-    const quizUrl = `quiz/${getAuth().currentUser?.uid}/${id}`;
-    get(child(dbRef, quizUrl))
+    const quizUrl = `quiz/${userId}/${id}`;
+    getData(child(dbRef, quizUrl))
       .then(snapshot => {
         if (snapshot.exists()) {
           set(() => ({

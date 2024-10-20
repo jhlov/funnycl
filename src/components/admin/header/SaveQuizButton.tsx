@@ -11,7 +11,7 @@ import { useQuiz } from "store/useQuiz";
 
 export const SaveQuizButton = () => {
   const auth = getAuth();
-  const { quizList, newQuiz, modifyQuizId } = useQuiz();
+  const { quizList, newQuiz, modifyQuizUserId, modifyQuizId } = useQuiz();
   const { subMenu } = useMenus();
   const history = useHistory();
 
@@ -38,7 +38,10 @@ export const SaveQuizButton = () => {
       newQuiz.title &&
       0 <
         quizList.filter(
-          item => item.id !== modifyQuizId && item.title === newQuiz.title
+          item =>
+            item.userId === modifyQuizUserId &&
+            item.id !== modifyQuizId &&
+            item.title === newQuiz.title
         ).length
     ) {
       return true;
@@ -69,7 +72,7 @@ export const SaveQuizButton = () => {
     }
 
     return false;
-  }, [newQuiz, quizList, modifyQuizId]);
+  }, [newQuiz, quizList, modifyQuizUserId, modifyQuizId]);
 
   const onClickSaveQuiz = async () => {
     console.log("onClickSaveQuiz");
@@ -108,7 +111,10 @@ export const SaveQuizButton = () => {
     const db = getDatabase();
 
     // Get a key for a new Post.
-    const quizUrl = `quiz/${auth.currentUser?.uid}`;
+    const quizUrl =
+      subMenu === "CREATE_QUIZ"
+        ? `quiz/${auth.currentUser?.uid}`
+        : `quiz/${modifyQuizUserId}`;
     const postKey =
       subMenu === "CREATE_QUIZ"
         ? push(child(ref(db), quizUrl)).key

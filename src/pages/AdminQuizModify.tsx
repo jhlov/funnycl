@@ -6,6 +6,7 @@ import { useMenus } from "store/useMenus";
 import { useQuiz } from "store/useQuiz";
 
 interface Params {
+  userId: string;
   id: string;
 }
 
@@ -17,7 +18,7 @@ export const AdminQuizModify = () => {
 
   useEffect(() => {
     setSubMenu("MODIFY_QUIZ");
-    getQuizInfo((match.params as Params).id);
+    getQuizInfo((match.params as Params).userId, (match.params as Params).id);
   }, []);
 
   return (

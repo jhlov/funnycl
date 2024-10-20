@@ -19,7 +19,10 @@ const AdminQuiz = () => {
       </Route>
       <Route path="/admin/quiz/list" component={AdminQuizList} />
       <Route path="/admin/quiz/create" component={AdminQuizCreate} />
-      <Route path="/admin/quiz/modify/:id" component={AdminQuizModify} />
+      <Route
+        path="/admin/quiz/modify/:userId/:id"
+        component={AdminQuizModify}
+      />
     </>
   );
 };

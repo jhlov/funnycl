@@ -148,7 +148,10 @@ const AdminQuizList = () => {
               <td>{item.created}</td>
               <td>{item.modified}</td>
               <td>
-                <Link className="btn" to={`/admin/quiz/modify/${item.id}`}>
+                <Link
+                  className="btn"
+                  to={`/admin/quiz/modify/${item.userId}/${item.id}`}
+                >
                   <EditIcon />
                 </Link>
               </td>
