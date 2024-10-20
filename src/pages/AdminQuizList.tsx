@@ -4,11 +4,11 @@ import classNames from "classnames";
 import { CONST } from "const";
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, update } from "firebase/database";
-import { Quiz } from "interfaces/Quiz";
+import { Quiz, quizSubjectList } from "interfaces/Quiz";
 import _ from "lodash";
 import moment from "moment";
-import { useEffect } from "react";
-import { OverlayTrigger, Table, Tooltip } from "react-bootstrap";
+import { useEffect, useMemo, useState } from "react";
+import { Form, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useLogin } from "store/useLogin";
 import { useMenus } from "store/useMenus";
@@ -36,6 +36,8 @@ const AdminQuizList = () => {
   const { userInfo } = useLogin();
   const { quizList, getQuizList } = useQuiz();
 
+  const [filterSubject, setFilterSubject] = useState("All");
+
   useEffect(() => {
     setSubMenu("QUIZ_LIST");
   }, []);
@@ -45,6 +47,14 @@ const AdminQuizList = () => {
       getQuizList();
     }
   }, [userInfo]);
+
+  const filteredQuizList = useMemo(() => {
+    if (filterSubject !== "All") {
+      return quizList.filter(quiz => quiz.subject === filterSubject);
+    }
+
+    return quizList;
+  }, [quizList, filterSubject]);
 
   const onClickRemoveQuiz = (userId: string, id: string) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -103,6 +113,24 @@ const AdminQuizList = () => {
 
   return (
     <div className="admin-quiz-list p-5">
+      {userInfo?.isMaster === true && (
+        <Form className="text-start">
+          <Form.Group className="mb-4" style={{ width: "100px" }}>
+            <Form.Label className="fw-bold">과목</Form.Label>
+            <Form.Select
+              value={filterSubject}
+              onChange={e => setFilterSubject(e.target.value)}
+            >
+              {["All", ...quizSubjectList].map(item => (
+                <option key={`subject${item}`} value={item}>
+                  {item}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        </Form>
+      )}
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -124,7 +152,7 @@ const AdminQuizList = () => {
           </tr>
         </thead>
         <tbody>
-          {quizList.map((item: Quiz, i) => (
+          {filteredQuizList.map((item: Quiz, i) => (
             <tr
               key={item.id}
               className={classNames({
